@@ -1,7 +1,7 @@
 --------------------------------------------------------
 --  File created - Wednesday-February-27-2019   
 --  All data is randomly generated. Any resemblance to actual persons, living or dead, or actual events is purely coincidental.
--- 	Data created by Ryan Hill (rlh1994) for use in an Oracle SQL Training session. 
+--  Data created by Ryan Hill (rlh1994) for use in an Oracle SQL Training session. 
 --------------------------------------------------------
 
 --This is how you write a comment, comments are lines that don't do anything when you run the script
@@ -143,7 +143,7 @@ Create queries that answer the below questions using the tools you have learnt s
 TIP: the order by is always the last line of a query
 1) What is the earliest join date of a customer who is still with us?
 2) What is the name of the customer who most recently closed their account?
-3) What's the biggest phone number of the customer who has a bill due on 3rd april, with a monthly bill of £44.99
+3) What's the biggest phone number of the customer who has a bill due on 3rd april, with a monthly bill of Â£44.99
 4) What's the name of the customer who joined in march 2017, pays the most, with the lowest account number
 Hint: if you want to order by multiple columns put a comma between the column names (which one does it order by first?)
 */
@@ -347,13 +347,6 @@ SELECT
 FROM 
 	MV_CUSTOMERS;
 
-SELECT 
-	* 
-FROM 
-	SD_BMU.PROD_WM_TASKS_X1 
-WHERE 
-	COM_FUR_DATE >= TRUNC(SYSDATE -1);
-
 --A 1X1 DUMMY TABLE
 SELECT 
 	* 
@@ -507,7 +500,7 @@ FROM
 GROUP BY 
 	AREA_CODE;
 
---The average montly bill column has too many decimal places, and it would be nice to have a £ in it so
+--The average montly bill column has too many decimal places, and it would be nice to have a Â£ in it so
 -- we use the round function, and the || operator which means concatinate (stick strings together)
 SELECT 
 	AREA_CODE, 
@@ -516,7 +509,7 @@ SELECT
 	MIN(PHONE_NUMBER), 
 	AVG(MONTHLY_BILL), 
 	STDDEV(MONTHLY_BILL),
-	'£' || ROUND(AVG(MONTHLY_BILL), 2) AS AVG_MONTLHY_BILL
+	'Â£' || ROUND(AVG(MONTHLY_BILL), 2) AS AVG_MONTLHY_BILL
 FROM
 	(SELECT 
 		A.*, 
@@ -535,8 +528,8 @@ SELECT
 	MIN(PHONE_NUMBER), 
 	AVG(MONTHLY_BILL), 
 	STDDEV(MONTHLY_BILL),
-	'£' || ROUND(AVG(MONTHLY_BILL), 2) AS AVG_MONTLHY_BILL,
-	'£' || TO_CHAR(ROUND(AVG(MONTHLY_BILL), 2), '99.99') AS AVG_MONTLHY_BILL2
+	'Â£' || ROUND(AVG(MONTHLY_BILL), 2) AS AVG_MONTLHY_BILL,
+	'Â£' || TO_CHAR(ROUND(AVG(MONTHLY_BILL), 2), '99.99') AS AVG_MONTLHY_BILL2
 FROM
 	(SELECT 
 		A.*, 
@@ -569,8 +562,8 @@ SELECT
 	MIN(PHONE_NUMBER), 
 	AVG(MONTHLY_BILL), 
 	STDDEV(MONTHLY_BILL),
-	'£' || ROUND(AVG(MONTHLY_BILL), 2) AS AVG_MONTLHY_BILL,
-	'£' || TO_CHAR(ROUND(AVG(MONTHLY_BILL), 2), '99.99') AS AVG_MONTLHY_BILL2
+	'Â£' || ROUND(AVG(MONTHLY_BILL), 2) AS AVG_MONTLHY_BILL,
+	'Â£' || TO_CHAR(ROUND(AVG(MONTHLY_BILL), 2), '99.99') AS AVG_MONTLHY_BILL2
 FROM
 	(SELECT 
 		A.*, 
@@ -851,13 +844,13 @@ We want to advertise to all our customers who could be on a faster product than 
 	a) Who are these customers? How many are there?
 	b) How much could their personal speed improve, and what's the average speed all these customers could see an uplift of?
 	c) How much more would these customers be paying personally? How much more would the company make from this? 
-	d) Say we wanted to entice customers by offering them money off their bill, do we make more money by offering 10% or £10 regardless of new bill amount?
+	d) Say we wanted to entice customers by offering them money off their bill, do we make more money by offering 10% or Â£10 regardless of new bill amount?
 	e) We want to build a table that we can use to send all our emails from to these customers automatically. 
 	Write a query that returns 2 columns - one with customer email and one with the content of the email using the concatination operator we learnt earlier
 	Use the below template, create a table in your schema first with each of these options (or whatever you need to get them easily) and then write the final script and query that table
 
 
-Dear  _______, We noticed that you are currently on our _____ product with an upload/download speed of ___mbps/___mbps, but you could be getting ___mbps/___mbps by switching to our _____ product. Not only will this let you stream all your favourite shows and download all your new music faster than ever, but for a limited time rather than the usual cost of £___ we are offering this to you for £____ (use whichever makes the company more money from above), meaning this is only £___ more than your current bill! That is a bargain you will only get direct from Mirgin Vedia. If you want to know more give our friendly customer helper line a call on 0800 GO-VEDIA (0800 46 83342)! Thanks, Your Local Mirgin Vedia Team!
+Dear  _______, We noticed that you are currently on our _____ product with an upload/download speed of ___mbps/___mbps, but you could be getting ___mbps/___mbps by switching to our _____ product. Not only will this let you stream all your favourite shows and download all your new music faster than ever, but for a limited time rather than the usual cost of Â£___ we are offering this to you for Â£____ (use whichever makes the company more money from above), meaning this is only Â£___ more than your current bill! That is a bargain you will only get direct from Mirgin Vedia. If you want to know more give our friendly customer helper line a call on 0800 GO-VEDIA (0800 46 83342)! Thanks, Your Local Mirgin Vedia Team!
 
 
 The lack of formatting might make our campaign less successful, but at least we don't have to type them all by hand!

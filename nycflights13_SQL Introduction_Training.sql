@@ -722,13 +722,61 @@ SELECT DISTINCT
 FROM
 	schema_name.flights;
 
+/* Next, let's discuss how we can combine the records that our queries return. Sometimes you might have some different
+queries but the output has the same columns. Sometimes these could be combined into 1 by clever uses of WHERE clauses and 
+CASE statements, but this isn't always possible and can lead to confusing code that is more error prone. There are 3 things
+you want might to do with the records return by multiple queries:
+1) Combine them, with or without duplicates, by just returning all records from both outputs. This is done using UNION [ALL] keyword.
+2) Find overlap between the two sets of records, returning only the records that exist in both outputs. This is done using INTERSECT keyword.
+3) Find records in the first output that aren't in the second. This is done using the MINUS keyword.
+/*
+TODO: add UNION/UNION ALL/INTERSECT/MINUS examples
 
 /*
--- distinct
--- union types
--- fetch
+Finally, while it is rare, you might want to only return a certain number of rows once the records have been ordered. We'll see later that it is 
+possible to add a row number based on an order, and you could then filter on that using a WHERE statement but this is more work than necessary.
+You can achieve this using the FETCH keyword and associated terms. The FETCH statement truly is the last part that the database will run as it 
+must complete all sorting first, so it won't run faster just because you only want 5 records returned. Again conveniently this is again
+the last part of the physically written query.
+
+SELECT
+	<COLUMNS>
+FROM
+	<TABLES>
+WHERE
+	<CONDITION>
+ORDER BY 
+	<COLUMNS>
+[OFFSET <NUMBER> ROWS]
+FETCH NEXT <NUMBER> [PERCENT] ROWS ONLY/WITH TIES;
+
+Where <NUMBER> is the number of rows you first optionally offset by (maybe you only want the 6th-10th rows, rather than 1st-5th), 
+and then the second <NUMBER> is how many rows, or the percentage of rows you wish to return.
+PERCENT is an optional keyword, to return a percentage of all records as opposed to an absolute number of records
+ONLY vs WITH TIES is what it sounds like, if you return 5 records and the 5th and 6th rows ties on what is in your ORDER BY, it will actually return 6 rows.
+
+The following example returns the 6th-10th most delayed departing flights, with any ties shown as well.
 */
 
+SELECT 
+	*
+FROM
+	schema_name.flights
+ORDER BY 
+	dep_delay desc
+OFFSET 5 ROWS
+FETCH NEXT 5 ROWS WITH TIES;
+
+/* That is the end of our section on records. We've covered how to filter the records based on conditions,
+how to order the records in the output and only return a selected number of them, how to remove duplicates from our data, 
+and finally how to combine the records that come from multiple queries in a variety of ways. Combined with the section on 
+variables you can do the vast majority of things you can do with single tables. Next we'll learn how to combine multiple tables
+so we can bring more variables and records in and show off the real power of relational databases over other tools and software.
+
+Finally, here are some common mistakes you might make while using what you have learnt, check the error messages 
+and understand the cause and how to fix it: */
+
+--TODO: Add Error examples
 ---------------------------------------------------------------------------------------------------
 /* Part 3: Tables - Reusing and joining
 -- dual

@@ -373,7 +373,7 @@ SELECT
 	CASE
 		WHEN dest in ('JFK', 'LGA', 'EWR') THEN 'NYC'
 		ELSE 'Other'
-	END AS dest_nyc_check_in
+	END AS dest_nyc_check_in,
 	CASE
 		WHEN dest = 'JFK' or dest = 'LGA' or dest = 'EWR' THEN 'NYC'
 		ELSE 'Other'
@@ -396,17 +396,17 @@ SELECT
 	origin, 
 	dest,
 	CASE
-		WHEN dest in ('JFK', 'LGA', 'EWR') THEN 'NYC'
+		WHEN origin in ('JFK', 'LGA', 'EWR') THEN 'NYC'
 		ELSE 'Other'
-	END AS dest_nyc_check1,
+	END AS origin_nyc_check1,
 	CASE
-		WHEN lower(dest) in ('JFK', 'LGA', 'EWR') THEN 'NYC'
+		WHEN lower(origin) in ('JFK', 'LGA', 'EWR') THEN 'NYC'
 		ELSE 'Other'
-	END AS dest_nyc_check2,
+	END AS origin_nyc_check2,
 	CASE
-		WHEN dest in ('JFK', 'lga', 'ewr') THEN 'NYC'
+		WHEN origin in ('JFK', 'lga', 'ewr') THEN 'NYC'
 		ELSE 'Other'
-	END AS dest_nyc_check3,
+	END AS origin_nyc_check3
 
 FROM
 	schema_name.flights;
@@ -497,7 +497,7 @@ depending on the machine running your scripts */
 ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MM-YYYY HH24:MI:SS';
 SELECT 
 	time_hour,
-	substr(time_hour, 4, 2)
+	substr(time_hour, 9, 2)
 FROM
 	schema_name.flights;
 
@@ -505,12 +505,12 @@ FROM
 ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-DD-MM HH24:MI:SS';
 SELECT 
 	time_hour,
-	substr(time_hour, 4, 2)
+	substr(time_hour, 9, 2)
 FROM
 	schema_name.flights;
 
 -- Reset our format to the suggested course default
-ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MM-YYYY HH24:MI:SS';
+ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MON-YYYY HH24:MI:SS';
 
 /* That concludes the section on variables. You have seen how to select all or just specific columns from a table,
 how to create and add your own columns to the output table that are returned by functions, as well as ones that 
@@ -583,6 +583,16 @@ WHERE
 	1 = 1
 	AND (hour < 5 or hour > 19) -- flights scheduled to depart in the first or last 5 hours of a day
 	AND dep_delay = 0; -- left on time
+
+
+/* Another useful filter is whether something IS NULL or IS NOT NULL. Let's see how many of our flights don't have any delay data: */
+SELECT 
+	*
+FROM 
+	schema_name.flights
+WHERE
+	dep_delay IS NULL;
+
 
 /* If we try to use a variable we create (or rename) in the SELECT clause of our query then we will get an error */
 SELECT 
@@ -763,9 +773,18 @@ SELECT
 FROM
 	schema_name.flights
 ORDER BY 
-	dep_delay desc
+	distance desc
 OFFSET 5 ROWS
 FETCH NEXT 5 ROWS WITH TIES;
+
+SELECT 
+	*
+FROM
+	schema_name.flights
+ORDER BY 
+	distance desc
+OFFSET 5 ROWS
+FETCH NEXT 5 ROWS ONLY;
 
 /* That is the end of our section on records. We've covered how to filter the records based on conditions,
 how to order the records in the output and only return a selected number of them, how to remove duplicates from our data, 
@@ -779,12 +798,20 @@ and understand the cause and how to fix it: */
 --TODO: Add Error examples
 ---------------------------------------------------------------------------------------------------
 /* Part 3: Tables - Reusing and joining
+
+Having now covered most of what you can do with variables and records, the next logical step is to see what we can do 
+with the tables themselves. This section will start off my introducing a new useful table that is always available,
+then we'll look at ways to use the output of your query within the same or another query. Finally we'll spend time looking at 
+one of the key features of relations databases - joins.
+
+
+*/
 -- dual
 -- Nesting
 -- with
 -- create
 -- join
-*/
+
 
 ---------------------------------------------------------------------------------------------------
 /* Part 4: Aggregation - Grouping and window functions

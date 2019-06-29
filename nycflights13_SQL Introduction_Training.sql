@@ -804,15 +804,257 @@ with the tables themselves. This section will start off my introducing a new use
 then we'll look at ways to use the output of your query within the same or another query. Finally we'll spend time looking at 
 one of the key features of relations databases - joins.
 
-
+The first thing we introduce is the dual table. This is what's known as the dummy table, because it has only 1 row, only column,
+and the single value of 'X'. The purpose of it is that, because pretty much everything in Oracle SQL expects a table/variable as an input,
+you can use this to be that table, or just test things out quickly.
 */
--- dual
--- Nesting
--- with
--- create
--- join
+SELECT
+	* 
+FROM
+	dual;
+
+SELECT
+	TRUNC(SYSDATE) - 5 + 1/24 + 14/24/60, --Some random date manipulation as a test
+	NEXT_DAY(TRUNC(SYSDATE), 'SAT') - 1 AS week_end_date -- should return Friday
+FROM
+	dual;
+
+SELECT
+	USER -- special keyword that is the current user/schema
+FROM
+	dual;
+
+/*
+We saw earlier that we can't use a newly created variable in a WHERE clause due to the order of execution. Beyond this, there are many situations
+where we want to use the output of a table within another query, or keep the table for a later date. Sometimes it can just be more clear to
+organise a query in multiple stages to make it easier to follow and think through. The first method for doing this known as nesting a query, because you
+nest one query within another to use the output table of the inner query as the input table of the outer query.
+
+SELECT
+	<COLUMNS>
+FROM
+	(SELECT
+		<COLUMNS>
+	FROM
+		<TABLES>
+	WHERE
+		<CONDITION>
+	)
+WHERE
+	<CONDITION>;
+
+We can do as deep with this nesting as we like, however it does force the database to run the inner query completely first, before any work is done 
+on the outer query. This can lead to inefficiencies, so you should always try to filter as much as possible as early as possible, and never do any 
+sorting until the outer-most query (if at all)!
+
+It is usually good practise (and saves a lot of time) to alias the nested query so it is easier to refer to elsewhere in the query. While technically
+possible to use the same alias as any table within the inner query it can lead to confusion and make it hard to debug your code, so I recommend never 
+using the same alias for any 2 tables in the same query. 
+*/
+
+SELECT
+	b.*
+FROM
+	(
+	SELECT
+		a.*,
+		distance * 1.60934 AS distance_km
+	FROM
+		schema_name.flights a
+	) b
+WHERE
+	distance_km > 1000;
 
 
+/*
+This is great when we want to just use the inner query once, but sometimes we might want to use it multiple times, or just want to write our 
+queries in an easier to read format. To do with we can use a WITH statement, this allows you to alias a query's output without having to nest it 
+in a query. We can alias as many query output tables as we want this way, and can even use any previous aliased tables in the next query in the WITH clause.
+
+WITH alias AS (<QUERY>),
+
+alias2 AS (<QUERY>)
+
+SELECT
+	<COLUMNS>
+FROM
+	<TABLES>
+WHERE
+	<CONDITION>;
+
+From a database point of view, sometimes it will store the result of a WITH statement as a temporary table, and sometimes it will just run the query when it 
+is used within another query. 
+*/
+WITH km_table as 
+(
+	SELECT
+		a.*,
+		distance * 1.60934 AS distance_km
+	FROM
+		schema_name.flights a
+)
+
+SELECT
+	*
+FROM
+	 km_table
+WHERE
+	distance_km > 1000
+UNION
+SELECT
+	*
+FROM
+	 km_table
+WHERE
+	distance_km < 1000;
+
+
+/*
+The final way we can use the output of our queries is to store the resulting table permanently(ish) in a table within your schema. To do this
+we use a CREATE TABLE statement. Whilst it is possible to create an empty table by specifying the variables and their type we will not cover 
+that in this course. Instead, we will just cover how to create a table from a SELECT statement.
+
+CREATE TABLE <TABLE> NOLOGGING AS
+<QUERY>;
+
+The NOLOGGING keyword just removed logs of this creation from the database to slightly improve speed.
+*/
+CREATE TABLE flights_km NOLOGGING AS
+SELECT
+	a.*,
+	 * 1.60934 AS distance_km
+FROM
+	schema_name.flights a;
+
+SELECT
+	*
+FROM 
+	flights_km; -- notice the lack of a schema name as this was created in your own schema
+
+/* 
+Once we are done with the table we want to remove it so we could reuse the name and free up space in the database. We do this using a 
+DROP TABLE statement.
+
+DROP TABLE <TABLE> PURGE;
+
+Where PURGE is a keyword to remove it from the recycling bin immediately.
+*/
+DROP TABLE flights_km PURGE;
+
+SELECT
+	*
+FROM 
+	flights_km; -- the table no longer exist.
+
+
+/*
+There are also ways to empty a table using the TRUNCATE TABLE statement, add new records to a table using the INSERT statement, remove
+specific records using a DELETE statement, or change some values of existing records using an UPDATE statement. However these are not 
+covered in this course but if you find yourself regularly dropping and recreating the same table with new/similar data then I recommend
+looking into these as a TRUNCATE and INSERT is often quicker and better for the database than a DROP and CREATE.
+
+Finally we come to the main feature of relational databases, joins! Joins allow us to return and use variables from multiple tables
+within the same query. They are written in the following way
+
+SELECT
+	<COLUMNS>
+FROM
+	<TABLE1> 
+	<JOIN_TYPE> JOIN <TABLE2>
+	ON <CONDITION>;
+
+There are 4 main types of joins:
+INNER JOIN - Only return records where they exist in both tables 
+LEFT/RIGHT JOIN - Return all records in the left/right table and any match in the right/left one if it exists
+FULL OUTER JOIN - Return all records in both tables and any match if it exists
+CROSS JOIN - Return all combinations of rows across both tables (the Cartesian product of the rows). Not often useful.
+
+Note that the CROSS JOIN does not have an ON condition. Sometimes it is possible to choose to have a condition in either
+the join statement or the where statement. Both are equally fine and the database will optimise for what is best. 
+
+Let's look at a few examples, but first let's create a smaller version of the PLANES table to help illustrate the different types
+*/
+CREATE TABLE planes_short NOLOGGING AS
+SELECT
+	* 
+FROM 
+	schema_name.planes
+WHERE
+	tailnum = 'N108UW';
+
+-- Only return rows where data is in both tables
+-- Notice that because we have returned all columns from both tables, the join column is returned twice despite being the exact same
+SELECT 
+	a.*,
+	b.*
+FROM 
+	schema_name.flights a
+	INNER JOIN schema_name.planes_short b
+	ON a.tailnum = b.tailnum; -- In this case the columns had the same names, but that won't always (in fact will rarely) be the case
+
+
+-- Return all rows in the left table, matching where exists in right table
+SELECT 
+	a.*,
+	b.*
+FROM 
+	schema_name.flights a
+	LEFT JOIN schema_name.planes_short b
+	ON a.tailnum = b.tailnum;
+
+-- Return all rows in the right table, matching where exists in right table
+-- Notice that in this case despite planes_short only having 1 row, this returns multiple rows because there are multiple matches
+SELECT 
+	a.*,
+	b.*
+FROM 
+	schema_name.flights a
+	RIGHT JOIN schema_name.planes_short b
+	ON a.tailnum = b.tailnum;
+
+-- Return all rows in either table whether they match or not
+-- To illustrate this we use a dummy table with a non-existent tail number
+SELECT 
+	a.*,
+	b.*
+FROM 
+	schema_name.flights a
+	FULL OUTER JOIN (SELECT 'FAKETAIL' AS tailnum FROM dual) b
+	ON a.tailnum = b.tailnum
+ORDER BY b.tailnum; -- Defaults to nulls last for ascending.
+
+-- Returns all possible combinations of rows
+-- We create some small tables using UNION and dual to illustrate this. Each has 3 rows so we return 9 rows (3x3)
+SELECT
+	*
+FROM 
+	(SELECT '1' AS NUM FROM DUAL
+		UNION
+	SELECT '2' AS NUM FROM DUAL
+		UNION
+	SELECT '3' AS NUM FROM DUAL) A
+CROSS JOIN
+	(SELECT 'A' AS LET FROM DUAL
+		UNION
+	SELECT 'B' AS LET FROM DUAL
+		UNION
+	SELECT 'C' AS LET FROM DUAL) B;
+
+-- Remove our table as we no longer need it.
+DROP TABLE planes_short PURGE;
+
+#
+/* That is the end of our section on tables. We've covered the dummy table which we've seen some uses for already. We covered
+3 methods to use the output of a query in another query; by nesting, using WITH statements, and creating a permanent table in our schema.
+Finally we saw how to join multiple tables together and all the different types that we could use in this join and the types of rows they return. 
+
+Next we'll learn how to aggregate the data within our data by grouping our data by specific variables and then summarising the data for each group
+using a multitude of functions. 
+
+Finally, here are some common mistakes you might make while using what you have learnt, check the error messages 
+and understand the cause and how to fix it: */
+
+--TODO: Add Error examples
 ---------------------------------------------------------------------------------------------------
 /* Part 4: Aggregation - Grouping and window functions
 -- group by

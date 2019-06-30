@@ -1057,11 +1057,438 @@ and understand the cause and how to fix it: */
 --TODO: Add Error examples
 ---------------------------------------------------------------------------------------------------
 /* Part 4: Aggregation - Grouping and window functions
--- group by
--- windows function (row number and one other example)
+
+The final section of learning will focus on the aggregation of data i.e. information about multiple records of our data. This information
+might be the count of records, the max, min, mean, sum etc. We will first look at it via summaries of specific groups of data, and then 
+aggregated information that is not summarised. 
+
+We'll start with group summaries, these have the output form where each unique grouping of variable values is one row, with its summary
+information as new variables. This is the same type of output format you'll get from using a PivotTable in Excel.
+
+To tell the database which variables identify our groups, we use a GROUP BY clause. This clause is written
+and executed after the WHERE clause, but before the ORDER BY.
+
+SELECT
+	<GROUP COLUMNS>,
+	<SUMMARY COLUMNS>
+FROM
+	<TABLES>
+WHERE
+	<CONDITION>
+GROUP BY 
+	<GROUP COLUMNS>
+ORDER BY 
+	<COLUMNS>;
+
+Any non-summarised variable MUST appear in the GROUP BY clause, but the inverse is not true; you can group by a variable you don't return in the output,
+however this is likely to be very confusing so is not recommended. There are many aggregating functions but the most common are:
+
+COUNT(*) 		- The total number of records per group
+COUNT(<COLUMN>)	- The total number of records that are non-null in that variable
+SUM(<COLUMN>)	- The sum of that variable, must be numeric
+AVG(<COLUMN>)	- The mean of that variable, must be numeric
+MAX(<COLUMN>)	- The maximum of that variable
+MIN(<COLUMN>)	- The minimum of that variable
+
+MAX and MIN don't have to be numeric but can lead to unexpected behaviour if you are not aware of how text is ordered. 
+
 */
+--Summary information of flights out of each NYC airport
+SELECT
+	origin,
+	COUNT(*) AS num_flights,
+	COUNT(dep_time) as num_departed_flights, -- doesn't count records with a null departure time
+	SUM(air_time) AS total_airtime,
+	AVG(air_time) AS mean_airtime,
+	MAX(dep_delay) AS latest_dep,
+	MIN(dep_delay) AS earliest_dep
+FROM 
+	schema_name.flights
+GROUP BY 
+	origin;
+
+--Summary information of flights out of each NYC airport to each destination airport
+SELECT
+	origin,
+	dest,
+	COUNT(*) AS num_flights,
+	COUNT(dep_time) as num_departed_flights,
+	SUM(air_time) AS total_airtime,
+	AVG(air_time) AS mean_airtime,
+	MAX(dep_delay) AS latest_dep,
+	MIN(dep_delay) AS earliest_dep
+FROM 
+	schema_name.flights
+GROUP BY 
+	origin,
+	dest;
+
+/* Note that we don't have to provide a GROUP BY clause when we are aggregating the whole table */
+SELECT 
+	COUNT(*) AS num_flights,
+	MAX(dep_delay) AS latest_dep,
+	MIN(dep_delay) AS earliest_dep
+FROM
+	schema_name.flights;
+
+/* Finally, it is possible to combine CASE statements and aggregate functions to convert text flags into numeric values like so */
+SELECT 
+	origin,
+	SUM(
+		CASE WHEN dep_delay = 0 AND arr_delay = 0 THEN 1 ELSE 0 END -- SUM uses 1 and 0 as the values
+		) AS perfect_flights,
+	COUNT(
+		CASE WHEN dep_delay = 0 AND arr_delay = 0 THEN 1 ELSE null END -- COUNT uses anything and null as the values
+		) AS perfect_flights2 
+FROM
+	schema_name.flights
+GROUP BY
+	origin;
+
+
+/*
+Sometimes we may not want to summarise the data, but still return and use aggregated information, such as adding a row number
+per group to identify the nth flight per carrier per day, or the average departure delay so we can filter records to only return
+those that have above average delays. 
+
+To do this we use what are known as window functions, and they usually have the following form:
+
+<WINDOW FUNCTION>(<COLUMN>) OVER (PARTITION BY <COLUMNS> ORDER BY <COLUMNS>)
+
+The function takes the column to act on, and the columns that follow PARITION BY define the group to aggregate the data by,
+the same as using a GROUP BY. If no PARTITION BY is specified then all records are used, again the same as a GROUP BY. ORDER BY is
+used in certain functions to define the order to use when calculating the information, many functions do not need it but we will see
+at least one example. 
+
+Many of the functions  are the same as the GROUP BY functions e.g COUNT(<COLUMN>), AVG(COLUMN) etc, but there are two/three 
+additional functions that are often useful
+
+ROW_NUMBER() OVER (PARTITION BY <COLUMNS> ORDER BY <COLUMNS>)
+RANK(<COLUMN>) OVER (PARTITION BY <COLUMNS> ORDER BY <COLUMNS>)
+DENSE_RANK(<COLUMN>) OVER (PARTITION BY <COLUMNS> ORDER BY <COLUMNS>)
+
+ROW_NUMBER returns a column that is, unsurprisingly, the row number starting at 1 and increasing based on the ORDER BY provided. 
+RANK returns a column that is the rank of the provided column, and will return the same value for ties.
+DENSE_RANK returns a column that is the rank of the provided column, and will return the same value for ties, but will not skip values when there are ties.
+*/
+
+
+/*Add which flight of the day it was for a given carrier, how many there are on that day, and the average departure delay */
+SELECT
+	a.*,
+	ROW_NUMBER() OVER (PARTITION BY year, month, day, carrier ORDER BY sched_dep_time) AS day_carrier_flight,
+	COUNT(*) OVER (PARTITION BY year, month, day, carrier) AS day_carrier_flight_total,
+	AVG(dep_delay) OVER (PARTITION BY year, month, day, carrier) AS day_carrier_avg_dep_delay
+FROM
+	schema_name.flights;
+
+/* Note that again we can't use these columns in a WHERE clause as they are created within the SELECT clause.
+There are more window functions available in Oracle SQL that will not be covered here, but could be useful if needed including
+ones to tell you what percentile of a groups value that record is in, the first value, the last value etc. */
+
+/* 
+That concludes the section on aggregation; you learnt how to summarise data by groups in a PivotTable type output, 
+and how to add aggregated information as a new column while keeping all original records. You now know the vast majority
+of what you need to know in Oracle SQL to write most queries you will ever write. There are a lot more irregularly used and specific
+quirks, functions, keywords etc that you may encounter as you solve more and more problems using SQL, but for most work this is more
+than enough.
+
+The final section covers an example of the kind of steps you might take and queries you might write to answer a 
+seemingly simple data science question.
+
+Finally, here are some examples of common errors you might encounter with these types of queries:*/
+
+--TODO: add error queries
 
 ---------------------------------------------------------------------------------------------------
 /* Part 5: Worked Example - Putting it all together
 
+This final section examines the process you might take to answer what might be asked a simple question. We'll
+work through some pre-checks that are worth doing on your data, and then the steps to building a query that 
+provides the data to answer the question. In reality you would likely build the main query a single query,
+but here I keep them separate for demonstration. It is also important to point out that this is just one way
+to answer a question, and just one way to write a query to return this data. There may be other solutions that
+are just as good.
+
+The question we will answer is this - Does precipitation make a plane more likely to be delayed departing, and 
+are specific airports worse than others at dealing with rain?
+
+We'll need to start by checking for any missing data and removing any incomplete data. Then we'll need to bring 
+in the weather data for each flight and have replaced the precipitation column with a decile value instead (which 10% of 
+precipitation is it in). Finally, we'll summarise the departure delay information by precip decile and then 
+bring in airport names for each of reading.
+*/
+
+-- Check if we have any missing departure delay data
+SELECT 
+	*
+FROM 
+	schema_name.flights
+WHERE
+	dep_delay IS NULL;
+
+/* We do have missing data. This could mean that the flight was cancelled, or that it wasn't but we don't have data for it. 
+In reality we might ask the data owner what this meant, as we cannot assume what it is and one is a very different meaning than
+the other. For now we will exclude this from our data going forward. */
+
+-- Next let's check if we have any time periods with no precip data 
+SELECT 
+	* 
+FROM 
+	schema_name.weather
+WHERE 
+	precip IS NULL;
+
+/* No missing data that's good. */
+
+-- Next let's check if we have any time period for flights where we are missing weather data
+SELECT 
+	* 
+FROM 
+	schema_name.flights fli
+	LEFT JOIN schema_name.weather weath
+	ON fli.time_hour = weath.time_hour AND fli.origin = weath.origin
+WHERE 
+	weath.origin IS NULL;
+
+/* We are missing some data so we will want to make sure to use an inner join to avoid including any flights we don't have weather
+data for. However this combined with the flights that we don't have departure info for should be extracted and provided as a caveat 
+with the answer to the question */
+CREATE TABLE missing_flight_info NOLOGGING AS
+SELECT 
+	year,
+	month,
+	day,
+	flight
+FROM 
+	schema_name.flights
+WHERE
+	dep_delay IS NULL
+UNION
+SELECT 
+	fli.year,
+	fli.month,
+	fli.day,
+	fli.flight
+FROM 
+	schema_name.flights fli
+	LEFT JOIN schema_name.weather weath
+	ON fli.time_hour = weath.time_hour AND fli.origin = weath.origin
+WHERE 
+	weath.origin IS NULL;
+
+/* Now we have recorded the flights we are going to exclude from the data, we can start to actually answer the question. First let
+us create our decile column in the weather data. You could make a case for this being created per ORIGIN however if we want to compare
+which airport handles rain better on a purely volume measure, then the deciles should be consistent across all airports.
+
+To create our decile we could find the maximum precip value, divide that records precip value by it, times by 10 and round down up to 
+a whole number. We would need to Google how to round up, but doing so tells us that the function is CEIL. To get the maximum of a column
+and use it per record we'd want to use a window function. */
+
+-- Add precipitation decile variable
+SELECT 
+	*,
+	CEIL(
+		(precip/(MAX(precip) OVER () )*10 -- no partition needed as we want to use the whole data
+		) AS precip_decile
+FROM 
+	schema_name.weather;
+
+/* This is a little messy and feels like there should be a better way to do this. Google searching "how to calculate decile Oracle SQL" returns
+pages relating to the NTILE window function. After looking at a few examples online hopefully we understand it enough to apply it to our work so 
+the above query becomes */
+
+-- Add precipitation decile variable version 2
+SELECT 
+	*,
+	NTILE(10) OVER (ORDER BY precip ASC) as precip_decile
+FROM 
+	schema_name.weather;
+
+/* Next we'll want to join this onto our flights table. At this point it's a good idea to think about what columns we actually want 
+from the weather table as our output table is going to start getting quite wide otherwise. In an ideal world you would think about this to start
+with and remove any unnecessary columns right from the start, but in reality it is often the case that you use * until a point where it becomes
+too much to look at and only then do you select the variables you actually need/want to keep.
+
+In this case we only really need the time_hour variable for our join, the origin variable also for our join, and our new precip_decile variable */
+
+--Only select the columns we need
+SELECT 
+	time_hour,
+	origin,
+	NTILE(10) OVER (ORDER BY precip ASC) AS precip_decile
+FROM 
+	schema_name.weather;
+
+/* We now have the choice to join this as a nested query, create it as a table, or use a WITH clause. As we are unlikely to need this table 
+long-term then creating a table seems a little excessive, and the choice between the other two is mostly personal preference (as we are not
+going to need to use the table multiple times in the same query). I choose to use WITH as I find it helps keep the query looking neat */
+
+WITH new_weather AS (
+	SELECT 
+		time_hour,
+		origin,
+		NTILE(10) OVER (ORDER BY precip ASC) AS precip_decile
+	FROM 
+		schema_name.weather
+)
+
+SELECT
+	*
+FROM 
+	schema_name.flights fli
+	INNER JOIN new_weather weath
+	ON fli.time_hour = weath.time_hour AND fli.origin = weath.origin
+WHERE
+	dep_delay IS NOT NULL;  -- remember to remove records without a dep delay value
+
+/* Now we have our combined data we need to group our data together so that we can get the average departure delay. We could do this in 
+a few different ways; for example do we want to look at the mean or the median as our measure for average? Do we just want to look at 
+delayed flights or should be include early departures as well? Finally, should we include the standard deviation (a measure of spread)
+in our results. 
+
+Let's return the mean, median, and standard deviation. We'll also exclude flights that departed early (but include those on time) but 
+this is something that should be clarified with the person asking the question, and is easy enough to change later (just remove the condition
+in the WHERE clause). */
+
+WITH new_weather AS (
+	SELECT 
+		time_hour,
+		origin,
+		NTILE(10) OVER (ORDER BY precip ASC) AS precip_decile
+	FROM 
+		schema_name.weather
+)
+
+SELECT
+	origin, 
+	precip_decile,
+	AVG(dep_delay) AS mean_dep_delay,
+	MEDIAN(dep_delay) AS median_dep_delay,
+	STDDEV(dep_delay) AS std_dep_delay,
+	COUNT(*) AS volume -- good idea to always include counts as people will ask about the volume of data used.
+FROM 
+	schema_name.flights fli
+	INNER JOIN new_weather weath
+	ON fli.time_hour = weath.time_hour AND fli.origin = weath.origin
+WHERE
+	fli.dep_delay >=0 -- automatically removes the nulls when applying a numeric or equals filter
+GROUP BY 
+	origin,
+	precip_decile
+;
+
+/* Finally, let's use the AIRPORTS table to make the output a little bit nicer to read with the full airport names. 
+As I know that the output of the previous query is only 30 rows, and that the flights table contains hundreds of thousands of rows, 
+I am going to do the join by nesting this query - the database should optimise it but just to force it to do the join after 
+doing the grouping of the data first. */
+
+
+WITH new_weather AS (
+	SELECT 
+		time_hour,
+		origin,
+		NTILE(10) OVER (ORDER BY precip ASC) as precip_decile
+	FROM 
+		schema_name.weather
+)
+
+SELECT 
+	b.name,
+	a.*
+FROM
+	(SELECT
+		origin, 
+		precip_decile,
+		AVG(dep_delay) AS mean_dep_delay,
+		MEDIAN(dep_delay) AS median_dep_delay,
+		STDDEV(dep_delay) AS std_dep_delay,
+		COUNT(*) AS volume 
+	FROM 
+		schema_name.flights fli
+		INNER JOIN new_weather weath
+		ON fli.time_hour = weath.time_hour AND fli.origin = weath.origin
+	WHERE
+		fli.dep_delay >=0 -- automatically removes the nulls when applying a numeric or equals filter
+	GROUP BY 
+		origin,
+		precip_decile
+	) a
+	LEFT JOIN schema_name.airports b
+	ON a.origin = b.name
+;
+
+/* The last things to do are to optionally order the output for ease of viewing, and save the output as a table. The order of
+this depends on what part of the question we want to answer; do higher deciles have a higher delay answers the first part of the
+question so we would want to order by decile (and in fact may want to have no grouped by origin at all, again this is easy to remove
+and create another table but for simplicity I'll leave it for now). For the second part, which airport deals with rain better we may want to 
+order by the airport to see how they each trend with heavier rainfall. In the end it doesn't really matter as there are relatively few rows 
+so sorting will be quick in the future, and there isn't really a need to order the data in the output at all until you present it to someone. */
+
+CREATE TABLE delay_precip_decile NOLOGGING AS 
+WITH new_weather AS (
+	SELECT 
+		time_hour,
+		origin,
+		NTILE(10) OVER (ORDER BY precip ASC) AS precip_decile
+	FROM 
+		schema_name.weather
+)
+
+SELECT 
+	b.name,
+	a.*
+FROM
+	(SELECT
+		origin, 
+		precip_decile,
+		AVG(dep_delay) AS mean_dep_delay,
+		MEDIAN(dep_delay) AS median_dep_delay,
+		STDDEV(dep_delay) AS std_dep_delay,
+		COUNT(*) AS volume
+	FROM 
+		schema_name.flights fli
+		INNER JOIN new_weather weath
+		ON fli.time_hour = weath.time_hour AND fli.origin = weath.origin
+	WHERE
+		fli.dep_delay >=0 -- automatically removes the nulls when applying a numeric or equals filter
+	GROUP BY 
+		origin,
+		precip_decile
+	) a
+	LEFT JOIN schema_name.airports b
+	ON a.origin = b.name
+ORDER BY 
+	precip_decile, 
+	origin 
+;
+
+/* Now we have this table we can answer the question ... TODO - answer the question 
+
+We can also work much quicker on the data now, we can look at just the first and tenth decile, we could look at just one airport etc.
+But we have lost information as well, we have no way to know what the range of each decile is, we can't identify the type of plane,
+or the time of year for the flights any more. We have no way, from this table, to repeat the analysis ignoring which airport they came from.
+In creating this output we have removed many variables from our data and combined many records. It's always important to think about what information
+is relevant, and what can safely be ignored. 
+
+It is also important that we save this query, if someone asks us in a month to reproduce the analysis on 2014's data we would have to write
+the whole script over again, and we might not remember what we did with the missing values, or if we included early departures or not. .SQL files are 
+tiny, so the rule is "There is no such thing as a one off script". Save every script you use, and where sensible include it with any analysis you output;
+comment your code so not just others but also future you can understand not only what the code does but why it does it, and finally try to name your 
+tables and files something clear and sensible, the more descriptive the better. 
+
+That was an example of how we might develop a script to answer a question. In the end we used 3 different tables, have 2 output tables,
+had to look up a new function, mixed nesting and WITH clauses, and much more for what seemed like a simple question!
+There's also a lot we didn't use. There was no date filtering, no LIKE conditions etc. 
+It is rare you'll need to use everything you've learnt in one query, but you could need anything you've learnt in any query. 
+
+Of course the work is not done, most people won't be very happy with a small table as an answer to a question. We might want to export this to an Excel 
+file for easier consumption, we might want to create slides/a report based on our findings, we may wish to produce graphs in Excel or something like R, but 
+the important thing is that the heavy lifting of the data cleaning and crunching was done in the database - a system designed to do those things.
+
+This concludes the learning for this training. There is one final exercise similar to the above example where there is a question you are given and you 
+are expected to come out with an answer, or at least the data to help support an answer. There are hints if needed and as always an example solution provided,
+but much like here we had to make some choices, you will have to there as well and there is no right answer so long as you can justify your reasoning. 
+
+If you have any comments or feedback about the scripts for the course please get in touch.
 */

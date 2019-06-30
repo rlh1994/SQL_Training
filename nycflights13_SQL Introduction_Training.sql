@@ -220,6 +220,7 @@ SELECT
 FROM
 	schema_name.flights;
 
+/* You can now attempt questions 1-4 */
 
 /* We can use current columns to create new columns */
 SELECT
@@ -275,6 +276,8 @@ SELECT
 	length(tailnum)
 FROM
 	schema_name.flights;
+
+/* You can now attempt questions 5-7 */
 
 /* 
 We've now seen how to create new variables based on transformations or calculations of current ones, but often
@@ -441,6 +444,7 @@ SELECT
 FROM
 	schema_name.flights;
 
+/* You can now attempt questions 8-11 */
 
 /* The final thing we will talk about in this section is Dates. For clarity, we are talking specifically about date type 
 variables here but much of it also works with the timestamp data type. A date variable, much like in excel, is able to be manipulated 
@@ -511,6 +515,8 @@ FROM
 
 -- Reset our format to the suggested course default
 ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MON-YYYY HH24:MI:SS';
+
+/* You can now attempt questions 12-15 */
 
 /* That concludes the section on variables. You have seen how to select all or just specific columns from a table,
 how to create and add your own columns to the output table that are returned by functions, as well as ones that 
@@ -635,6 +641,7 @@ FROM
 WHERE
 	origin = 'JFK'; -- only flights out of JFK airport
 
+/* You can now attempt questions 16-19 */
 
 /* Now we have our filtered records, we might want to sort them so they are returned to us in a given order. Sorting is a very
 computationally expensive operation, so it should always be the last thing to be written and not used unless absolutely necessary 
@@ -786,6 +793,8 @@ ORDER BY
 OFFSET 5 ROWS
 FETCH NEXT 5 ROWS ONLY;
 
+/* You can now attempt questions 20-22 */
+
 /* That is the end of our section on records. We've covered how to filter the records based on conditions,
 how to order the records in the output and only return a selected number of them, how to remove duplicates from our data, 
 and finally how to combine the records that come from multiple queries in a variety of ways. Combined with the section on 
@@ -823,6 +832,8 @@ SELECT
 	USER -- special keyword that is the current user/schema
 FROM
 	dual;
+
+/* You can now attempt question 23 */
 
 /*
 We saw earlier that we can't use a newly created variable in a WHERE clause due to the order of execution. Beyond this, there are many situations
@@ -908,6 +919,7 @@ FROM
 WHERE
 	distance_km < 1000;
 
+/* You can now attempt questions 24-26 */
 
 /*
 The final way we can use the output of our queries is to store the resulting table permanently(ish) in a table within your schema. To do this
@@ -946,6 +958,7 @@ SELECT
 FROM 
 	flights_km; -- the table no longer exist.
 
+/* You can now attempt question 27 */
 
 /*
 There are also ways to empty a table using the TRUNCATE TABLE statement, add new records to a table using the INSERT statement, remove
@@ -1043,7 +1056,7 @@ CROSS JOIN
 -- Remove our table as we no longer need it.
 DROP TABLE planes_short PURGE;
 
-#
+
 /* That is the end of our section on tables. We've covered the dummy table which we've seen some uses for already. We covered
 3 methods to use the output of a query in another query; by nesting, using WITH statements, and creating a permanent table in our schema.
 Finally we saw how to join multiple tables together and all the different types that we could use in this join and the types of rows they return. 
@@ -1055,6 +1068,11 @@ Finally, here are some common mistakes you might make while using what you have 
 and understand the cause and how to fix it: */
 
 --TODO: Add Error examples
+-- not sure which table referencing
+-- didn't alias table
+-- table already exists
+-- table doesn't exist
+
 ---------------------------------------------------------------------------------------------------
 /* Part 4: Aggregation - Grouping and window functions
 
@@ -1199,6 +1217,8 @@ seemingly simple data science question.
 Finally, here are some examples of common errors you might encounter with these types of queries:*/
 
 --TODO: add error queries
+--  not a group by expression
+-- forgetting a partition/order by 
 
 ---------------------------------------------------------------------------------------------------
 /* Part 5: Worked Example - Putting it all together

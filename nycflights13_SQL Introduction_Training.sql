@@ -474,22 +474,21 @@ SELECT
 	TO_CHAR(time_hour, 'HH24:MI DAY DD MONTH YYYY'), -- format date in a specific format
 	TO_CHAR(time_hour, 'HH24:MI Day dd month yyyy'), -- notice how case changes the output
 	EXTRACT(MONTH FROM time_hour), -- get the month
-	(year||'-'||month||'-'||day||' '||hour||':'||minute, -- demonstrate || operator
+	(year||'-'||month||'-'||day||' '||hour||':'||minute), -- demonstrate || operator
 	TO_DATE(year||'-'||month||'-'||day||' '||hour||':'||minute, 'YYYY-MM-DD HH24:MI') -- convert our columns into a date
 FROM
 	schema_name.flights;
 
 
-/* There's two other ways to input dates rather than using TO_DATE(), which for simply writing in a fixed date can be a bit much,
-the first method uses the DATE keyword and is the correct approach to use as it allows the database to optimise a query and is consistent. 
+/* There other ways to input dates rather than using TO_DATE(), which for simply writing in a fixed date can be a bit much,
+the method uses the DATE keyword and is the correct approach to use as it allows the database to optimise a query and is consistent. 
 To use this one you must input the date, as a string, following the DATE keyword in the format YYYY-MM-DD as this is an industry standard.
+Note that there is no way to add a time component using this method.
+*/
 
-The other method you may see but I must discourage the use of is to not use the DATE keyword and instead write the string in the DD-MON-YY format. 
-I only mention it for completeness and in case you come across it. */
 SELECT
 	tailnum,
-	DATE '2019-01-20' AS correct_method,
-	'20-JAN-2019' AS incorrect_method
+	DATE '2019-01-20' AS fixed_date
 FROM
 	schema_name.flights;
 
@@ -934,7 +933,7 @@ The NOLOGGING keyword just removed logs of this creation from the database to sl
 CREATE TABLE flights_km NOLOGGING AS
 SELECT
 	a.*,
-	 * 1.60934 AS distance_km
+	distance * 1.60934 AS distance_km
 FROM
 	schema_name.flights a;
 
@@ -1002,7 +1001,7 @@ SELECT
 	b.*
 FROM 
 	schema_name.flights a
-	INNER JOIN schema_name.planes_short b
+	INNER JOIN planes_short b
 	ON a.tailnum = b.tailnum; -- In this case the columns had the same names, but that won't always (in fact will rarely) be the case
 
 
@@ -1012,7 +1011,7 @@ SELECT
 	b.*
 FROM 
 	schema_name.flights a
-	LEFT JOIN schema_name.planes_short b
+	LEFT JOIN planes_short b
 	ON a.tailnum = b.tailnum;
 
 -- Return all rows in the right table, matching where exists in right table
@@ -1022,7 +1021,7 @@ SELECT
 	b.*
 FROM 
 	schema_name.flights a
-	RIGHT JOIN schema_name.planes_short b
+	RIGHT JOIN planes_short b
 	ON a.tailnum = b.tailnum;
 
 -- Return all rows in either table whether they match or not
@@ -1032,26 +1031,26 @@ SELECT
 	b.*
 FROM 
 	schema_name.flights a
-	FULL OUTER JOIN (SELECT 'FAKETAIL' AS tailnum FROM dual) b
-	ON a.tailnum = b.tailnum
-ORDER BY b.tailnum; -- Defaults to nulls last for ascending.
+	FULL OUTER JOIN (SELECT 'FAKETAIL' AS tailnum_2 FROM dual) b
+	ON a.tailnum = b.tailnum_2
+ORDER BY a.flight DESC; -- Defaults to nulls first for descending.
 
 -- Returns all possible combinations of rows
 -- We create some small tables using UNION and dual to illustrate this. Each has 3 rows so we return 9 rows (3x3)
 SELECT
 	*
 FROM 
-	(SELECT '1' AS NUM FROM DUAL
+	(SELECT '1' AS num FROM DUAL
 		UNION
-	SELECT '2' AS NUM FROM DUAL
+	SELECT '2' AS num FROM DUAL
 		UNION
-	SELECT '3' AS NUM FROM DUAL) A
+	SELECT '3' AS num FROM DUAL) A
 CROSS JOIN
-	(SELECT 'A' AS LET FROM DUAL
+	(SELECT 'A' AS let FROM DUAL
 		UNION
-	SELECT 'B' AS LET FROM DUAL
+	SELECT 'B' AS let FROM DUAL
 		UNION
-	SELECT 'C' AS LET FROM DUAL) B;
+	SELECT 'C' AS let FROM DUAL) B;
 
 -- Remove our table as we no longer need it.
 DROP TABLE planes_short PURGE;
@@ -1198,7 +1197,7 @@ SELECT
 	COUNT(*) OVER (PARTITION BY year, month, day, carrier) AS day_carrier_flight_total,
 	AVG(dep_delay) OVER (PARTITION BY year, month, day, carrier) AS day_carrier_avg_dep_delay
 FROM
-	schema_name.flights;
+	schema_name.flights a;
 
 /* Note that again we can't use these columns in a WHERE clause as they are created within the SELECT clause.
 There are more window functions available in Oracle SQL that will not be covered here, but could be useful if needed including
@@ -1303,16 +1302,16 @@ which airport handles rain better on a purely volume measure, then the deciles s
 
 To create our decile we could find the maximum precip value, divide that records precip value by it, times by 10 and round down up to 
 a whole number. We would need to Google how to round up, but doing so tells us that the function is CEIL. To get the maximum of a column
-and use it per record we'd want to use a window function. */
+and use it per record we'd want to use a window function. We also need to add a very small value for when we have a precip value of 0*/
 
 -- Add precipitation decile variable
 SELECT 
-	*,
+	a.*,
 	CEIL(
-		(precip/(MAX(precip) OVER () )*10 -- no partition needed as we want to use the whole data
+		((precip + 0.00000001)/(MAX(precip) OVER () ))*10 -- no partition needed as we want to use the whole data
 		) AS precip_decile
 FROM 
-	schema_name.weather;
+	schema_name.weather a;
 
 /* This is a little messy and feels like there should be a better way to do this. Google searching "how to calculate decile Oracle SQL" returns
 pages relating to the NTILE window function. After looking at a few examples online hopefully we understand it enough to apply it to our work so 
@@ -1320,10 +1319,10 @@ the above query becomes */
 
 -- Add precipitation decile variable version 2
 SELECT 
-	*,
+	a.*,
 	NTILE(10) OVER (ORDER BY precip ASC) as precip_decile
 FROM 
-	schema_name.weather;
+	schema_name.weather a;
 
 /* Next we'll want to join this onto our flights table. At this point it's a good idea to think about what columns we actually want 
 from the weather table as our output table is going to start getting quite wide otherwise. In an ideal world you would think about this to start
@@ -1381,7 +1380,7 @@ WITH new_weather AS (
 )
 
 SELECT
-	origin, 
+	fli.origin, 
 	precip_decile,
 	AVG(dep_delay) AS mean_dep_delay,
 	MEDIAN(dep_delay) AS median_dep_delay,
@@ -1394,14 +1393,14 @@ FROM
 WHERE
 	fli.dep_delay >=0 -- automatically removes the nulls when applying a numeric or equals filter
 GROUP BY 
-	origin,
+	fli.origin,
 	precip_decile
 ;
 
 /* Finally, let's use the AIRPORTS table to make the output a little bit nicer to read with the full airport names. 
 As I know that the output of the previous query is only 30 rows, and that the flights table contains hundreds of thousands of rows, 
 I am going to do the join by nesting this query - the database should optimise it but just to force it to do the join after 
-doing the grouping of the data first. */
+doing the grouping of the data first. Let's also round the long decimal numbers.*/
 
 
 WITH new_weather AS (
@@ -1418,11 +1417,11 @@ SELECT
 	a.*
 FROM
 	(SELECT
-		origin, 
+		fli.origin, 
 		precip_decile,
-		AVG(dep_delay) AS mean_dep_delay,
+        ROUND(AVG(dep_delay), 2) AS mean_dep_delay,
 		MEDIAN(dep_delay) AS median_dep_delay,
-		STDDEV(dep_delay) AS std_dep_delay,
+		ROUND(STDDEV(dep_delay), 2) AS std_dep_delay,
 		COUNT(*) AS volume 
 	FROM 
 		schema_name.flights fli
@@ -1431,11 +1430,11 @@ FROM
 	WHERE
 		fli.dep_delay >=0 -- automatically removes the nulls when applying a numeric or equals filter
 	GROUP BY 
-		origin,
+		fli.origin,
 		precip_decile
 	) a
 	LEFT JOIN schema_name.airports b
-	ON a.origin = b.name
+	ON a.origin = b.faa
 ;
 
 /* The last things to do are to optionally order the output for ease of viewing, and save the output as a table. The order of
@@ -1450,7 +1449,7 @@ WITH new_weather AS (
 	SELECT 
 		time_hour,
 		origin,
-		NTILE(10) OVER (ORDER BY precip ASC) AS precip_decile
+		NTILE(10) OVER (ORDER BY precip ASC) as precip_decile
 	FROM 
 		schema_name.weather
 )
@@ -1460,12 +1459,12 @@ SELECT
 	a.*
 FROM
 	(SELECT
-		origin, 
+		fli.origin, 
 		precip_decile,
-		AVG(dep_delay) AS mean_dep_delay,
+        ROUND(AVG(dep_delay), 2) AS mean_dep_delay,
 		MEDIAN(dep_delay) AS median_dep_delay,
-		STDDEV(dep_delay) AS std_dep_delay,
-		COUNT(*) AS volume
+		ROUND(STDDEV(dep_delay), 2) AS std_dep_delay,
+		COUNT(*) AS volume 
 	FROM 
 		schema_name.flights fli
 		INNER JOIN new_weather weath
@@ -1473,17 +1472,21 @@ FROM
 	WHERE
 		fli.dep_delay >=0 -- automatically removes the nulls when applying a numeric or equals filter
 	GROUP BY 
-		origin,
+		fli.origin,
 		precip_decile
 	) a
 	LEFT JOIN schema_name.airports b
-	ON a.origin = b.name
+	ON a.origin = b.faa
 ORDER BY 
 	precip_decile, 
 	origin 
 ;
 
-/* Now we have this table we can answer the question ... TODO - answer the question 
+/* Now we have this table we can answer the question ... sort of. Because of the choices we made with regards to deciles over all airports
+we actually in many cases on have one airport per decile! Overall there seems to be a spike of delays in the 10th devile, and a small but not
+smooth trend upwards in the lower deciles, which suggest there isn't much of a correlation except for extreme amounts of rain. La Guardia seems 
+to cope best with high volumes of rain, potentially because they most often see more rain than the other airports, but using just this data in the 
+way we created it I wouldn't be super confident in my findings as there is such a high standard deviation for each decile.
 
 We can also work much quicker on the data now, we can look at just the first and tenth decile, we could look at just one airport etc.
 But we have lost information as well, we have no way to know what the range of each decile is, we can't identify the type of plane,

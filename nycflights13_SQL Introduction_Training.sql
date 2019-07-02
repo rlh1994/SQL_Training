@@ -745,8 +745,70 @@ you want might to do with the records return by multiple queries:
 1) Combine them, with or without duplicates, by just returning all records from both outputs. This is done using UNION [ALL] keyword.
 2) Find overlap between the two sets of records, returning only the records that exist in both outputs. This is done using INTERSECT keyword.
 3) Find records in the first output that aren't in the second. This is done using the MINUS keyword.
-/*
-TODO: add UNION/UNION ALL/INTERSECT/MINUS examples
+Importantly each table must have the same number of variables and they must be the same type.
+
+We'll use the airlines table with some specific filters to illustrate these concepts
+*/
+
+--UNION records without duplicates
+SELECT 
+	*
+FROM 
+	schema_name.airlines
+WHERE
+	carrier in ('9E', 'AA', 'AS')
+UNION
+SELECT 
+	*
+FROM 
+	schema_name.airlines
+WHERE
+	carrier in ('AS', 'B6', 'DL');
+
+--UNION ALL records with duplicates
+SELECT 
+	*
+FROM 
+	schema_name.airlines
+WHERE
+	carrier in ('9E', 'AA', 'AS')
+UNION ALL
+SELECT 
+	*
+FROM 
+	schema_name.airlines
+WHERE
+	carrier in ('AS', 'B6', 'DL');
+
+--Find INTERESECTion of records 
+SELECT 
+	*
+FROM 
+	schema_name.airlines
+WHERE
+	carrier in ('9E', 'AA', 'AS')
+INTERSECT
+SELECT 
+	*
+FROM 
+	schema_name.airlines
+WHERE
+	carrier in ('AS', 'B6', 'DL');
+
+--MINUS any matching records from the second table from the first
+SELECT 
+	*
+FROM 
+	schema_name.airlines
+WHERE
+	carrier in ('9E', 'AA', 'AS')
+MINUS
+SELECT 
+	*
+FROM 
+	schema_name.airlines
+WHERE
+	carrier in ('AS', 'B6', 'DL');
 
 /*
 Finally, while it is rare, you might want to only return a certain number of rows once the records have been ordered. We'll see later that it is 
@@ -804,6 +866,7 @@ Finally, here are some common mistakes you might make while using what you have 
 and understand the cause and how to fix it: */
 
 --TODO: Add Error examples
+	-- 
 ---------------------------------------------------------------------------------------------------
 /* Part 3: Tables - Reusing and joining
 

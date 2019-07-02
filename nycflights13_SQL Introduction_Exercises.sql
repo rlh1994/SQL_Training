@@ -61,6 +61,9 @@ the 15th August inclusive using the time_hour column. */
 /*19- Write a query to return records from the AIRPORTS table where the time zone is Denver, Chicago, or Los Angeles. 
 Try to do this first using like statements, then again using IN once you know their full names.*/
 
+--TODO add UNION etc questions
+--TODO add in distinct question
+
 /*20- Write a query to return all records from the PLANES table ordered by seats descending then engines ascending
 for any ties.*/
 
@@ -84,6 +87,22 @@ in the name. Order the resulting table by the carrier code descending.*/
 
 /*27- Create a table called airlines_lines_temp that stores the result of your answer to question 26. Then drop the table.*/
 
-/*28- */
+/*28- Using an inner join, combine the flights table and the weather table, bringing back all columns. Will this keep any records
+for which there isn't a matching weather record?*/
 
-/*- */
+/*29- Using a left join, combine the weather and airports table to get the full name of the airport as the only extra column. What
+would happen if a match couldn't be found for the airport code?*/
+
+/*30- Using 3 joins, combine the flights, airports, and planes table to get a column for the full origin name, a column for the 
+full destination name, and a column for the type of airplane. Justify what type of joins you use. */
+
+/*- Using the planes table, use a GROUP BY to identify how many planes each manufcaturer has, their average number of seats, and max speed*/
+
+/*- Using the airports table, how many airports are in each time zone, and using a CASE WHEN, how many of these are below 500m altitude?*/
+
+/*- Using a window function, add variables to the airports table that is the average altitutde per time zone, and the max altitude per timezone*/
+
+/*- Using window functions, add variables to the weather table that is are the average temperature per airport and month of the year, average temperature per
+hour of the day and airport(regardless of day), and the record number (row number) of every record per airport per day*/
+
+/*Final Exercise- */

@@ -1148,7 +1148,7 @@ SELECT
 FROM
 	schema_name.flights;
 
-/* Finally, it is possible to combine CASE statements and aggregate functions to convert text flags into numeric values like so */
+/* It is possible to combine CASE statements and aggregate functions to convert text flags into numeric values like so */
 SELECT 
 	origin,
 	SUM(
@@ -1161,6 +1161,18 @@ FROM
 	schema_name.flights
 GROUP BY
 	origin;
+
+
+/* Finally, there is a way to combine a filter on an summary value without having to nest the query using the HAVING keyword */
+SELECT
+	tailnum,
+	COUNT(*)
+FROM
+	schema_name.flights
+GROUP BY
+	tailnum
+HAVING
+	COUNT(*) > 50; -- only planes that had at least 50 flights in 2013
 
 
 /*

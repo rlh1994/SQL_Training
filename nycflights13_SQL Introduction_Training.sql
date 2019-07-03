@@ -1,4 +1,5 @@
-/* Part 0: Comments, syntax, and error messages
+/* 
+Part 0: Comments, syntax, and error messages
 
 A comment is the most important thing in any language and script; for all the complex code and 
 fancy solutions, with comments then code will only be useful for a day before you forget how
@@ -24,8 +25,9 @@ and I suggest you find you can work with and try to stick to it. Operators and c
 for Oracle SQL and readability/teachability, not ANSI SQL or ISO standards e.g. we'll use != instead of <>.
 */
 
--- Three equivalent queries despite case and whitespace
+/* Three equivalent queries despite case and whitespace */
 SELECT ORIGIN, DEST FROM FLIGHTS;
+
 
 select 
 	origin, 
@@ -33,7 +35,9 @@ select
 from 
 	flights;
 
+
 SeLeCt      OrIgIn,DeSt        fRoM      fLiGhTs;
+
 
 /*
 Error messages are important in writing any code, they will appear when you have made a mistake and the code
@@ -52,7 +56,8 @@ a string, or NA, but a specific type of null. You cannot have a record where all
 */
 
 ---------------------------------------------------------------------------------------------------
-/* Part 1: Variables - Selecting and creating them with functions
+/* 
+Part 1: Variables - Selecting and creating them with functions
 
 The structure of a basic query is:
 SELECT
@@ -103,6 +108,7 @@ SELECT
 	time_hour
 FROM
 	schema_name.flights;
+
 
 /* Instead we can just choose to select some of the columns in the table, say just the planned info for the flights */
 SELECT
@@ -171,6 +177,7 @@ SELECT
 FROM
 	schema_name.flights;
 
+
 /* Importantly, if you try to select all columns from a table using *, and then additional columns you create, then you get an error. */
 SELECT 
 	*,
@@ -178,14 +185,18 @@ SELECT
 FROM
 	schema_name.flights;
 
-/* This is because * means all, so how can you have all but then there be more? The solution to this is to select all
+
+/* 
+This is because * means all, so how can you have all but then there be more? The solution to this is to select all
 from the table (rather than the "universe") and then add our columns as well. Technically, just like how the database name is implicit,
 and the schema name can be implicit, so is the table name for all of the columns. This will become more obvious why when we look at joins
-later by to show this we can write the following*/
+later by to show this we can write the following
+*/
 SELECT 
 	schema_name.flights.tailnum
 FROM
 	schema_name.flights;
+
 
 /* As this is quite long, it is often useful to alias a table. Here we can't use the AS keyword but the idea is the same. For small queries,
 people often use simple letters like a and b for tables, but as they grow it can be useful to give them short but informative names. */
@@ -193,6 +204,7 @@ SELECT
 	a.tailnum
 FROM
 	schema_name.flights a;
+
 
 /* Now we can finally select all columns from our table, but still add more! */
 SELECT 
@@ -202,9 +214,11 @@ FROM
 	schema_name.flights a;
 
 
-/* I mentioned that you can, but shouldn't, use spaces or lower-case in column/table names. You do this by using 
+/* 
+I mentioned that you can, but shouldn't, use spaces or lower-case in column/table names. You do this by using 
 double quotes ("), which is also how you reference a column, table, or schema that would require it, such as a schema
-that starts with a number. */
+that starts with a number. 
+*/
 SELECT
 	year, 
 	month, 
@@ -220,7 +234,9 @@ SELECT
 FROM
 	schema_name.flights;
 
+
 /* You can now attempt questions 1-4 */
+
 
 /* We can use current columns to create new columns */
 SELECT
@@ -277,7 +293,9 @@ SELECT
 FROM
 	schema_name.flights;
 
+
 /* You can now attempt questions 5-7 */
+
 
 /* 
 We've now seen how to create new variables based on transformations or calculations of current ones, but often
@@ -326,7 +344,6 @@ The logical operators are:
 	()			Brackets, force the evaluation of the logical statement inside before any outside, i.e. (2+7)*5 != 2+7*5 
 
 */
-
 
 /* Using a CASE statement to determine if the flight departed in the morning or the afternoon, we can also use functions within our conditions */
 SELECT
@@ -444,9 +461,12 @@ SELECT
 FROM
 	schema_name.flights;
 
+
 /* You can now attempt questions 8-11 */
 
-/* The final thing we will talk about in this section is Dates. For clarity, we are talking specifically about date type 
+
+/* 
+The final thing we will talk about in this section is Dates. For clarity, we are talking specifically about date type 
 variables here but much of it also works with the timestamp data type. A date variable, much like in excel, is able to be manipulated 
 as if it were a number, where 1 is equivalent to 24 hours. Dates are not pure numbers though, they are very much a data type and have 
 specific functions that work just with them. 
@@ -464,6 +484,7 @@ A few of the key date functions are:
 
 I'll also introduce the concatenate operator here, ||, which just pastes two strings together
 */
+
 SELECT 
 	time_hour,
 	time_hour + 1, -- add 1 day
@@ -480,7 +501,8 @@ FROM
 	schema_name.flights;
 
 
-/* There other ways to input dates rather than using TO_DATE(), which for simply writing in a fixed date can be a bit much,
+/* 
+There other ways to input dates rather than using TO_DATE(), which for simply writing in a fixed date can be a bit much,
 the method uses the DATE keyword and is the correct approach to use as it allows the database to optimise a query and is consistent. 
 To use this one you must input the date, as a string, following the DATE keyword in the format YYYY-MM-DD as this is an industry standard.
 Note that there is no way to add a time component using this method.
@@ -504,6 +526,7 @@ SELECT
 FROM
 	schema_name.flights;
 
+
 -- Change the format and check the results
 ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-DD-MM HH24:MI:SS';
 SELECT 
@@ -512,12 +535,16 @@ SELECT
 FROM
 	schema_name.flights;
 
+
 -- Reset our format to the suggested course default
 ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MON-YYYY HH24:MI:SS';
 
+
 /* You can now attempt questions 12-15 */
 
-/* That concludes the section on variables. You have seen how to select all or just specific columns from a table,
+
+/* 
+That concludes the section on variables. You have seen how to select all or just specific columns from a table,
 how to create and add your own columns to the output table that are returned by functions, as well as ones that 
 are generated based on a condition. You've seen some of the main functions for working with strings, and how to 
 correctly work with dates. You've learnt how to alias/rename columns, and how to alias a table as well. 
@@ -525,7 +552,8 @@ Importantly, you've learnt that all select queries return a table, and that ever
 and FROM keywords are columns (or something that returns a column). 
 
 Finally, here are some common mistakes you might make while using what you have learnt, check the error messages 
-and understand the cause and how to fix it: */
+and understand the cause and how to fix it: 
+*/
 
 -- TODO: Add some error examples.
 
@@ -536,7 +564,8 @@ and understand the cause and how to fix it: */
 -- misspelt keyword
 
 ---------------------------------------------------------------------------------------------------
-/* Part 2: Records - Filtering and ordering
+/* 
+Part 2: Records - Filtering and ordering
 
 Now we know how to work with our variables (columns) we can next start learning how to work with our records (rows).
 In this section we'll learn how to filter our records to only those that meet a certain condition, how to order
@@ -557,6 +586,7 @@ WHERE
 Exactly like in the case statement our condition is written as a boolean expression, and only records that return TRUE will be 
 returned in the output table of the query. Let's start by just returning flights that departed and arrived perfectly on time:
 */
+
 SELECT 
 	*
 FROM
@@ -607,6 +637,7 @@ FROM
 WHERE
 	flight_day > DATE '2013-06-01';
 
+
 SELECT 
 	tailnum AS tailnumber
 FROM
@@ -614,15 +645,20 @@ FROM
 WHERE
 	tailnumber LIKE 'N%';
 
-/* The reason for this is because even though we physically write the WHERE clause after the SELECT clause, the database
+
+/* 
+The reason for this is because even though we physically write the WHERE clause after the SELECT clause, the database
 actually runs the WHERE clause first, so it will filter our records THEN it will select/create/rename our variables. We will see a 
-more powerful method to deal with this later, but for now it's acceptable to simply repeat the variable calculation in the WHERE statement */
+more powerful method to deal with this later, but for now it's acceptable to simply repeat the variable calculation in the WHERE statement 
+*/
+
 SELECT 
 	TRUNC(time_hour) AS flight_day
 FROM
 	schema_name.flights
 WHERE
 	TRUNC(time_hour)  > DATE '2013-06-01';
+
 
 SELECT 
 	tailnum AS tailnumber
@@ -633,6 +669,7 @@ WHERE
 
 
 /* An upside of this is you can filter the records on a variable that you don't actually include at the end */ 
+
 SELECT 
 	tailnum 
 FROM
@@ -640,9 +677,12 @@ FROM
 WHERE
 	origin = 'JFK'; -- only flights out of JFK airport
 
+
 /* You can now attempt questions 16-19 */
 
-/* Now we have our filtered records, we might want to sort them so they are returned to us in a given order. Sorting is a very
+
+/* 
+Now we have our filtered records, we might want to sort them so they are returned to us in a given order. Sorting is a very
 computationally expensive operation, so it should always be the last thing to be written and not used unless absolutely necessary 
 (in particular, it may sometimes be quicker to actually order your data in another software e.g. Excel). Helpfully to enforce this point
 the ORDER by clause is the last thing to be written in the ordering of a query
@@ -657,7 +697,8 @@ ORDER BY
 	<COLUMNS>;
 
 Let's see an example where we order by the flights least delayed on departure, after first filtering to 
-flights that were delayed (so there are less records to sort) */
+flights that were delayed (so there are less records to sort) 
+*/
 
 SELECT 
 	*
@@ -667,6 +708,7 @@ WHERE
 	dep_delay > 0
 ORDER BY 
 	dep_delay;
+
 
 /* We can also tell the database how to order ties, by providing more columns separated my a comma, if there is a 
 tie on the first it will compare the second and so on. */
@@ -679,6 +721,7 @@ WHERE
 ORDER BY 
 	dep_delay, arr_delay; -- sort by departure delay THEN arrival delay if there is a tie.
 
+
 /* If instead we wanted to see the most delayed flights, then we use the DESC keyword after each column we want to see in a descending order */
 SELECT 
 	*
@@ -689,6 +732,7 @@ WHERE
 ORDER BY 
 	dep_delay DESC, arr_delay; -- Most delayed departing, ties are sorted by least delayed when arriving.
 
+
 SELECT 
 	*
 FROM
@@ -698,11 +742,14 @@ WHERE
 ORDER BY 
 	dep_delay DESC, arr_delay DESC; --Most delayed departing AND arriving
 
-/* Finally, unlike the WHERE clause, the ORDER BY clause is (almost) the last thing to be run by the database, so we CAN
+
+/* 
+Finally, unlike the WHERE clause, the ORDER BY clause is (almost) the last thing to be run by the database, so we CAN
 use new/renamed variables, but this does mean we HAVE to include that variable in our SELECT clause. It also means we can 
 use a trick; instead of having to write out the full column names, because the order of our columns are now fixed we can
 just use the number that column is! Be careful though, if you change your SELECT clause you might end up changing your 
-sorting as well! */
+sorting as well! 
+*/
 SELECT 
 	flight,
 	dep_delay,
@@ -715,7 +762,8 @@ ORDER BY
 	2 desc, 3; -- Most delayed departing, ties are sorted by least delayed when arriving.
 
 
-/* Now you can sort your data you might start to notice that you have the same records more than once, or that by removing
+/* 
+Now you can sort your data you might start to notice that you have the same records more than once, or that by removing
 some variables your records look identical. Unless there are duplicates in your original data table, this can be a hint at an error 
 in your script, usually duplicates get introduced by incorrect joins (which we'll come to later). If you've removed some variables 
 that now gives you identical records you may need to ask yourself if you actually need some variables you removed. If you've done
@@ -725,12 +773,14 @@ no way to apply the distinct to just a single variable, it is applied to every v
 
 A common example is getting a list of unique values in a variable, or a collection of variables. So we could 
 get a list of all the values in the origin variable (so all the airport codes in NYC), and then all the combinations 
-of origin and destination*/
+of origin and destination
+*/
 
 SELECT DISTINCT 
 	origin
 FROM
 	schema_name.flights;
+
 
 SELECT DISTINCT 
 	origin,
@@ -738,7 +788,12 @@ SELECT DISTINCT
 FROM
 	schema_name.flights;
 
-/* Next, let's discuss how we can combine the records that our queries return. Sometimes you might have some different
+
+/* You can now attempt questions 20-21 */
+
+
+/* 
+Next, let's discuss how we can combine the records that our queries return. Sometimes you might have some different
 queries but the output has the same columns. Sometimes these could be combined into 1 by clever uses of WHERE clauses and 
 CASE statements, but this isn't always possible and can lead to confusing code that is more error prone. There are 3 things
 you want might to do with the records return by multiple queries:
@@ -750,7 +805,7 @@ Importantly each table must have the same number of variables and they must be t
 We'll use the airlines table with some specific filters to illustrate these concepts
 */
 
---UNION records without duplicates
+/* UNION records without duplicates */
 SELECT 
 	*
 FROM 
@@ -765,7 +820,8 @@ FROM
 WHERE
 	carrier in ('AS', 'B6', 'DL');
 
---UNION ALL records with duplicates
+
+/* UNION ALL records with duplicates */
 SELECT 
 	*
 FROM 
@@ -780,7 +836,8 @@ FROM
 WHERE
 	carrier in ('AS', 'B6', 'DL');
 
---Find INTERESECTion of records 
+
+/* Find INTERESECTion of records */
 SELECT 
 	*
 FROM 
@@ -795,7 +852,8 @@ FROM
 WHERE
 	carrier in ('AS', 'B6', 'DL');
 
---MINUS any matching records from the second table from the first
+
+/* MINUS any matching records from the second table from the first */
 SELECT 
 	*
 FROM 
@@ -809,6 +867,10 @@ FROM
 	schema_name.airlines
 WHERE
 	carrier in ('AS', 'B6', 'DL');
+
+
+/* You can now attempt question 22 */
+
 
 /*
 Finally, while it is rare, you might want to only return a certain number of rows once the records have been ordered. We'll see later that it is 
@@ -845,6 +907,7 @@ ORDER BY
 OFFSET 5 ROWS
 FETCH NEXT 5 ROWS WITH TIES;
 
+
 SELECT 
 	*
 FROM
@@ -854,21 +917,26 @@ ORDER BY
 OFFSET 5 ROWS
 FETCH NEXT 5 ROWS ONLY;
 
-/* You can now attempt questions 20-22 */
 
-/* That is the end of our section on records. We've covered how to filter the records based on conditions,
+/* You can now attempt questions 20-24 */
+
+
+/* 
+That is the end of our section on records. We've covered how to filter the records based on conditions,
 how to order the records in the output and only return a selected number of them, how to remove duplicates from our data, 
 and finally how to combine the records that come from multiple queries in a variety of ways. Combined with the section on 
 variables you can do the vast majority of things you can do with single tables. Next we'll learn how to combine multiple tables
 so we can bring more variables and records in and show off the real power of relational databases over other tools and software.
 
 Finally, here are some common mistakes you might make while using what you have learnt, check the error messages 
-and understand the cause and how to fix it: */
+and understand the cause and how to fix it: 
+*/
 
 --TODO: Add Error examples
 	-- 
 ---------------------------------------------------------------------------------------------------
-/* Part 3: Tables - Reusing and joining
+/* 
+Part 3: Tables - Reusing and joining
 
 Having now covered most of what you can do with variables and records, the next logical step is to see what we can do 
 with the tables themselves. This section will start off my introducing a new useful table that is always available,
@@ -879,10 +947,12 @@ The first thing we introduce is the dual table. This is what's known as the dumm
 and the single value of 'X'. The purpose of it is that, because pretty much everything in Oracle SQL expects a table/variable as an input,
 you can use this to be that table, or just test things out quickly.
 */
+
 SELECT
 	* 
 FROM
 	dual;
+
 
 SELECT
 	TRUNC(SYSDATE) - 5 + 1/24 + 14/24/60, --Some random date manipulation as a test
@@ -890,12 +960,15 @@ SELECT
 FROM
 	dual;
 
+
 SELECT
 	USER -- special keyword that is the current user/schema
 FROM
 	dual;
 
+
 /* You can now attempt question 23 */
+
 
 /*
 We saw earlier that we can't use a newly created variable in a WHERE clause due to the order of execution. Beyond this, there are many situations
@@ -958,6 +1031,7 @@ WHERE
 From a database point of view, sometimes it will store the result of a WITH statement as a temporary table, and sometimes it will just run the query when it 
 is used within another query. 
 */
+
 WITH km_table as 
 (
 	SELECT
@@ -981,7 +1055,9 @@ FROM
 WHERE
 	distance_km < 1000;
 
-/* You can now attempt questions 24-26 */
+
+/* You can now attempt questions 26-28 */
+
 
 /*
 The final way we can use the output of our queries is to store the resulting table permanently(ish) in a table within your schema. To do this
@@ -993,6 +1069,7 @@ CREATE TABLE <TABLE> NOLOGGING AS
 
 The NOLOGGING keyword just removed logs of this creation from the database to slightly improve speed.
 */
+
 CREATE TABLE flights_km NOLOGGING AS
 SELECT
 	a.*,
@@ -1000,10 +1077,12 @@ SELECT
 FROM
 	schema_name.flights a;
 
+
 SELECT
 	*
 FROM 
 	flights_km; -- notice the lack of a schema name as this was created in your own schema
+
 
 /* 
 Once we are done with the table we want to remove it so we could reuse the name and free up space in the database. We do this using a 
@@ -1013,14 +1092,18 @@ DROP TABLE <TABLE> PURGE;
 
 Where PURGE is a keyword to remove it from the recycling bin immediately.
 */
+
 DROP TABLE flights_km PURGE;
+
 
 SELECT
 	*
 FROM 
 	flights_km; -- the table no longer exist.
 
-/* You can now attempt question 27 */
+
+/* You can now attempt question 29 */
+
 
 /*
 There are also ways to empty a table using the TRUNCATE TABLE statement, add new records to a table using the INSERT statement, remove
@@ -1049,6 +1132,7 @@ the join statement or the where statement. Both are equally fine and the databas
 
 Let's look at a few examples, but first let's create a smaller version of the PLANES table to help illustrate the different types
 */
+
 CREATE TABLE planes_short NOLOGGING AS
 SELECT
 	* 
@@ -1057,8 +1141,9 @@ FROM
 WHERE
 	tailnum = 'N108UW';
 
--- Only return rows where data is in both tables
--- Notice that because we have returned all columns from both tables, the join column is returned twice despite being the exact same
+
+/* Only return rows where data is in both tables
+Notice that because we have returned all columns from both tables, the join column is returned twice despite being the exact same */
 SELECT 
 	a.*,
 	b.*
@@ -1068,7 +1153,7 @@ FROM
 	ON a.tailnum = b.tailnum; -- In this case the columns had the same names, but that won't always (in fact will rarely) be the case
 
 
--- Return all rows in the left table, matching where exists in right table
+/* Return all rows in the left table, matching where exists in right table */
 SELECT 
 	a.*,
 	b.*
@@ -1077,8 +1162,9 @@ FROM
 	LEFT JOIN planes_short b
 	ON a.tailnum = b.tailnum;
 
--- Return all rows in the right table, matching where exists in right table
--- Notice that in this case despite planes_short only having 1 row, this returns multiple rows because there are multiple matches
+
+/*- Return all rows in the right table, matching where exists in right table
+ Notice that in this case despite planes_short only having 1 row, this returns multiple rows because there are multiple matches */
 SELECT 
 	a.*,
 	b.*
@@ -1087,8 +1173,9 @@ FROM
 	RIGHT JOIN planes_short b
 	ON a.tailnum = b.tailnum;
 
--- Return all rows in either table whether they match or not
--- To illustrate this we use a dummy table with a non-existent tail number
+
+/* Return all rows in either table whether they match or not
+ To illustrate this we use a dummy table with a non-existent tail number */
 SELECT 
 	a.*,
 	b.*
@@ -1098,8 +1185,9 @@ FROM
 	ON a.tailnum = b.tailnum_2
 ORDER BY a.flight DESC; -- Defaults to nulls first for descending.
 
--- Returns all possible combinations of rows
--- We create some small tables using UNION and dual to illustrate this. Each has 3 rows so we return 9 rows (3x3)
+
+/* Returns all possible combinations of rows
+ We create some small tables using UNION and dual to illustrate this. Each has 3 rows so we return 9 rows (3x3) */
 SELECT
 	*
 FROM 
@@ -1115,11 +1203,16 @@ CROSS JOIN
 		UNION
 	SELECT 'C' AS let FROM DUAL) B;
 
+
 -- Remove our table as we no longer need it.
 DROP TABLE planes_short PURGE;
 
 
-/* That is the end of our section on tables. We've covered the dummy table which we've seen some uses for already. We covered
+/* You can now attempt questions 30-32 */
+
+
+/* 
+That is the end of our section on tables. We've covered the dummy table which we've seen some uses for already. We covered
 3 methods to use the output of a query in another query; by nesting, using WITH statements, and creating a permanent table in our schema.
 Finally we saw how to join multiple tables together and all the different types that we could use in this join and the types of rows they return. 
 
@@ -1127,7 +1220,8 @@ Next we'll learn how to aggregate the data within our data by grouping our data 
 using a multitude of functions. 
 
 Finally, here are some common mistakes you might make while using what you have learnt, check the error messages 
-and understand the cause and how to fix it: */
+and understand the cause and how to fix it: 
+*/
 
 --TODO: Add Error examples
 -- not sure which table referencing
@@ -1136,7 +1230,8 @@ and understand the cause and how to fix it: */
 -- table doesn't exist
 
 ---------------------------------------------------------------------------------------------------
-/* Part 4: Aggregation - Grouping and window functions
+/* 
+Part 4: Aggregation - Grouping and window functions
 
 The final section of learning will focus on the aggregation of data i.e. information about multiple records of our data. This information
 might be the count of records, the max, min, mean, sum etc. We will first look at it via summaries of specific groups of data, and then 
@@ -1173,7 +1268,8 @@ MIN(<COLUMN>)	- The minimum of that variable
 MAX and MIN don't have to be numeric but can lead to unexpected behaviour if you are not aware of how text is ordered. 
 
 */
---Summary information of flights out of each NYC airport
+
+/* Summary information of flights out of each NYC airport */
 SELECT
 	origin,
 	COUNT(*) AS num_flights,
@@ -1187,7 +1283,8 @@ FROM
 GROUP BY 
 	origin;
 
---Summary information of flights out of each NYC airport to each destination airport
+
+/* Summary information of flights out of each NYC airport to each destination airport */
 SELECT
 	origin,
 	dest,
@@ -1203,6 +1300,7 @@ GROUP BY
 	origin,
 	dest;
 
+
 /* Note that we don't have to provide a GROUP BY clause when we are aggregating the whole table */
 SELECT 
 	COUNT(*) AS num_flights,
@@ -1210,6 +1308,7 @@ SELECT
 	MIN(dep_delay) AS earliest_dep
 FROM
 	schema_name.flights;
+
 
 /* It is possible to combine CASE statements and aggregate functions to convert text flags into numeric values like so */
 SELECT 
@@ -1238,6 +1337,9 @@ HAVING
 	COUNT(*) > 50; -- only planes that had at least 50 flights in 2013
 
 
+/* You can now attempt questions 33-34 */
+
+
 /*
 Sometimes we may not want to summarise the data, but still return and use aggregated information, such as adding a row number
 per group to identify the nth flight per carrier per day, or the average departure delay so we can filter records to only return
@@ -1264,7 +1366,6 @@ RANK returns a column that is the rank of the provided column, and will return t
 DENSE_RANK returns a column that is the rank of the provided column, and will return the same value for ties, but will not skip values when there are ties.
 */
 
-
 /*Add which flight of the day it was for a given carrier, how many there are on that day, and the average departure delay */
 SELECT
 	a.*,
@@ -1273,6 +1374,10 @@ SELECT
 	AVG(dep_delay) OVER (PARTITION BY year, month, day, carrier) AS day_carrier_avg_dep_delay
 FROM
 	schema_name.flights a;
+
+
+/* You can now attempt questions 35-36 */
+
 
 /* Note that again we can't use these columns in a WHERE clause as they are created within the SELECT clause.
 There are more window functions available in Oracle SQL that will not be covered here, but could be useful if needed including
@@ -1288,14 +1393,16 @@ than enough.
 The final section covers an example of the kind of steps you might take and queries you might write to answer a 
 seemingly simple data science question.
 
-Finally, here are some examples of common errors you might encounter with these types of queries:*/
+Finally, here are some examples of common errors you might encounter with these types of queries:
+*/
 
 --TODO: add error queries
 --  not a group by expression
 -- forgetting a partition/order by 
 
 ---------------------------------------------------------------------------------------------------
-/* Part 5: Worked Example - Putting it all together
+/* 
+Part 5: Worked Example - Putting it all together
 
 This final section examines the process you might take to answer what might be asked a simple question. We'll
 work through some pre-checks that are worth doing on your data, and then the steps to building a query that 
@@ -1313,7 +1420,7 @@ precipitation is it in). Finally, we'll summarise the departure delay informatio
 bring in airport names for each of reading.
 */
 
--- Check if we have any missing departure delay data
+/* Check if we have any missing departure delay data */
 SELECT 
 	*
 FROM 
@@ -1321,11 +1428,14 @@ FROM
 WHERE
 	dep_delay IS NULL;
 
-/* We do have missing data. This could mean that the flight was cancelled, or that it wasn't but we don't have data for it. 
-In reality we might ask the data owner what this meant, as we cannot assume what it is and one is a very different meaning than
-the other. For now we will exclude this from our data going forward. */
 
--- Next let's check if we have any time periods with no precip data 
+/* 
+We do have missing data. This could mean that the flight was cancelled, or that it wasn't but we don't have data for it. 
+In reality we might ask the data owner what this meant, as we cannot assume what it is and one is a very different meaning than
+the other. For now we will exclude this from our data going forward. 
+*/
+
+/* Next let's check if we have any time periods with no precip data */
 SELECT 
 	* 
 FROM 
@@ -1335,7 +1445,8 @@ WHERE
 
 /* No missing data that's good. */
 
--- Next let's check if we have any time period for flights where we are missing weather data
+
+/* Next let's check if we have any time period for flights where we are missing weather data */
 SELECT 
 	* 
 FROM 
@@ -1344,6 +1455,7 @@ FROM
 	ON fli.time_hour = weath.time_hour AND fli.origin = weath.origin
 WHERE 
 	weath.origin IS NULL;
+
 
 /* We are missing some data so we will want to make sure to use an inner join to avoid including any flights we don't have weather
 data for. However this combined with the flights that we don't have departure info for should be extracted and provided as a caveat 
@@ -1371,15 +1483,18 @@ FROM
 WHERE 
 	weath.origin IS NULL;
 
-/* Now we have recorded the flights we are going to exclude from the data, we can start to actually answer the question. First let
+
+/* 
+Now we have recorded the flights we are going to exclude from the data, we can start to actually answer the question. First let
 us create our decile column in the weather data. You could make a case for this being created per ORIGIN however if we want to compare
 which airport handles rain better on a purely volume measure, then the deciles should be consistent across all airports.
 
 To create our decile we could find the maximum precip value, divide that records precip value by it, times by 10 and round down up to 
 a whole number. We would need to Google how to round up, but doing so tells us that the function is CEIL. To get the maximum of a column
-and use it per record we'd want to use a window function. We also need to add a very small value for when we have a precip value of 0*/
+and use it per record we'd want to use a window function. We also need to add a very small value for when we have a precip value of 0
+*/
 
--- Add precipitation decile variable
+/* Add precipitation decile variable */
 SELECT 
 	a.*,
 	CEIL(
@@ -1388,25 +1503,29 @@ SELECT
 FROM 
 	schema_name.weather a;
 
+
 /* This is a little messy and feels like there should be a better way to do this. Google searching "how to calculate decile Oracle SQL" returns
 pages relating to the NTILE window function. After looking at a few examples online hopefully we understand it enough to apply it to our work so 
 the above query becomes */
 
--- Add precipitation decile variable version 2
+/* Add precipitation decile variable version 2 */
 SELECT 
 	a.*,
 	NTILE(10) OVER (ORDER BY precip ASC) as precip_decile
 FROM 
 	schema_name.weather a;
 
-/* Next we'll want to join this onto our flights table. At this point it's a good idea to think about what columns we actually want 
+
+/* 
+Next we'll want to join this onto our flights table. At this point it's a good idea to think about what columns we actually want 
 from the weather table as our output table is going to start getting quite wide otherwise. In an ideal world you would think about this to start
 with and remove any unnecessary columns right from the start, but in reality it is often the case that you use * until a point where it becomes
 too much to look at and only then do you select the variables you actually need/want to keep.
 
-In this case we only really need the time_hour variable for our join, the origin variable also for our join, and our new precip_decile variable */
+In this case we only really need the time_hour variable for our join, the origin variable also for our join, and our new precip_decile variable 
+*/
 
---Only select the columns we need
+/* Only select the columns we need */
 SELECT 
 	time_hour,
 	origin,
@@ -1414,10 +1533,10 @@ SELECT
 FROM 
 	schema_name.weather;
 
+
 /* We now have the choice to join this as a nested query, create it as a table, or use a WITH clause. As we are unlikely to need this table 
 long-term then creating a table seems a little excessive, and the choice between the other two is mostly personal preference (as we are not
 going to need to use the table multiple times in the same query). I choose to use WITH as I find it helps keep the query looking neat */
-
 WITH new_weather AS (
 	SELECT 
 		time_hour,
@@ -1436,15 +1555,17 @@ FROM
 WHERE
 	dep_delay IS NOT NULL;  -- remember to remove records without a dep delay value
 
-/* Now we have our combined data we need to group our data together so that we can get the average departure delay. We could do this in 
+
+/* 
+Now we have our combined data we need to group our data together so that we can get the average departure delay. We could do this in 
 a few different ways; for example do we want to look at the mean or the median as our measure for average? Do we just want to look at 
 delayed flights or should be include early departures as well? Finally, should we include the standard deviation (a measure of spread)
 in our results. 
 
 Let's return the mean, median, and standard deviation. We'll also exclude flights that departed early (but include those on time) but 
 this is something that should be clarified with the person asking the question, and is easy enough to change later (just remove the condition
-in the WHERE clause). */
-
+in the WHERE clause). 
+*/
 WITH new_weather AS (
 	SELECT 
 		time_hour,
@@ -1469,15 +1590,15 @@ WHERE
 	fli.dep_delay >=0 -- automatically removes the nulls when applying a numeric or equals filter
 GROUP BY 
 	fli.origin,
-	precip_decile
-;
+	precip_decile;
 
-/* Finally, let's use the AIRPORTS table to make the output a little bit nicer to read with the full airport names. 
+
+/* 
+Finally, let's use the AIRPORTS table to make the output a little bit nicer to read with the full airport names. 
 As I know that the output of the previous query is only 30 rows, and that the flights table contains hundreds of thousands of rows, 
 I am going to do the join by nesting this query - the database should optimise it but just to force it to do the join after 
-doing the grouping of the data first. Let's also round the long decimal numbers.*/
-
-
+doing the grouping of the data first. Let's also round the long decimal numbers.
+*/
 WITH new_weather AS (
 	SELECT 
 		time_hour,
@@ -1508,17 +1629,17 @@ FROM
 		fli.origin,
 		precip_decile
 	) a
-	LEFT JOIN schema_name.airports b
-	ON a.origin = b.faa
-;
+LEFT JOIN schema_name.airports b
+ON a.origin = b.faa;
 
-/* The last things to do are to optionally order the output for ease of viewing, and save the output as a table. The order of
+/* 
+The last things to do are to optionally order the output for ease of viewing, and save the output as a table. The order of
 this depends on what part of the question we want to answer; do higher deciles have a higher delay answers the first part of the
 question so we would want to order by decile (and in fact may want to have no grouped by origin at all, again this is easy to remove
 and create another table but for simplicity I'll leave it for now). For the second part, which airport deals with rain better we may want to 
 order by the airport to see how they each trend with heavier rainfall. In the end it doesn't really matter as there are relatively few rows 
-so sorting will be quick in the future, and there isn't really a need to order the data in the output at all until you present it to someone. */
-
+so sorting will be quick in the future, and there isn't really a need to order the data in the output at all until you present it to someone. 
+*/
 CREATE TABLE delay_precip_decile NOLOGGING AS 
 WITH new_weather AS (
 	SELECT 
@@ -1557,8 +1678,9 @@ ORDER BY
 	origin 
 ;
 
-/* Now we have this table we can answer the question ... sort of. Because of the choices we made with regards to deciles over all airports
-we actually in many cases on have one airport per decile! Overall there seems to be a spike of delays in the 10th devile, and a small but not
+/* 
+Now we have this table we can answer the question ... sort of. Because of the choices we made with regards to deciles over all airports
+we actually in many cases on have one airport per decile! Overall there seems to be a spike of delays in the 10th decile, and a small but not
 smooth trend upwards in the lower deciles, which suggest there isn't much of a correlation except for extreme amounts of rain. La Guardia seems 
 to cope best with high volumes of rain, potentially because they most often see more rain than the other airports, but using just this data in the 
 way we created it I wouldn't be super confident in my findings as there is such a high standard deviation for each decile.

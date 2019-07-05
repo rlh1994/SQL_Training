@@ -63,7 +63,7 @@ FROM
 
 
 /*6- The temp variable in the WEATHER table is in F. Write a query to add a new variable, temp_c,
-that is the temperature in celcius*/
+that is the temperature in Celsius*/
 SELECT 
     a.*,
     (temp - 32) * 5/9 AS temp_c
@@ -72,8 +72,8 @@ FROM
 
 
 /*7- The precip variable in the WEATHER table is in inches. Write a query that replaces the precip 
-variable with the precipitation in cms, the visibl variable with visibility in kms, and the temp variable
-with the temperature on celcius. Do not return the original variables.*/
+variable with the precipitation in cms, the visib variable with visibility in kms, and the temp variable
+with the temperature on Celsius. Do not return the original variables.*/
 SELECT 
     origin,
     year,
@@ -259,16 +259,87 @@ FROM
 
 
 /*22- Using the airports table write 2 queries, 1 that has all airports in the America/Vancouver timezone, and 
-1 that contains those with faa code 'WHD', '17G', and 'AVL'. Then combine them  so you get:
+1 that contains those with faa code 'WHD', '17G', and 'AVL'. Then combine them so you get:
 a) Airports that are in both queries
 b) Airports that are in either query (without duplicating them)
 c) Airports in the second query that are not in the first
+*/
+SELECT 
+	*
+FROM
+	airports
+WHERE
+	tzone = 'America/Vancouver';
+
+SELECT 
+	*
+FROM
+	airports
+WHERE
+	faa IN ('WHD', '17G', 'AVL');
+
+SELECT 
+	*
+FROM
+	airports
+WHERE
+	tzone = 'America/Vancouver';
+INTERSECT
+SELECT 
+	*
+FROM
+	airports
+WHERE
+	faa IN ('WHD', '17G', 'AVL');
 
 
-/*23- Write a query to return the 15 oldest planes from the PLANE table. Include any extra ties if there are.*/
+SELECT 
+	*
+FROM
+	airports
+WHERE
+	tzone = 'America/Vancouver';
+UNION 
+SELECT 
+	*
+FROM
+	airports
+WHERE
+	faa IN ('WHD', '17G', 'AVL');
+
+SELECT 
+	*
+FROM
+	airports
+WHERE
+	tzone = 'America/Vancouver';
+MINUS
+SELECT 
+	*
+FROM
+	airports
+WHERE
+	faa IN ('WHD', '17G', 'AVL');
 
 
-/*24- Write a query to return the top 5% of planes from the PLANE table with the most number of seats.*/
+/*23- Write a query to return the 15 oldest planes from the PLANES table. Include any extra ties if there are.*/
+SELECT 
+	*
+FROM
+	planes
+ORDER BY 
+	year desc
+FETCH FIRST 15 ROWS WITH TIES;
+
+
+/*24- Write a query to return the top 5% of planes from the PLANES table with the most number of seats.*/
+SELECT 
+	*
+FROM
+	planes
+ORDER BY 
+	seats desc
+FETCH FIRST 5 PERCENT ROWS ONLY;
 
 
 /*25- Create queries using the dual table to generate:
@@ -276,46 +347,197 @@ The date for the first of this month
 The value of the sine of 1.2 radians (You may need to google how to evaluate sine in Oracle SQL)
 Anything else you want to practise 
 */
+SELECT 
+	TRUNC(SYSDATE, 'MM'),
+	SIN(1.2)
+FROM
+	dual;
 
 
 /*26- Take your answer from question 7 and by nesting the table filter the results to just those records with precipitation above 
 0.2cm of rain and temperature above 20 degrees celcius.*/
+SELECT 
+	* 
+FROM
+	(
+	SELECT 
+	    origin,
+	    year,
+	    month,
+	    day,
+	    hour,
+	    (temp - 32) * 5/9 AS temp,
+	    dewp,
+	    humid,
+	    wind_dir,
+	    wind_speed,
+	    wind_gust,
+	    precip * 2.54 AS precip,
+	    pressure,
+	    visib * 0.621371 AS visib,
+	    time_hour
+	FROM 
+	    weather
+	)
+WHERE
+	precip > 0.2 AND temp > 20;
 
 
-/*27- Take your answer from question 9 and using the WITH caluse filter the results to records with Mist or Haze*/
+/*27- Take your answer from question 9 and using the WITH clause filter the results to records with Mist or Haze*/
+WITH weather2 as (
+	SELECT
+	    a.*,
+	    CASE 
+	        WHEN visib <= 0.625 THEN 'Fog'
+	        WHEN visib <= 1.2 THEN 'Mist'
+	        WHEN visib <= 3.1 THEN 'Haze'
+	        ELSE 'Clear'
+	    END AS visib_desc
+	FROM
+	    weather a
+)
+
+SELECT 
+	*
+FROM 
+	weather2
+WHERE
+	visib_desc IN ('Mist', 'Haze');
 
 
 /*28- Take your answer from question 11 and using whichever method you prefer filter to just records with 'lines' somewhere
 in the name. Order the resulting table by the carrier code descending.*/
+SELECT 
+	*
+FROM
+(
+	SELECT
+	    a.*,
+	    CASE
+	        WHEN lower(name) LIKE '%lines%' then 'Y'
+	        ELSE 'N'
+	    END AS line_flag
+	FROM
+	    airlines a
+)
+WHERE 
+	line_flag = 'Y'
+ORDER BY
+	carrier DESC;
 
 
-/*29- Create a table called airlines_lines_temp that stores the result of your answer to question 26. Then drop the table.*/
+/*29- Create a table called airlines_lines_temp that stores the result of your answer to question 28. Then drop the table.*/
+CREATE TABLE airlines_lines_temp NOLOGGING AS
+SELECT 
+	*
+FROM
+(
+	SELECT
+	    a.*,
+	    CASE
+	        WHEN lower(name) LIKE '%lines%' then 'Y'
+	        ELSE 'N'
+	    END AS line_flag
+	FROM
+	    airlines a
+)
+WHERE 
+	line_flag = 'Y'
+ORDER BY
+	carrier DESC;
+
+DROP TABLE airlines_lines_temp PURGE;
 
 
 /*30- Using an inner join, combine the flights table and the weather table, bringing back all columns. Will this keep any records
 for which there isn't a matching weather record?*/
+SELECT
+	*
+FROM 
+	flights a 
+LEFT JOIN
+	weather b
+ON a.time_hour = b.time_hour and a.origin = b.origin;
+-- Will not keep records where there is no matching weather record
 
 
 /*31- Using a left join, combine the weather and airports table to get the full name of the airport as the only extra column. What
 would happen if a match couldn't be found for the airport code?*/
+SELECT
+	a.*,
+	b.name
+FROM 
+	weather a 
+LEFT JOIN
+	airports b
+ON a.origin = b.faa;
+-- It would be null in the name column
 
 
 /*32- Using 3 joins, combine the flights, airports, and planes table to get a column for the full origin name, a column for the 
 full destination name, and a column for the type of airplane. Justify what type of joins you use. */
+SELECT
+	a.*,
+	b.name AS origin_name,
+	c.name AS dest_name,
+	d.type
+FROM 
+	flights a 
+LEFT JOIN
+	airports b
+ON a.origin = b.faa
+LEFT JOIN
+	airports c
+ON a.origin = c.faa
+LEFT JOIN
+	planes d
+ON a.tailnum = d.tailnum;
+-- Used left joins because I wanted to keep all flights even if there was no matching full name or plane description.
 
 
-/*33- Using the planes table, use a GROUP BY to identify how many planes each manufcaturer has, their average number of seats, and max speed*/
+/*33- Using the planes table, use a GROUP BY to identify how many planes each manufacturer has, their average number of seats, and max speed*/
+SELECT 
+	manufacturer,
+	COUNT(*),
+	AVG(seats),
+	MAX(speed)
+FROM
+	planes
+GROUP BY
+	manufacturer;
 
 
 /*34- Using the airports table, how many airports are in each time zone, and using a CASE WHEN, how many of these are below 500m altitude?*/
+SELECT
+	tzone,
+	COUNT(*),
+	SUM(CASE WHEN alt*0.3048 < 500 THEN 1 ELSE 0 END) -- remember alt is in feet 
+FROM
+	airports
+GROUP BY 
+	tzone;
 
 
-/*35- Using a window function, add variables to the airports table that is the average altitutde per time zone, and the max altitude per timezone*/
+/*35- Using a window function, add variables to the airports table that is the average altitude per time zone, and the max altitude per timezone*/
+SELECT
+	a.*,
+	AVG(alt) OVER (PARTITION BY tzone),
+	MAX(alt) OVER (PARTITION BY tzone),
+FROM
+	airports a;
 
 
 /*36- Using window functions, add variables to the weather table that is are the average temperature per airport and month of the year, average temperature per
 hour of the day and airport(regardless of day), and the record number (row number) of every record per airport per day*/
+SELECT 
+	a.*,
+	AVG(temp) OVER (PARTITION BY origin, month),
+	AVG(temp) OVER (PARTITION BY hour, origin),
+	ROW_NUMBER() OVER (PARTITION BY origin ORDER BY time_hour)
+FROM
+	weather a;
 
 
 /*Final Exercise- Are newer planes better at making up time on a delay? For a more advanced question, which manufacturer has the most years where
 their planes are best at making up time on a delay?*/
+

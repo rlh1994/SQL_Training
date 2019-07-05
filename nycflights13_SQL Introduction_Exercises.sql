@@ -16,12 +16,12 @@ that is the visibility in kms */
 
 
 /*6- The temp variable in the WEATHER table is in F. Write a query to add a new variable, temp_c,
-that is the temperature in celcius*/
+that is the temperature in Celsius*/
 
 
 /*7- The precip variable in the WEATHER table is in inches. Write a query that replaces the precip 
-variable with the precipitation in cms, the visibl variable with visibility in kms, and the temp variable
-with the temperature on celcius. Do not return the original variables.*/
+variable with the precipitation in cms, the visib variable with visibility in kms, and the temp variable
+with the temperature on Celsius. Do not return the original variables.*/
 
 
 /*8- Write a query to add a column to the WEATHER table that has the value 'N' if there is no
@@ -91,12 +91,12 @@ for any ties.*/
 a) Airports that are in both queries
 b) Airports that are in either query (without duplicating them)
 c) Airports in the second query that are not in the first
+*/
+
+/*23- Write a query to return the 15 oldest planes from the PLANES table. Include any extra ties if there are.*/
 
 
-/*23- Write a query to return the 15 oldest planes from the PLANE table. Include any extra ties if there are.*/
-
-
-/*24- Write a query to return the top 5% of planes from the PLANE table with the most number of seats.*/
+/*24- Write a query to return the top 5% of planes from the PLANES table with the most number of seats.*/
 
 
 /*25- Create queries using the dual table to generate:
@@ -107,17 +107,17 @@ Anything else you want to practise
 
 
 /*26- Take your answer from question 7 and by nesting the table filter the results to just those records with precipitation above 
-0.2cm of rain and temperature above 20 degrees celcius.*/
+0.2cm of rain and temperature above 20 degrees Celsius.*/
 
 
-/*27- Take your answer from question 9 and using the WITH caluse filter the results to records with Mist or Haze*/
+/*27- Take your answer from question 9 and using the WITH clause filter the results to records with Mist or Haze*/
 
 
 /*28- Take your answer from question 11 and using whichever method you prefer filter to just records with 'lines' somewhere
 in the name. Order the resulting table by the carrier code descending.*/
 
 
-/*29- Create a table called airlines_lines_temp that stores the result of your answer to question 26. Then drop the table.*/
+/*29- Create a table called airlines_lines_temp that stores the result of your answer to question 28. Then drop the table.*/
 
 
 /*30- Using an inner join, combine the flights table and the weather table, bringing back all columns. Will this keep any records
@@ -132,13 +132,13 @@ would happen if a match couldn't be found for the airport code?*/
 full destination name, and a column for the type of airplane. Justify what type of joins you use. */
 
 
-/*33- Using the planes table, use a GROUP BY to identify how many planes each manufcaturer has, their average number of seats, and max speed*/
+/*33- Using the planes table, use a GROUP BY to identify how many planes each manufacturer has, their average number of seats, and max speed*/
 
 
 /*34- Using the airports table, how many airports are in each time zone, and using a CASE WHEN, how many of these are below 500m altitude?*/
 
 
-/*35- Using a window function, add variables to the airports table that is the average altitutde per time zone, and the max altitude per timezone*/
+/*35- Using a window function, add variables to the airports table that is the average altitude per time zone, and the max altitude per timezone*/
 
 
 /*36- Using window functions, add variables to the weather table that is are the average temperature per airport and month of the year, average temperature per

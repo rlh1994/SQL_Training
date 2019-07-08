@@ -552,16 +552,69 @@ Importantly, you've learnt that all select queries return a table, and that ever
 and FROM keywords are columns (or something that returns a column). 
 
 Finally, here are some common mistakes you might make while using what you have learnt, check the error messages 
-and understand the cause and how to fix it: 
+and understand the cause and how to fix it. Impotrantly notice the row number and column (in this case this means
+how many characters in the line the error roughly is) of the error location.
 */
 
--- TODO: Add some error examples.
 
--- missing comma
--- missing end
--- misspelt column
--- misspelt table
--- misspelt keyword
+/* Problem: Missing comma between variable names, but only 1
+   Solution: Check output, no error is thrown in this case */
+SELECT 
+	dep_time,
+	sched_dep_time
+	dep_delay,
+	arr_time
+FROM
+	schema_name.flights;
+
+/* Problem: However if you miss a few, it tells you 
+   Solution: add the missing commas */
+SELECT 
+	dep_time,
+	sched_dep_time
+	dep_delay
+	arr_time
+FROM
+	schema_name.flights;
+
+/* Problem: You forgot to put an END after your case when
+   Solution: Add the END
+   Note: Similar errors are obtained when you forget a when or a then. */
+SELECT 
+	CASE
+		WHEN dep_delay < 0 THEN 'EARLY'
+		ELSE 'LATE'
+	AS early_late
+FROM
+	schema_name.flights;
+
+/* Problem: You spelt a column name wrong 
+   Solution: Correct the spelling */
+SELECT 
+	dep_time,
+	sched_dep_time,
+	depdelay,
+	arr_time
+FROM
+	schema_name.flights;
+
+/* Problem: You spelt a table wrong.  
+   Solution: Correct the spelling
+   Note: This is the same error you get if you don't have access to a table */
+SELECT 
+	dep_time,
+	sched_dep_time,
+	depdelay,
+	arr_time
+FROM
+	schema_name.flight;
+
+/* Problem: You spelt a keyword or function name wrong 
+   Solution: Correct the spelling */
+SELECT 
+	TRUNK(sysdate) AS today
+FROM
+	schema_name.flight;
 
 ---------------------------------------------------------------------------------------------------
 /* 
@@ -932,8 +985,53 @@ Finally, here are some common mistakes you might make while using what you have 
 and understand the cause and how to fix it: 
 */
 
---TODO: Add Error examples
-	-- 
+
+/* Problem: You tried to use a new variable you just created in a WHERE clause
+   Solution: Either provide the full creation code to the clause, or see the next section */
+SELECT 
+	dep_delay,
+	dep_delay * 60 AS dep_delay_sec
+FROM
+	flights
+WHERE
+	dep_delay_sec > 3600;
+
+/* Problem: You tried to UNION tables with a different number of variables
+   Solution: Ensure your tables have the same number of variables */
+SELECT 
+	dep_delay
+FROM
+	schema_name.flights
+UNION
+SELECT
+	dep_delay,
+	arr_delay
+FROM 
+	schema_name.flights;
+
+/* Problem: You tried to UNION tables with variables of different types
+   Solution: Ensure your tables have the variables in the same order */
+SELECT 
+	dep_delay,
+	tailnum
+FROM
+	schema_name.flights
+UNION
+SELECT
+	tailnum,
+	dep_delay
+FROM 
+	schema_name.flights;
+
+/* Problem: You tried to order by an old variable that no longer exists in the table
+   Solution: Order by a column that is still in the table or include that column in your select statement */
+SELECT 
+	dep_delay * 60 AS dep_delay_sec
+FROM
+	schema_name.flights
+ORDER BY 
+	dep_delay; -- TODO: make sure this does error
+	 
 ---------------------------------------------------------------------------------------------------
 /* 
 Part 3: Tables - Reusing and joining
@@ -1223,11 +1321,46 @@ Finally, here are some common mistakes you might make while using what you have 
 and understand the cause and how to fix it: 
 */
 
---TODO: Add Error examples
--- not sure which table referencing
--- didn't alias table
--- table already exists
--- table doesn't exist
+/* Problem: You use a variable within your query that could refer to one in multiple tables
+   Solution: Ensure you use the alias dot method to refer to columns in your query */
+SELECT 
+	*
+FROM 
+	flights a
+	LEFT JOIN
+	planes b
+	ON a.tailnum = b.tailnum
+WHERE
+	year = 2013;
+
+/* Problem: You referenced an alias you never defined
+   Solution: Alias your table */
+SELECT 
+	*
+FROM 
+	flights a
+	LEFT JOIN
+	planes
+	ON a.tailnum = b.tailnum;
+
+/* Problem: You've tried to create a table with a name of one that already exists
+   Solution: Either drop the table first if you want to overwrite it, or change the name if not */
+CREATE TABLE temp1 NOLOGGING AS
+SELECT 
+	* 
+FROM 
+	dual;
+
+CREATE TABLE temp1 NOLOGGING AS
+SELECT 
+	* 
+FROM 
+	dual;
+
+/* Problem: You tried to query/drop a table that doesn't exist in the specified schema
+   Solution: Correct the schema or the table and verify you have access */
+DROP TABLE temp1 PURGE;
+DROP TABLE temp1 PURGE;
 
 ---------------------------------------------------------------------------------------------------
 /* 
@@ -1396,9 +1529,28 @@ seemingly simple data science question.
 Finally, here are some examples of common errors you might encounter with these types of queries:
 */
 
---TODO: add error queries
---  not a group by expression
--- forgetting a partition/order by 
+
+/* Problem: You included a non-aggregated column in your query but not in your group by
+   Solution: Add it to your group by if intended, otherwise remove it from the select */
+SELECT
+	year,
+	type,
+	manufacturer,
+	COUNT(*) as CNT
+FROM
+	planes
+GROUP BY 
+	year, 
+	manufactuer;
+
+
+/* Problem: You tried to use a window function without specifying the partition or order that is required
+   Solution: Add in the missing information that is required */
+SELECT
+	a.*,
+	ROW_NUMBER() OVER (PARTITION BY year) AS tailnum_by_year
+FROM
+	schema_name.planes a; --TODO make sure this is broken?
 
 ---------------------------------------------------------------------------------------------------
 /* 

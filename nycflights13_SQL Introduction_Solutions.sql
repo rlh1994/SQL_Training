@@ -3,22 +3,22 @@ Write queries to select all the columns from each of these tables and examine th
 SELECT 
     *
 FROM
-    airports;
+    schema_name.airports;
 
 SELECT 
     *
 FROM
-    airlines;
+   schema_name.airlines;
     
 SELECT 
     *
 FROM
-    planes;
+    schema_name.planes;
     
 SELECT 
     *
 FROM
-    weather;
+    schema_name.weather;
     
     
 /*2- Write queries to return any 3 columns from any 2 of the above tables */
@@ -27,14 +27,14 @@ SELECT
     origin,
     year
 FROM
-    weather;
+    schema_name.weather;
 
 SELECT 
     name,
     lat,
     alt
 FROM
-    airports;
+    schema_name.airports;
 
 
 /*3- Write a query to add a column to any of the above tables that is your name, call it my_name */
@@ -42,7 +42,7 @@ SELECT
     a.*,
     'Ryan' AS my_name
 FROM
-    planes a;
+    schema_name.planes a;
 
 
 /*4- Write another query to add a column to a different table that is your age, call it my_age*/
@@ -50,7 +50,7 @@ SELECT
     a.*,
     '25' AS my_age
 FROM
-    airports a;
+    schema_name.airports a;
 
 
 /*5- The visib variable in the WEATHER table is in miles. Write a query to add a new variable, visib_km,
@@ -59,7 +59,7 @@ SELECT
     a.*,
     visib * 0.621371 AS visib_km
 FROM
-    weather a;
+    schema_name.weather a;
 
 
 /*6- The temp variable in the WEATHER table is in F. Write a query to add a new variable, temp_c,
@@ -68,7 +68,7 @@ SELECT
     a.*,
     (temp - 32) * 5/9 AS temp_c
 FROM
-    weather a;
+    schema_name.weather a;
 
 
 /*7- The precip variable in the WEATHER table is in inches. Write a query that replaces the precip 
@@ -91,7 +91,7 @@ SELECT
     visib * 0.621371 AS visib,
     time_hour
 FROM 
-    weather;
+    schema_name.weather;
 
 
 /*8- Write a query to add a column to the WEATHER table that has the value 'N' if there is no
@@ -103,7 +103,7 @@ SELECT
         ELSE 'N'
     END AS has_precip
 FROM
-    weather a;
+    schema_name.weather a;
 
 
 /*9- Write a query to add a column to the WEATHER table that defines the is based on the following
@@ -121,7 +121,7 @@ SELECT
         ELSE 'Clear'
     END AS visib_desc
 FROM
-    weather a;
+    schema_name.weather a;
 
 
 /*10- Write a query that adds a variable to the PLANES table that is a 1 when the engine has 'Turbo'
@@ -133,7 +133,7 @@ SELECT
         ELSE 0
     END AS turbo_flag
 FROM
-    planes a;
+    schema_name.planes a;
 
 
 /*11- Write a query that adds a variable to the AIRLINES table that is 'Y' when the name has 'lines' somewhere
@@ -145,7 +145,7 @@ SELECT
         ELSE 'N'
     END AS line_flag
 FROM
-    airlines a;
+    schema_name.airlines a;
 
 
 /*12- Write a query that adds a variable to the WEATHER table that is the number of days between the weather reading
@@ -154,7 +154,7 @@ SELECT
     a.*,
     SYSDATE - time_hour AS days_since_record
 FROM
-    weather a;
+    schema_name.weather a;
 
 
 /*13- Write a query that adds a variable to the WEATHER table that is the number of whole days between the weather reading
@@ -163,7 +163,7 @@ SELECT
     a.*,
     TRUNC(time_hour) - TRUNC(time_hour, 'MM') AS days_since_first_of_month
 FROM
-    weather a;
+    schema_name.weather a;
 
 
 /*14- Write a query that adds a variable to the WEATHER table that is 'First half - windy' where the date of the reading
@@ -178,7 +178,7 @@ SELECT
         WHEN time_hour > DATE '2013-07-01' and wind_speed <= 12 THEN 'Second half - not windy'
     END AS really_specific_wind_column
 FROM
-    weather a;
+    schema_name.weather a;
 
 
 /*15- Write a query that adds multiple variables to the WEATHER table. 
@@ -191,14 +191,14 @@ SELECT
     TO_DATE(YEAR||'-'||MONTH||'-'||DAY||'-'||HOUR , 'YYYY-MM-DD-HH24')- time_hour AS second_column,
     TO_CHAR(time_hour, 'HH24-MI MON-YYYY-DD') as third_column
 FROM
-    weather a;
+    schema_name.weather a;
 
 
 /*16- Write a query to return records from the PLANES table where the year of production is less before 2002*/
 SELECT
     *
 FROM
-    planes
+    schema_name.planes
 WHERE 
     year < 2002;
 
@@ -208,7 +208,7 @@ with a latitude that is less than 50 or more than 60*/
 SELECT
     *
 FROM
-    airports
+    schema_name.airports
 WHERE 
     lon > -100 and (lat < 50 or lat > 60);
 
@@ -218,9 +218,9 @@ the 15th August inclusive using the time_hour column. */
 SELECT
     *
 FROM
-    weather
+    schema_name.weather
 WHERE
-    time_hour BETWEEN DATE '2013-06-20' AND '2013-08-16';
+    time_hour BETWEEN DATE '2013-06-20' AND DATE '2013-08-16';
 
 
 /*19- Write a query to return records from the AIRPORTS table where the time zone is Denver, Chicago, or Los Angeles. 
@@ -228,14 +228,14 @@ Try to do this first using like statements, then again using IN once you know th
 SELECT
     *
 FROM
-    airports
+    schema_name.airports
 WHERE 
     lower(tzone) LIKE '%denver%' or lower(tzone) LIKE '%chicago%' or lower(tzone) LIKE '%los%angeles%';
     
 SELECT
     *
 FROM
-    airports
+    schema_name.airports
 WHERE 
     tzone in ('America/Chicago', 'America/Denver', 'America/Los_Angeles');
 
@@ -245,7 +245,7 @@ for any ties.*/
 SELECT
     *
 FROM
-    planes
+    schema_name.planes
 ORDER BY 
     seats desc,
     engines;
@@ -255,7 +255,7 @@ ORDER BY
 SELECT DISTINCT 
     manufacturer
 FROM
-    planes;
+    schema_name.planes;
 
 
 /*22- Using the airports table write 2 queries, 1 that has all airports in the America/Vancouver timezone, and 
@@ -267,28 +267,28 @@ c) Airports in the second query that are not in the first
 SELECT 
 	*
 FROM
-	airports
+	schema_name.airports
 WHERE
 	tzone = 'America/Vancouver';
 
 SELECT 
 	*
 FROM
-	airports
+	schema_name.airports
 WHERE
 	faa IN ('WHD', '17G', 'AVL');
 
 SELECT 
 	*
 FROM
-	airports
+	schema_name.airports
 WHERE
-	tzone = 'America/Vancouver';
+	tzone = 'America/Vancouver'
 INTERSECT
 SELECT 
 	*
 FROM
-	airports
+	schema_name.airports
 WHERE
 	faa IN ('WHD', '17G', 'AVL');
 
@@ -296,28 +296,28 @@ WHERE
 SELECT 
 	*
 FROM
-	airports
+	schema_name.airports
 WHERE
-	tzone = 'America/Vancouver';
+	tzone = 'America/Vancouver'
 UNION 
 SELECT 
 	*
 FROM
-	airports
+	schema_name.airports
 WHERE
 	faa IN ('WHD', '17G', 'AVL');
 
 SELECT 
 	*
 FROM
-	airports
+	schema_name.airports
 WHERE
-	tzone = 'America/Vancouver';
+	tzone = 'America/Vancouver'
 MINUS
 SELECT 
 	*
 FROM
-	airports
+	schema_name.airports
 WHERE
 	faa IN ('WHD', '17G', 'AVL');
 
@@ -326,7 +326,7 @@ WHERE
 SELECT 
 	*
 FROM
-	planes
+	schema_name.planes
 ORDER BY 
 	year desc
 FETCH FIRST 15 ROWS WITH TIES;
@@ -336,7 +336,7 @@ FETCH FIRST 15 ROWS WITH TIES;
 SELECT 
 	*
 FROM
-	planes
+	schema_name.planes
 ORDER BY 
 	seats desc
 FETCH FIRST 5 PERCENT ROWS ONLY;
@@ -377,7 +377,7 @@ FROM
 	    visib * 0.621371 AS visib,
 	    time_hour
 	FROM 
-	    weather
+	    schema_name.weather
 	)
 WHERE
 	precip > 0.2 AND temp > 20;
@@ -394,7 +394,7 @@ WITH weather2 as (
 	        ELSE 'Clear'
 	    END AS visib_desc
 	FROM
-	    weather a
+	    schema_name.weather a
 )
 
 SELECT 
@@ -418,7 +418,7 @@ FROM
 	        ELSE 'N'
 	    END AS line_flag
 	FROM
-	    airlines a
+	    schema_name.airlines a
 )
 WHERE 
 	line_flag = 'Y'
@@ -439,7 +439,7 @@ FROM
 	        ELSE 'N'
 	    END AS line_flag
 	FROM
-	    airlines a
+	    schema_name.airlines a
 )
 WHERE 
 	line_flag = 'Y'
@@ -454,9 +454,9 @@ for which there isn't a matching weather record?*/
 SELECT
 	*
 FROM 
-	flights a 
+	schema_name.flights a 
 LEFT JOIN
-	weather b
+	schema_name.weather b
 ON a.time_hour = b.time_hour and a.origin = b.origin;
 -- Will not keep records where there is no matching weather record
 
@@ -467,9 +467,9 @@ SELECT
 	a.*,
 	b.name
 FROM 
-	weather a 
+	schema_name.weather a 
 LEFT JOIN
-	airports b
+	schema_name.airports b
 ON a.origin = b.faa;
 -- It would be null in the name column
 
@@ -482,15 +482,15 @@ SELECT
 	c.name AS dest_name,
 	d.type
 FROM 
-	flights a 
+	schema_name.flights a 
 LEFT JOIN
-	airports b
+	schema_name.airports b
 ON a.origin = b.faa
 LEFT JOIN
-	airports c
-ON a.origin = c.faa
+	schema_name.airports c
+ON a.dest = c.faa
 LEFT JOIN
-	planes d
+	schema_name.planes d
 ON a.tailnum = d.tailnum;
 -- Used left joins because I wanted to keep all flights even if there was no matching full name or plane description.
 
@@ -502,7 +502,7 @@ SELECT
 	AVG(seats),
 	MAX(speed)
 FROM
-	planes
+	schema_name.planes
 GROUP BY
 	manufacturer;
 
@@ -513,7 +513,7 @@ SELECT
 	COUNT(*),
 	SUM(CASE WHEN alt*0.3048 < 500 THEN 1 ELSE 0 END) -- remember alt is in feet 
 FROM
-	airports
+	schema_name.airports
 GROUP BY 
 	tzone;
 
@@ -522,9 +522,9 @@ GROUP BY
 SELECT
 	a.*,
 	AVG(alt) OVER (PARTITION BY tzone),
-	MAX(alt) OVER (PARTITION BY tzone),
+	MAX(alt) OVER (PARTITION BY tzone)
 FROM
-	airports a;
+	schema_name.airports a;
 
 
 /*36- Using window functions, add variables to the weather table that is are the average temperature per airport and month of the year, average temperature per
@@ -535,7 +535,7 @@ SELECT
 	AVG(temp) OVER (PARTITION BY hour, origin),
 	ROW_NUMBER() OVER (PARTITION BY origin ORDER BY time_hour)
 FROM
-	weather a;
+	schema_name.weather a;
 
 
 /*Final Exercise- Are newer planes better at making up time on a delay? For a more advanced question, which manufacturer has the most years where

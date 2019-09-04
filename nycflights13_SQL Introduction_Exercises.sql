@@ -64,7 +64,7 @@ The next is a date column created using TO_DATE() from the year, month, day, hou
 The final is the time of the recording, formatted as 22-00 NOV-2013-25 (that is, hour-minute month-year-day) */
 
 
-/*16- Write a query to return records from the PLANES table where the year of production is less before 2002*/
+/*16- Write a query to return records from the PLANES table where the year of production is before 2002*/
 
 
 /*17- Write a query to return records from the AIRPORTS table where the longitude is greater than -100 

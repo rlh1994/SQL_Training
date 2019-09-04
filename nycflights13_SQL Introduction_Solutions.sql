@@ -455,7 +455,7 @@ SELECT
 	*
 FROM 
 	schema_name.flights a 
-LEFT JOIN
+INNER JOIN
 	schema_name.weather b
 ON a.time_hour = b.time_hour and a.origin = b.origin;
 -- Will not keep records where there is no matching weather record

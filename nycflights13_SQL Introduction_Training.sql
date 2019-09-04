@@ -364,6 +364,7 @@ SELECT
 	END AS DEP_TIME_DETAIL, -- Notice no ELSE
 	sched_arr_time,
 	CASE 
+		WHEN length(sched_arr_time) != 4 THEN 'AM'
 		WHEN substr(sched_arr_time, 1, 2) < 12 THEN 'AM'
 		WHEN substr(sched_arr_time, 1, 2) > 12 THEN 'PM'
 		ELSE 'Midday'
@@ -453,7 +454,7 @@ SELECT
 	CASE 
 		WHEN NOT (tailnum LIKE '%Q') THEN 1 -- A NOT acting on the output of a logical statement
 		ELSE 0
-	END AS ends_in_q,
+	END AS ends_in_not_q,
 	CASE WHEN tailnum NOT LIKE 'N5_5%' THEN 1 -- A NOT LIKE, specifically any record that doesn't match the pattern, slightly different to above
 		ELSE 0
 	END AS weird_test
@@ -669,7 +670,7 @@ FROM
 	schema_name.flights
 WHERE
 	1 = 1
-	AND (hour < 5 or hour > 19) -- flights scheduled to depart in the first or last 5 hours of a day
+	AND (hour < 10 or hour > 19) -- flights scheduled to depart in the first 10 or last 5 hours of a day
 	AND dep_delay = 0; -- left on time
 
 
@@ -971,7 +972,7 @@ OFFSET 5 ROWS
 FETCH NEXT 5 ROWS ONLY;
 
 
-/* You can now attempt questions 20-24 */
+/* You can now attempt questions 23-24 */
 
 
 /* 
@@ -1022,15 +1023,6 @@ SELECT
 	dep_delay
 FROM 
 	schema_name.flights;
-
-/* Problem: You tried to order by an old variable that no longer exists in the table
-   Solution: Order by a column that is still in the table or include that column in your select statement */
-SELECT 
-	dep_delay * 60 AS dep_delay_sec
-FROM
-	schema_name.flights
-ORDER BY 
-	dep_delay; -- TODO: make sure this does error
 	 
 ---------------------------------------------------------------------------------------------------
 /* 
@@ -1541,7 +1533,7 @@ FROM
 	planes
 GROUP BY 
 	year, 
-	manufactuer;
+	manufacturer;
 
 
 /* Problem: You tried to use a window function without specifying the partition or order that is required

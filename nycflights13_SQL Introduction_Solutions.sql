@@ -57,7 +57,7 @@ FROM
 that is the visibility in kms */
 SELECT 
     a.*,
-    visib * 0.621371 AS visib_km
+    visib * 1.60934 AS visib_km
 FROM
     schema_name.weather a;
 
@@ -328,7 +328,7 @@ SELECT
 FROM
 	schema_name.planes
 ORDER BY 
-	year desc
+	year asc
 FETCH FIRST 15 ROWS WITH TIES;
 
 

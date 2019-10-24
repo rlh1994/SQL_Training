@@ -15,100 +15,46 @@ library(dplyr)
 
 ```
 
-# Introduction
-Part 0: Comments, syntax, and error messages
-
-A comment is the most important thing in any language and script; for all the complex code and fancy solutions, with comments then code will only be useful for a day before you forget how it works. A comment is any text that will be ignored when the script is run, so is used to describe what a script, or part of a script does, how it does it, and what it returns.
-
-A comment in SQL is achieved in one of two ways. A multi-line or in-line comment is achieved by placing the comment like this one, between the first symbol /* and * / (without the space). To comment an entire single line, you place --at the start of the comment, anything on that line after that symbol is treated as a comment.
-
-Keywords in SQL are case insensitive, so the follow scripts, which will be explained shortly, are equivalent. Table and variable (column) names, are also case insensitive, unless they were created specifically to not be,
-which is rare but we will see an example of later in the session. Strings in SQL are case sensitive, and we will see the importance of this later.
-
-Whitespace in SQL is also not important (other than for readability), so tabs, new lines, extra spaces etc do not change the result of a query.
-
-For this course we will try to keep a consistent style guide of lower-case for field names, upper-case for functions/keywords, and favour more whitespace than less. There are many variants on this style guide, and I suggest you find you can work with and try to stick to it. Operators and code will be optimised for Oracle SQL and readability/teachability, not ANSI SQL or ISO standards e.g. we'll use != instead of <>.
-
-
-Three equivalent queries despite case and whitespace
+# Comments
+## Comment the rest of a line
 ```sql
-SELECT ORIGIN, DEST FROM FLIGHTS;
-
-
-select 
-	origin, 
-	dest 
-from 
-	flights;
-
-
-SeLeCt      OrIgIn,DeSt        fRoM      fLiGhTs;
+SELECT 
+  * 
+FROM -- two dashses comment the rest of the line
+  flights; 
 ```
 
+## Comment out multiple lines
+```sql
+/* to comment out multiple lines
+you use this method */
+SELECT 
+  * 
+FROM 
+  flights;
+```
 
-Error messages are important in writing any code, they will appear when you have made a mistake and the code won't run. There are a few key error messages that you will see over and over again, usually related to  misspelling a table or variable name, trying to access a table you don't have access to, missing a keyword, having an extra or missing comma, etc. As you practise with the exercises you will see these error messages, learn how to read them (given that it tells you the rough location of the error), what they mean, and how to fix them. If in doubt, or you get a new error message you don't understand, then search for the error code and message online (avoid Oracle documentation where you can) and see if you can find a solution. Learning how to use error messages is as important as knowing how to write the code in the first place.  At the end of each section you'll find some purposefully wrong queries so you can see the error messages they produce and how to fix them
+# Comparison Operators
+## Numerical Operators
 
-Missing values i.e. no data for a variable for a given record has a special type in SQL, it is null. null is not a string, or NA, but a specific type of null. You cannot have a record where all variables are null.
+## String Matching
+
+## Checking for Nulls
 
 # Variables i.e. Columns
-
-The structure of a basic query is:
-SELECT
-	<COLUMNS>
-FROM
-	<DATABASE>.<SCHEMA>.<TABLE>;
-
-SELECT and FROM are SQL keywords and form the basis for every query. 
-<DATABASE> is the database you are querying if you have multiple connections. By default is the current connection.
-	We will not use this option at all in our code.
-<COLUMNS> is a comma separated list of columns, either already in the table or new columns created using functions
-<SCHEMA> is the name of a schema, this is optional and will default to your schema if none are provided.
-<TABLE> is the name of a table within that schema
-All queries must end with a semi-colon.
-
-The most common and basic query you can ever write, and will write often, uses a wildcard character, *, which means all.
-
-REMEMBER: the return type of a SELECT statement is another table, it's not stored anywhere, but this will be important later.
-
 ## Choosing Variables
-### All Variables
+### Return all variables
 
 Return a table all rows and columns within a table
 ```sql
 SELECT 
 	*
 FROM
-	schema_name.flights;
+	flights;
 ```
 
-This is equivalent to listing out all the variables, note that the last column name isn't followed by a comma
-```sql
-SELECT
-	year, 
-	month, 
-	day, 
-	dep_time, 
-	sched_dep_time, 
-	dep_delay, 
-	arr_time, 
-	sched_arr_time, 
-	arr_delay, 
-	carrier, 
-	flight, 
-	tailnum, 
-	origin, 
-	dest, 
-	air_time, 
-	distance, 
-	hour, 
-	minute, 
-	time_hour
-FROM
-	schema_name.flights;
-```
-
-### Specfic Variables
-Instead we can just choose to select some of the columns in the table, say just the planned info for the flights 
+### Return specfic variables
+A comma seperated list of variables between the `SELECT` and `FROM` returns just those variables. No comma on after the last variable. 
 ```sql
 SELECT
 	year, 
@@ -122,11 +68,12 @@ SELECT
 	origin, 
 	dest
 FROM
-	schema_name.flights;
+	flights;
 ```
 
 ## Adding New Variables
-We can add more variables/columns into this list as well, let's start with something useless to illustrate the point
+### Add a new variable
+We can add more variables/columns in the list between `SELECT` and `FROM`
 ```sql
 SELECT
 	year, 
@@ -139,18 +86,19 @@ SELECT
 	tailnum, 
 	origin, 
 	dest,
-	123
+	123,
+	'test'
 FROM
-	schema_name.flights;
+	flights;
 ```
-### Aliasing a Variable
-The new column name isn't very useful, so let's *alias* it as something using the AS keyword
+### Aliasing/renaming a Variable
+We can *alias/rename* as variable as something using the `AS` keyword
 ```sql
 SELECT
 	year, 
 	month, 
 	day, 
-	sched_dep_time,   
+	sched_dep_time AS planned_departure_time,   
 	sched_arr_time, 
 	carrier, 
 	flight, 
@@ -159,7 +107,7 @@ SELECT
 	dest,
 	123 AS new_column
 FROM
-	schema_name.flights;
+	flights;
 ```
 You don't actually have to use the AS keyword, it can be implicit but is good practise to use it. We can also rename existing columns in the same way
 ```sql
@@ -167,7 +115,7 @@ SELECT
 	year, 
 	month, 
 	day, 
-	sched_dep_time,   
+	sched_dep_time planned_departure_time,   
 	sched_arr_time, 
 	carrier, 
 	flight, 
@@ -176,45 +124,21 @@ SELECT
 	dest destination,
 	123 new_column
 FROM
-	schema_name.flights;
+	flights;
 ```
 
-Importantly, if you try to select all columns from a table using *, and then additional columns you create, then you get an error.
-```sql
-SELECT 
-	*,
-	123 as new_column
-FROM
-	schema_name.flights;
-```
-
-This is because * means all, so how can you have all but then there be more? The solution to this is to select all from the table (rather than the "universe") and then add our columns as well. Technically, just like how the database name is implicit, and the schema name can be implicit, so is the table name for all of the columns. This will become more obvious why when we look at joins later by to show this we can write the following
-```sql
-SELECT 
-	schema_name.flights.tailnum
-FROM
-	schema_name.flights;
-```
-
-As this is quite long, it is often useful to alias a table. Here we can't use the AS keyword but the idea is the same. For small queries, people often use simple letters like a and b for tables, but as they grow it can be useful to give them short but informative names.
-```sql
-SELECT 
-	a.tailnum
-FROM
-	schema_name.flights a;
-```
-
-Now we can finally select all columns from our table, but still add more!
+### Adding a new variable but keeping all the rest
+We need to *alias* the table in this case to get *everything* and more. Here we alias it `a` but we could have called it anything else. We **cannot** use the `AS` keyword here.
 ```sql
 SELECT 
 	a.*,
 	123 as new_column
 FROM
-	schema_name.flights a;
+	flights a;
 ```
 
-### Non-standard naming (bad practise)
-I mentioned that you can, but shouldn't, use spaces or lower-case in column/table names. You do this by using  double quotes ("), which is also how you reference a column, table, or schema that would require it, such as a schema that starts with a number. 
+### Dealing with non-standard naming (bad practise)
+You can, but **shouldn't**, use spaces or lower-case in column/table names or start them with a number. You do this by using double quotes ("), which is also how you reference a column, table, or schema that would require it, such as a schema that starts with a number. 
 ```sql
 SELECT
 	year, 
@@ -227,13 +151,13 @@ SELECT
 	tailnum, 
 	origin, 
 	dest,
-	123 "new column"
+	123 AS "1new column"
 FROM
-	schema_name.flights;
+	flights;
 ```
 
-### New based off exisitng columns
-We can use current columns to create new columns
+### New variable based off exisitng columns
+We can use current columns to create new columns, either by using functions (see next section) or numerical/text operators on a current column.
 ```sql
 SELECT
 	year, 
@@ -248,7 +172,7 @@ SELECT
 	origin, 
 	dest
 FROM
-	schema_name.flights;
+	flights;
 ```
 
 We don't need to keep the original column
@@ -265,37 +189,12 @@ SELECT
 	origin, 
 	dest
 FROM
-	schema_name.flights;
+	flights;
 ```
 
-We CAN'T use this new column name in another column calculation, we'll see how to do it properly later
-```sql
-SELECT
-	year, 
-	month + 1 AS next_month,
-	next_month + 1 AS next_next_month
-FROM
-	schema_name.flights;
-```
+## Dates
 
-
-## Functions
-### String Functions
-Let's look at a few functions that manipulate strings. The results aren't meaningful, but are just for examples 
-```sql
-SELECT
-	carrier, 
-	lower(carrier),
-	upper(lower(carrier)),
-	tailnum,
-	substr(tailnum, 3),
-	substr(tailnum, 1, 3),
-	substr(tailnum, 3, 2),
-	length(tailnum)
-FROM
-	schema_name.flights;
-```
-### Case When
+## Case When
 We've now seen how to create new variables based on transformations or calculations of current ones, but often
 we will want to create a new variable that is based on a condition (which could be based on another variable).
 
@@ -374,7 +273,7 @@ SELECT
 	origin, 
 	dest
 FROM
-	schema_name.flights;
+	flights;
 ```
 
 Using a CASE statement to determine if the flight was internal to NYC. Notice that the string values are in single quotes. We can do this using ORs or more easily using IN
@@ -399,7 +298,7 @@ SELECT
 		ELSE 'Other'
 	END AS dest_nyc_check_ors
 FROM
-	schema_name.flights;
+	flights;
 ```
 
 String values are case sensitive on input and output. It is usually a good idea to use lower/upper to ensure a fixed case for all of the values in a string type variable.
@@ -429,7 +328,7 @@ SELECT
 	END AS origin_nyc_check3
 
 FROM
-	schema_name.flights;
+	flights;
 ```
 
 Finally, for no reason other than to illustrate the example, let's see if the tail number of the plane contains certain characters
@@ -459,179 +358,81 @@ SELECT
 		ELSE 0
 	END AS weird_test
 FROM
-	schema_name.flights;
+	flights;
 ```
-## Dates
 
-The final thing we will talk about in this section is Dates. For clarity, we are talking specifically about date type variables here but much of it also works with the timestamp data type. A date variable, much like in excel, is able to be manipulated as if it were a number, where 1 is equivalent to 24 hours. Dates are not pure numbers though, they are very much a data type and have specific functions that work just with them. 
+# Functions
+## String Functions
+The main functions you might come across are:
 
-As a reminder, Oracle has no date data type without a time component.
+* LENGTH(*column*) - Returns the length of a string or number
+* LOWER(*column*) - Returns a string in all lowercase
+* UPPER(*column*) - Returns a string in all uppercase
+* SUBSTR(*column, start, length*) - Returns a string, starting at the *start* character of length *length*. 
+* INSTR(*column, pattern*) - ???
+* REPLACE(*column, pattern, replacement*) - ???
+* *string* || *string* - Concatinates the two *string*s together, can be chained as many times as needed.
 
-A few of the key date functions are:
-	TO_DATE(<variable>, <fmt>)		Converts the variable (or string) into a date by giving it the format the variable is in
-	TRUNC(<date> [, fmt])			Sets the time component of the date to 00:00:00 by default, or will round down to the format if provided
-	sysdate							A system variable that is the current (local) date and time
-	NEXT_DAY(<date>, <day>)			Returns the next date of the given day, after the date provided e.g. takes a Saturday at 00:00:01 to the NEXT Saturday
+### Get the length of a string/number variable
+
+### Change the case of a string variable
+
+### Get a part of a string variable
+
+### Find something within a string variable
+
+### Replace something within a string variable
+
+### Paste 2 string variables together
+
+
+## Date Functions
+The main functions you might come across are:
+
+* DATE '*yyyy-mm-dd* - 
+* TRUNC(*column*) - 
+* SYSDATE - 
+* NEXT_DAY(*column, day*)
+* EXTRACT (*value* FROM *date*)
 	TO_CHAR(<variable>, fmt)		Converts the variable (usually a date or a number) into the given format. This is the method to format a date in a given way NOT substr
-	EXTRACT(<value> FROM <date>)	Returns the given value e.g. year from the date and returns it as a number. To extract units less than a day you must use a timestamp
 	TO_TIMESTAMP(<variable>, <fmt>)	Converts the variable (or string) into a timestamp by giving it the format the variable is in
 
-I'll also introduce the concatenate operator here, ||, which just pastes two strings together
+### Create a date from a string in the yyyy-mm-dd format
 
-```sql
-SELECT 
-	time_hour,
-	time_hour + 1, -- add 1 day
-	time_hour + 5/24/60, -- add 5 minutes
-	TRUNC(time_hour), -- set time component to 0
-	TRUNC(time_hour, 'MM'), -- set to first of month TODO: check if strips time as well
-	NEXT_DAY(time_hour, 'Saturday') - 1, -- Set to Friday inclusive for a week
-	TO_CHAR(time_hour, 'HH24:MI DAY DD MONTH YYYY'), -- format date in a specific format
-	TO_CHAR(time_hour, 'HH24:MI Day dd month yyyy'), -- notice how case changes the output
-	EXTRACT(MONTH FROM time_hour), -- get the month
-	(year||'-'||month||'-'||day||' '||hour||':'||minute), -- demonstrate || operator
-	TO_DATE(year||'-'||month||'-'||day||' '||hour||':'||minute, 'YYYY-MM-DD HH24:MI') -- convert our columns into a date
-FROM
-	schema_name.flights;
-```
+### Get current the date and time
 
-There other ways to input dates rather than using TO_DATE(), which for simply writing in a fixed date can be a bit much, the method uses the DATE keyword and is the correct approach to use as it allows the database to optimise a query and is consistent. To use this one you must input the date, as a string, following the DATE keyword in the format YYYY-MM-DD as this is an industry standard. Note that there is no way to add a time component using this method.
+### Get the next e.g. Monday from a date variable
 
-```sql
-SELECT
-	tailnum,
-	DATE '2019-01-20' AS fixed_date
-FROM
-	schema_name.flights;
-```
+### Extract part of a date variable
 
-The reason I said not to use substr() for date formatting is because it is dependant on local settings so could change depending on the machine running your scripts */
+### Add to dates
 
-```sql
--- Set a specific date format for your local session and sub-string our dates
-ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MM-YYYY HH24:MI:SS';
-SELECT 
-	time_hour,
-	substr(time_hour, 9, 2)
-FROM
-	schema_name.flights;
+## Numeric Functions
 
+### Base maths
 
--- Change the format and check the results
-ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-DD-MM HH24:MI:SS';
-SELECT 
-	time_hour,
-	substr(time_hour, 9, 2)
-FROM
-	schema_name.flights;
+### A little more advanced maths
 
+### Using trigonometric functions
 
--- Reset our format to the suggested course default
-ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MON-YYYY HH24:MI:SS';
-```
+## Convertion Functions
 
-That concludes the section on variables. You have seen how to select all or just specific columns from a table,
-how to create and add your own columns to the output table that are returned by functions, as well as ones that 
-are generated based on a condition. You've seen some of the main functions for working with strings, and how to 
-correctly work with dates. You've learnt how to alias/rename columns, and how to alias a table as well. 
-Importantly, you've learnt that all select queries return a table, and that everything between the SELECT
-and FROM keywords are columns (or something that returns a column). 
+### Converting to a Date Variable
 
-Finally, here are some common mistakes you might make while using what you have learnt, check the error messages 
-and understand the cause and how to fix it. Impotrantly notice the row number and column (in this case this means
-how many characters in the line the error roughly is) of the error location.
+### Converting to a String variable with a particular format
 
-
-```sql
-/* Problem: Missing comma between variable names, but only 1
-   Solution: Check output, no error is thrown in this case */
-SELECT 
-	dep_time,
-	sched_dep_time
-	dep_delay,
-	arr_time
-FROM
-	schema_name.flights;
-
-/* Problem: However if you miss a few, it tells you 
-   Solution: add the missing commas */
-SELECT 
-	dep_time,
-	sched_dep_time
-	dep_delay
-	arr_time
-FROM
-	schema_name.flights;
-
-/* Problem: You forgot to put an END after your case when
-   Solution: Add the END
-   Note: Similar errors are obtained when you forget a when or a then. */
-SELECT 
-	CASE
-		WHEN dep_delay < 0 THEN 'EARLY'
-		ELSE 'LATE'
-	AS early_late
-FROM
-	schema_name.flights;
-
-/* Problem: You spelt a column name wrong 
-   Solution: Correct the spelling */
-SELECT 
-	dep_time,
-	sched_dep_time,
-	depdelay,
-	arr_time
-FROM
-	schema_name.flights;
-
-/* Problem: You spelt a table wrong.  
-   Solution: Correct the spelling
-   Note: This is the same error you get if you don't have access to a table */
-SELECT 
-	dep_time,
-	sched_dep_time,
-	depdelay,
-	arr_time
-FROM
-	schema_name.flight;
-
-/* Problem: You spelt a keyword or function name wrong 
-   Solution: Correct the spelling */
-SELECT 
-	TRUNK(sysdate) AS today
-FROM
-	schema_name.flight;
-```
+### Converting to a Numeric variable
 
 
 # Records i.e. Rows
 
-Now we know how to work with our variables (columns) we can next start learning how to work with our records (rows).
-In this section we'll learn how to filter our records to only those that meet a certain condition, how to order
-our records based on specific variables, how to return only unique records, how to combine the records of multiple
-queries together, and how to only return a specific number of records. 
-
-## Filtering Records
-### Basic use of `sql WHERE`
-We'll start by learning how to filter our records as this is one of the most common things you will want to do 
-with your data. We filter our records by using a WHERE clause in the query, which is placed after the FROM statement and
-tables. 
-
-SELECT
-	<COLUMNS>
-FROM
-	<TABLES>
-WHERE
-	<CONDITION>;
-
-Exactly like in the case statement our condition is written as a boolean expression, and only records that return TRUE will be 
-returned in the output table of the query. Let's start by just returning flights that departed and arrived perfectly on time:
-
+## How Filter Records using `WHERE`
+The `WHERE` clause goes after the `FROM` (including joins) but before anything else. It takes logical 
 ```sql
 SELECT 
 	*
 FROM
-	schema_name.flights
+	flights
 WHERE
 	arr_delay = 0
 	AND dep_delay = 0;
@@ -643,7 +444,7 @@ A small trick when writing queries is to make the first condition of your WHERE 
 SELECT 
 	*
 FROM
-	schema_name.flights
+	flights
 WHERE
 	1 = 1
 	--AND arr_delay = 0
@@ -655,71 +456,13 @@ Boolean logic is still the same in a WHERE clause, so we can mix AND/OR/NOT. It 
 SELECT
 	*
 FROM
-	schema_name.flights
+	flights
 WHERE
 	1 = 1
 	AND (hour < 10 or hour > 19) -- flights scheduled to depart in the first 10 or last 5 hours of a day
 	AND dep_delay = 0; -- left on time
 	```
 
-### Checking for `sql NULL`
-Another useful filter is whether something IS NULL or IS NOT NULL. Let's see how many of our flights don't have any delay data:
-```sql
-SELECT 
-	*
-FROM 
-	schema_name.flights
-WHERE
-	dep_delay IS NULL;
-```
-
-### Using a new variable in a where (common pitfall)
-If we try to use a variable we create (or rename) in the SELECT clause of our query then we will get an error
-```sql
-SELECT 
-	TRUNC(time_hour) AS flight_day
-FROM
-	schema_name.flights
-WHERE
-	flight_day > DATE '2013-06-01';
-
-
-SELECT 
-	tailnum AS tailnumber
-FROM
-	schema_name.flights
-WHERE
-	tailnumber LIKE 'N%';
-```
-
-The reason for this is because even though we physically write the WHERE clause after the SELECT clause, the database actually runs the WHERE clause first, so it will filter our records THEN it will select/create/rename our variables. We will see amore powerful method to deal with this later, but for now it's acceptable to simply repeat the variable calculation in the WHERE statement 
-
-```sql
-SELECT 
-	TRUNC(time_hour) AS flight_day
-FROM
-	schema_name.flights
-WHERE
-	TRUNC(time_hour)  > DATE '2013-06-01';
-
-
-SELECT 
-	tailnum AS tailnumber
-FROM
-	schema_name.flights
-WHERE
-	tailnum LIKE 'N%';
-```
-
-An upside of this is you can filter the records on a variable that you don't actually include at the end
-```sql
-SELECT 
-	tailnum 
-FROM
-	schema_name.flights
-WHERE
-	origin = 'JFK'; -- only flights out of JFK airport
-```
 ## Ordering Records
 ### Basic use of `sql ORDER BY`
 Now we have our filtered records, we might want to sort them so they are returned to us in a given order. Sorting is a very computationally expensive operation, so it should always be the last thing to be written and not used unless absolutely necessary (in particular, it may sometimes be quicker to actually order your data in another software e.g. Excel). Helpfully to enforce this point the ORDER by clause is the last thing to be written in the ordering of a query
@@ -740,7 +483,7 @@ flights that were delayed (so there are less records to sort)
 SELECT 
 	*
 FROM
-	schema_name.flights
+	flights
 WHERE 
 	dep_delay > 0
 ORDER BY 
@@ -752,7 +495,7 @@ We can also tell the database how to order ties, by providing more columns separ
 SELECT 
 	*
 FROM
-	schema_name.flights
+	flights
 WHERE 
 	dep_delay > 0
 ORDER BY 
@@ -764,7 +507,7 @@ If instead we wanted to see the most delayed flights, then we use the DESC keywo
 SELECT 
 	*
 FROM
-	schema_name.flights
+	flights
 WHERE 
 	dep_delay > 0
 ORDER BY 
@@ -774,7 +517,7 @@ ORDER BY
 SELECT 
 	*
 FROM
-	schema_name.flights
+	flights
 WHERE 
 	dep_delay > 0
 ORDER BY 
@@ -789,7 +532,7 @@ SELECT
 	dep_delay,
 	arr_delay
 FROM
-	schema_name.flights
+	flights
 WHERE 
 	dep_delay > 0
 ORDER BY 
@@ -805,14 +548,14 @@ A common example is getting a list of unique values in a variable, or a collecti
 SELECT DISTINCT 
 	origin
 FROM
-	schema_name.flights;
+	flights;
 
 
 SELECT DISTINCT 
 	origin,
 	dest
 FROM
-	schema_name.flights;
+	flights;
 ```
 
 ## Combing records
@@ -829,14 +572,14 @@ We'll use the airlines table with some specific filters to illustrate these conc
 SELECT 
 	*
 FROM 
-	schema_name.airlines
+	airlines
 WHERE
 	carrier in ('9E', 'AA', 'AS')
 UNION
 SELECT 
 	*
 FROM 
-	schema_name.airlines
+	airlines
 WHERE
 	carrier in ('AS', 'B6', 'DL');
 
@@ -845,14 +588,14 @@ WHERE
 SELECT 
 	*
 FROM 
-	schema_name.airlines
+	airlines
 WHERE
 	carrier in ('9E', 'AA', 'AS')
 UNION ALL
 SELECT 
 	*
 FROM 
-	schema_name.airlines
+	airlines
 WHERE
 	carrier in ('AS', 'B6', 'DL');
 
@@ -861,14 +604,14 @@ WHERE
 SELECT 
 	*
 FROM 
-	schema_name.airlines
+	airlines
 WHERE
 	carrier in ('9E', 'AA', 'AS')
 INTERSECT
 SELECT 
 	*
 FROM 
-	schema_name.airlines
+	airlines
 WHERE
 	carrier in ('AS', 'B6', 'DL');
 
@@ -877,14 +620,14 @@ WHERE
 SELECT 
 	*
 FROM 
-	schema_name.airlines
+	airlines
 WHERE
 	carrier in ('9E', 'AA', 'AS')
 MINUS
 SELECT 
 	*
 FROM 
-	schema_name.airlines
+	airlines
 WHERE
 	carrier in ('AS', 'B6', 'DL');
 ```
@@ -911,7 +654,7 @@ The following example returns the 6th-10th most delayed departing flights, with 
 SELECT 
 	*
 FROM
-	schema_name.flights
+	flights
 ORDER BY 
 	distance desc
 OFFSET 5 ROWS
@@ -921,7 +664,7 @@ FETCH NEXT 5 ROWS WITH TIES;
 SELECT 
 	*
 FROM
-	schema_name.flights
+	flights
 ORDER BY 
 	distance desc
 OFFSET 5 ROWS
@@ -953,13 +696,13 @@ WHERE
 SELECT 
 	dep_delay
 FROM
-	schema_name.flights
+	flights
 UNION
 SELECT
 	dep_delay,
 	arr_delay
 FROM 
-	schema_name.flights;
+	flights;
 
 /* Problem: You tried to UNION tables with variables of different types
    Solution: Ensure your tables have the variables in the same order */
@@ -967,13 +710,13 @@ SELECT
 	dep_delay,
 	tailnum
 FROM
-	schema_name.flights
+	flights
 UNION
 SELECT
 	tailnum,
 	dep_delay
 FROM 
-	schema_name.flights;
+	flights;
 ```
 
 
@@ -1033,7 +776,7 @@ FROM
 		a.*,
 		distance * 1.60934 AS distance_km
 	FROM
-		schema_name.flights a
+		flights a
 	) b
 WHERE
 	distance_km > 1000;
@@ -1063,7 +806,7 @@ WITH km_table as
 		a.*,
 		distance * 1.60934 AS distance_km
 	FROM
-		schema_name.flights a
+		flights a
 )
 
 SELECT
@@ -1095,7 +838,7 @@ SELECT
 	a.*,
 	distance * 1.60934 AS distance_km
 FROM
-	schema_name.flights a;
+	flights a;
 
 
 SELECT
@@ -1151,7 +894,7 @@ CREATE TABLE planes_short NOLOGGING AS
 SELECT
 	* 
 FROM 
-	schema_name.planes
+	planes
 WHERE
 	tailnum = 'N108UW';
 ```
@@ -1163,7 +906,7 @@ SELECT
 	a.*,
 	b.*
 FROM 
-	schema_name.flights a
+	flights a
 	INNER JOIN planes_short b
 	ON a.tailnum = b.tailnum; -- In this case the columns had the same names, but that won't always (in fact will rarely) be the case
 ```
@@ -1174,7 +917,7 @@ SELECT
 	a.*,
 	b.*
 FROM 
-	schema_name.flights a
+	flights a
 	LEFT JOIN planes_short b
 	ON a.tailnum = b.tailnum;
 ```
@@ -1185,7 +928,7 @@ SELECT
 	a.*,
 	b.*
 FROM 
-	schema_name.flights a
+	flights a
 	RIGHT JOIN planes_short b
 	ON a.tailnum = b.tailnum;
 ```
@@ -1197,7 +940,7 @@ SELECT
 	a.*,
 	b.*
 FROM 
-	schema_name.flights a
+	flights a
 	FULL OUTER JOIN (SELECT 'FAKETAIL' AS tailnum_2 FROM dual) b
 	ON a.tailnum = b.tailnum_2
 ORDER BY a.flight DESC; -- Defaults to nulls first for descending.
@@ -1321,7 +1064,7 @@ SELECT
 	MAX(dep_delay) AS latest_dep,
 	MIN(dep_delay) AS earliest_dep
 FROM 
-	schema_name.flights
+	flights
 GROUP BY 
 	origin;
 ```
@@ -1338,7 +1081,7 @@ SELECT
 	MAX(dep_delay) AS latest_dep,
 	MIN(dep_delay) AS earliest_dep
 FROM 
-	schema_name.flights
+	flights
 GROUP BY 
 	origin,
 	dest;
@@ -1351,7 +1094,7 @@ SELECT
 	MAX(dep_delay) AS latest_dep,
 	MIN(dep_delay) AS earliest_dep
 FROM
-	schema_name.flights;
+	flights;
 ```
 ### Aggregating non-numeric columns
 It is possible to combine CASE statements and aggregate functions to convert text flags into numeric values like so
@@ -1365,7 +1108,7 @@ SELECT
 		CASE WHEN dep_delay = 0 AND arr_delay = 0 THEN 1 ELSE null END -- COUNT uses anything and null as the values
 		) AS perfect_flights2 
 FROM
-	schema_name.flights
+	flights
 GROUP BY
 	origin;
 ```
@@ -1376,7 +1119,7 @@ SELECT
 	tailnum,
 	COUNT(*)
 FROM
-	schema_name.flights
+	flights
 GROUP BY
 	tailnum
 HAVING
@@ -1411,7 +1154,7 @@ SELECT
 	COUNT(*) OVER (PARTITION BY year, month, day, carrier) AS day_carrier_flight_total,
 	AVG(dep_delay) OVER (PARTITION BY year, month, day, carrier) AS day_carrier_avg_dep_delay
 FROM
-	schema_name.flights a;
+	flights a;
 ```
 
 Note that again we can't use these columns in a WHERE clause as they are created within the SELECT clause.
@@ -1445,7 +1188,7 @@ SELECT
 	a.*,
 	ROW_NUMBER() OVER (PARTITION BY year) AS tailnum_by_year
 FROM
-	schema_name.planes a; --TODO make sure this is broken?
+	planes a; --TODO make sure this is broken?
 ```
 
 ---------------------------------------------------------------------------------------------------
@@ -1462,7 +1205,7 @@ Check if we have any missing departure delay data
 SELECT 
 	*
 FROM 
-	schema_name.flights
+	flights
 WHERE
 	dep_delay IS NULL;
 ```
@@ -1474,7 +1217,7 @@ Next let's check if we have any time periods with no precip data
 SELECT 
 	* 
 FROM 
-	schema_name.weather
+	weather
 WHERE 
 	precip IS NULL;
 ```
@@ -1486,8 +1229,8 @@ Next let's check if we have any time period for flights where we are missing wea
 SELECT 
 	* 
 FROM 
-	schema_name.flights fli
-	LEFT JOIN schema_name.weather weath
+	flights fli
+	LEFT JOIN weather weath
 	ON fli.time_hour = weath.time_hour AND fli.origin = weath.origin
 WHERE 
 	weath.origin IS NULL;
@@ -1502,7 +1245,7 @@ SELECT
 	day,
 	flight
 FROM 
-	schema_name.flights
+	flights
 WHERE
 	dep_delay IS NULL
 UNION
@@ -1512,8 +1255,8 @@ SELECT
 	fli.day,
 	fli.flight
 FROM 
-	schema_name.flights fli
-	LEFT JOIN schema_name.weather weath
+	flights fli
+	LEFT JOIN weather weath
 	ON fli.time_hour = weath.time_hour AND fli.origin = weath.origin
 WHERE 
 	weath.origin IS NULL;
@@ -1532,7 +1275,7 @@ SELECT
 		((precip + 0.00000001)/(MAX(precip) OVER () ))*10 -- no partition needed as we want to use the whole data
 		) AS precip_decile
 FROM 
-	schema_name.weather a;
+	weather a;
 ```
 
 This is a little messy and feels like there should be a better way to do this. Google searching "how to calculate decile Oracle SQL" returns pages relating to the NTILE window function. After looking at a few examples online hopefully we understand it enough to apply it to our work so the above query becomes
@@ -1543,7 +1286,7 @@ SELECT
 	a.*,
 	NTILE(10) OVER (ORDER BY precip ASC) as precip_decile
 FROM 
-	schema_name.weather a;
+	weather a;
 ```
 
 Next we'll want to join this onto our flights table. At this point it's a good idea to think about what columns we actually wantfrom the weather table as our output table is going to start getting quite wide otherwise. In an ideal world you would think about this to start with and remove any unnecessary columns right from the start, but in reality it is often the case that you use * until a point where it becomes too much to look at and only then do you select the variables you actually need/want to keep.
@@ -1558,7 +1301,7 @@ SELECT
 	origin,
 	NTILE(10) OVER (ORDER BY precip ASC) AS precip_decile
 FROM 
-	schema_name.weather;
+	weather;
 ```
 
 We now have the choice to join this as a nested query, create it as a table, or use a WITH clause. As we are unlikely to need this tablelong-term then creating a table seems a little excessive, and the choice between the other two is mostly personal preference (as we are not going to need to use the table multiple times in the same query). I choose to use WITH as I find it helps keep the query looking neat.
@@ -1569,13 +1312,13 @@ WITH new_weather AS (
 		origin,
 		NTILE(10) OVER (ORDER BY precip ASC) AS precip_decile
 	FROM 
-		schema_name.weather
+		weather
 )
 
 SELECT
 	*
 FROM 
-	schema_name.flights fli
+	flights fli
 	INNER JOIN new_weather weath
 	ON fli.time_hour = weath.time_hour AND fli.origin = weath.origin
 WHERE
@@ -1592,7 +1335,7 @@ WITH new_weather AS (
 		origin,
 		NTILE(10) OVER (ORDER BY precip ASC) AS precip_decile
 	FROM 
-		schema_name.weather
+		weather
 )
 
 SELECT
@@ -1603,7 +1346,7 @@ SELECT
 	STDDEV(dep_delay) AS std_dep_delay,
 	COUNT(*) AS volume -- good idea to always include counts as people will ask about the volume of data used.
 FROM 
-	schema_name.flights fli
+	flights fli
 	INNER JOIN new_weather weath
 	ON fli.time_hour = weath.time_hour AND fli.origin = weath.origin
 WHERE
@@ -1621,7 +1364,7 @@ WITH new_weather AS (
 		origin,
 		NTILE(10) OVER (ORDER BY precip ASC) as precip_decile
 	FROM 
-		schema_name.weather
+		weather
 )
 
 SELECT 
@@ -1636,7 +1379,7 @@ FROM
 		ROUND(STDDEV(dep_delay), 2) AS std_dep_delay,
 		COUNT(*) AS volume 
 	FROM 
-		schema_name.flights fli
+		flights fli
 		INNER JOIN new_weather weath
 		ON fli.time_hour = weath.time_hour AND fli.origin = weath.origin
 	WHERE
@@ -1645,7 +1388,7 @@ FROM
 		fli.origin,
 		precip_decile
 	) a
-LEFT JOIN schema_name.airports b
+LEFT JOIN airports b
 ON a.origin = b.faa;
 ```
 
@@ -1658,7 +1401,7 @@ WITH new_weather AS (
 		origin,
 		NTILE(10) OVER (ORDER BY precip ASC) as precip_decile
 	FROM 
-		schema_name.weather
+		weather
 )
 
 SELECT 
@@ -1673,7 +1416,7 @@ FROM
 		ROUND(STDDEV(dep_delay), 2) AS std_dep_delay,
 		COUNT(*) AS volume 
 	FROM 
-		schema_name.flights fli
+		flights fli
 		INNER JOIN new_weather weath
 		ON fli.time_hour = weath.time_hour AND fli.origin = weath.origin
 	WHERE
@@ -1682,7 +1425,7 @@ FROM
 		fli.origin,
 		precip_decile
 	) a
-	LEFT JOIN schema_name.airports b
+	LEFT JOIN airports b
 	ON a.origin = b.faa
 ORDER BY 
 	precip_decile, 
@@ -1712,3 +1455,67 @@ If you have any comments or feedback about the scripts for the course please get
 ### Copy and Paste
 
 ### Export Wizard
+
+# Common Errors
+
+
+```sql
+/* Problem: Missing comma between variable names, but only 1
+   Solution: Check output, no error is thrown in this case */
+SELECT 
+	dep_time,
+	sched_dep_time
+	dep_delay,
+	arr_time
+FROM
+	flights;
+
+/* Problem: However if you miss a few, it tells you 
+   Solution: add the missing commas */
+SELECT 
+	dep_time,
+	sched_dep_time
+	dep_delay
+	arr_time
+FROM
+	flights;
+
+/* Problem: You forgot to put an END after your case when
+   Solution: Add the END
+   Note: Similar errors are obtained when you forget a when or a then. */
+SELECT 
+	CASE
+		WHEN dep_delay < 0 THEN 'EARLY'
+		ELSE 'LATE'
+	AS early_late
+FROM
+	flights;
+
+/* Problem: You spelt a column name wrong 
+   Solution: Correct the spelling */
+SELECT 
+	dep_time,
+	sched_dep_time,
+	depdelay,
+	arr_time
+FROM
+	flights;
+
+/* Problem: You spelt a table wrong.  
+   Solution: Correct the spelling
+   Note: This is the same error you get if you don't have access to a table */
+SELECT 
+	dep_time,
+	sched_dep_time,
+	depdelay,
+	arr_time
+FROM
+	flight;
+
+/* Problem: You spelt a keyword or function name wrong 
+   Solution: Correct the spelling */
+SELECT 
+	TRUNK(sysdate) AS today
+FROM
+	flight;
+```

@@ -11,7 +11,7 @@
 
 <meta name="author" content="Ryan Hill" />
 
-<meta name="date" content="2019-10-04" />
+<meta name="date" content="2019-10-24" />
 
 <title>Base SQL</title>
 
@@ -1545,80 +1545,45 @@ div.tocify {
 
 <h1 class="title toc-ignore">Base SQL</h1>
 <h4 class="author">Ryan Hill</h4>
-<h4 class="date">04 October 2019</h4>
+<h4 class="date">24 October 2019</h4>
 
 </div>
 
 
-<div id="introduction" class="section level1">
-<h1>Introduction</h1>
-<p>Part 0: Comments, syntax, and error messages</p>
-<p>A comment is the most important thing in any language and script; for all the complex code and fancy solutions, with comments then code will only be useful for a day before you forget how it works. A comment is any text that will be ignored when the script is run, so is used to describe what a script, or part of a script does, how it does it, and what it returns.</p>
-<p>A comment in SQL is achieved in one of two ways. A multi-line or in-line comment is achieved by placing the comment like this one, between the first symbol /* and * / (without the space). To comment an entire single line, you place –at the start of the comment, anything on that line after that symbol is treated as a comment.</p>
-<p>Keywords in SQL are case insensitive, so the follow scripts, which will be explained shortly, are equivalent. Table and variable (column) names, are also case insensitive, unless they were created specifically to not be, which is rare but we will see an example of later in the session. Strings in SQL are case sensitive, and we will see the importance of this later.</p>
-<p>Whitespace in SQL is also not important (other than for readability), so tabs, new lines, extra spaces etc do not change the result of a query.</p>
-<p>For this course we will try to keep a consistent style guide of lower-case for field names, upper-case for functions/keywords, and favour more whitespace than less. There are many variants on this style guide, and I suggest you find you can work with and try to stick to it. Operators and code will be optimised for Oracle SQL and readability/teachability, not ANSI SQL or ISO standards e.g. we’ll use != instead of &lt;&gt;.</p>
-<p>Three equivalent queries despite case and whitespace</p>
-<pre class="sql"><code>SELECT ORIGIN, DEST FROM FLIGHTS;
-
-
-select 
-    origin, 
-    dest 
-from 
-    flights;
-
-
-SeLeCt      OrIgIn,DeSt        fRoM      fLiGhTs;</code></pre>
-<p>Error messages are important in writing any code, they will appear when you have made a mistake and the code won’t run. There are a few key error messages that you will see over and over again, usually related to misspelling a table or variable name, trying to access a table you don’t have access to, missing a keyword, having an extra or missing comma, etc. As you practise with the exercises you will see these error messages, learn how to read them (given that it tells you the rough location of the error), what they mean, and how to fix them. If in doubt, or you get a new error message you don’t understand, then search for the error code and message online (avoid Oracle documentation where you can) and see if you can find a solution. Learning how to use error messages is as important as knowing how to write the code in the first place. At the end of each section you’ll find some purposefully wrong queries so you can see the error messages they produce and how to fix them</p>
-<p>Missing values i.e. no data for a variable for a given record has a special type in SQL, it is null. null is not a string, or NA, but a specific type of null. You cannot have a record where all variables are null.</p>
+<div id="comments" class="section level1">
+<h1>Comments</h1>
+<div id="comment-the-rest-of-a-line" class="section level2">
+<h2>Comment the rest of a line</h2>
+<pre class="sql"><code>SELECT 
+  * 
+FROM -- two dashses comment the rest of the line
+  flights; </code></pre>
+</div>
+<div id="comment-out-multiple-lines" class="section level2">
+<h2>Comment out multiple lines</h2>
+<pre class="sql"><code>/* to comment out multiple lines
+you use this method */
+SELECT 
+  * 
+FROM 
+  flights;</code></pre>
+</div>
 </div>
 <div id="variables-i.e.-columns" class="section level1">
 <h1>Variables i.e. Columns</h1>
-The structure of a basic query is: SELECT <COLUMNS> FROM <DATABASE>.<SCHEMA>.
-<TABLE>
-<p>;</p>
-SELECT and FROM are SQL keywords and form the basis for every query. <DATABASE> is the database you are querying if you have multiple connections. By default is the current connection. We will not use this option at all in our code. <COLUMNS> is a comma separated list of columns, either already in the table or new columns created using functions <SCHEMA> is the name of a schema, this is optional and will default to your schema if none are provided.
-<TABLE>
-<p>is the name of a table within that schema All queries must end with a semi-colon.</p>
-<p>The most common and basic query you can ever write, and will write often, uses a wildcard character, *, which means all.</p>
-<p>REMEMBER: the return type of a SELECT statement is another table, it’s not stored anywhere, but this will be important later.</p>
 <div id="choosing-variables" class="section level2">
 <h2>Choosing Variables</h2>
-<div id="all-variables" class="section level3">
-<h3>All Variables</h3>
+<div id="return-all-variables" class="section level3">
+<h3>Return all variables</h3>
 <p>Return a table all rows and columns within a table</p>
 <pre class="sql"><code>SELECT 
     *
 FROM
-    schema_name.flights;</code></pre>
-<p>This is equivalent to listing out all the variables, note that the last column name isn’t followed by a comma</p>
-<pre class="sql"><code>SELECT
-    year, 
-    month, 
-    day, 
-    dep_time, 
-    sched_dep_time, 
-    dep_delay, 
-    arr_time, 
-    sched_arr_time, 
-    arr_delay, 
-    carrier, 
-    flight, 
-    tailnum, 
-    origin, 
-    dest, 
-    air_time, 
-    distance, 
-    hour, 
-    minute, 
-    time_hour
-FROM
-    schema_name.flights;</code></pre>
+    flights;</code></pre>
 </div>
-<div id="specfic-variables" class="section level3">
-<h3>Specfic Variables</h3>
-<p>Instead we can just choose to select some of the columns in the table, say just the planned info for the flights</p>
+<div id="return-specfic-variables" class="section level3">
+<h3>Return specfic variables</h3>
+<p>A comma seperated list of variables between the <code>sql SELECT</code> and <code>sql FROM</code> returns just those variables. No comma on after the last variable.</p>
 <pre class="sql"><code>SELECT
     year, 
     month, 
@@ -1636,7 +1601,9 @@ FROM
 </div>
 <div id="adding-new-variables" class="section level2">
 <h2>Adding New Variables</h2>
-<p>We can add more variables/columns into this list as well, let’s start with something useless to illustrate the point</p>
+<div id="add-a-new-variable" class="section level3">
+<h3>Add a new variable</h3>
+<p>We can add more variables/columns in the list between <code>SQL SELECT</code> and <code>sql FROM</code></p>
 <pre class="sql"><code>SELECT
     year, 
     month, 
@@ -1648,9 +1615,11 @@ FROM
     tailnum, 
     origin, 
     dest,
-    123
+    123,
+    &#39;test&#39;
 FROM
     schema_name.flights;</code></pre>
+</div>
 <div id="aliasing-a-variable" class="section level3">
 <h3>Aliasing a Variable</h3>
 <p>The new column name isn’t very useful, so let’s <em>alias</em> it as something using the AS keyword</p>
@@ -1766,7 +1735,9 @@ FROM
 </div>
 <div id="functions" class="section level2">
 <h2>Functions</h2>
-<p>###String Functions Let’s look at a few functions that manipulate strings. The results aren’t meaningful, but are just for examples</p>
+<div id="string-functions" class="section level3">
+<h3>String Functions</h3>
+<p>Let’s look at a few functions that manipulate strings. The results aren’t meaningful, but are just for examples</p>
 <pre class="sql"><code>SELECT
     carrier, 
     lower(carrier),
@@ -1778,6 +1749,7 @@ FROM
     length(tailnum)
 FROM
     schema_name.flights;</code></pre>
+</div>
 <div id="case-when" class="section level3">
 <h3>Case When</h3>
 <p>We’ve now seen how to create new variables based on transformations or calculations of current ones, but often we will want to create a new variable that is based on a condition (which could be based on another variable).</p>
@@ -2289,9 +2261,11 @@ SELECT
     dep_delay
 FROM 
     schema_name.flights;</code></pre>
-<p>#Tables - Reusing and joining</p>
-<p>Having now covered most of what you can do with variables and records, the next logical step is to see what we can do with the tables themselves. This section will start off my introducing a new useful table that is always available, then we’ll look at ways to use the output of your query within the same or another query. Finally we’ll spend time looking at one of the key features of relations databases - joins.</p>
 </div>
+</div>
+<div id="tables---reusing-and-joining" class="section level1">
+<h1>Tables - Reusing and joining</h1>
+<p>Having now covered most of what you can do with variables and records, the next logical step is to see what we can do with the tables themselves. This section will start off my introducing a new useful table that is always available, then we’ll look at ways to use the output of your query within the same or another query. Finally we’ll spend time looking at one of the key features of relations databases - joins.</p>
 <div id="the-dual-table-dummy-table" class="section level2">
 <h2>The Dual Table (dummy table)</h2>
 <p>The first thing we introduce is the dual table. This is what’s known as the dummy table, because it has only 1 row, only column, and the single value of ‘X’. The purpose of it is that, because pretty much everything in Oracle SQL expects a table/variable as an input, you can use this to be that table, or just test things out quickly.</p>
@@ -2522,10 +2496,12 @@ FROM
    Solution: Correct the schema or the table and verify you have access */
 DROP TABLE temp1 PURGE;
 DROP TABLE temp1 PURGE;</code></pre>
-<p>#Aggregation i.e. Grouping and window functions</p>
+</div>
+</div>
+</div>
+<div id="aggregation-i.e.-grouping-and-window-functions" class="section level1">
+<h1>Aggregation i.e. Grouping and window functions</h1>
 <p>The final section of learning will focus on the aggregation of data i.e. information about multiple records of our data. This information might be the count of records, the max, min, mean, sum etc. We will first look at it via summaries of specific groups of data, and then aggregated information that is not summarised.</p>
-</div>
-</div>
 <div id="summarising-information-using-sql-group-by" class="section level2">
 <h2>Summarising Information using <code>sql GROUP BY</code></h2>
 <div id="explicit-grouping-usual-use-case" class="section level3">
@@ -2855,6 +2831,21 @@ ORDER BY
 <p>Of course the work is not done, most people won’t be very happy with a small table as an answer to a question. We might want to export this to an Excel file for easier consumption, we might want to create slides/a report based on our findings, we may wish to produce graphs in Excel or something like R, but the important thing is that the heavy lifting of the data cleaning and crunching was done in the database - a system designed to do those things.</p>
 <p>This concludes the learning for this training. There is one final exercise similar to the above example where there is a question you are given and you are expected to come out with an answer, or at least the data to help support an answer. There are hints if needed and as always an example solution provided, but much like here we had to make some choices, you will have to there as well and there is no right answer so long as you can justify your reasoning.</p>
 <p>If you have any comments or feedback about the scripts for the course please get in touch.</p>
+</div>
+<div id="importing-and-exporting" class="section level1">
+<h1>Importing and Exporting</h1>
+<div id="importing-data-using-sql-developer" class="section level2">
+<h2>Importing Data using SQL Developer</h2>
+</div>
+<div id="exporting-data" class="section level2">
+<h2>Exporting Data</h2>
+<div id="copy-and-paste" class="section level3">
+<h3>Copy and Paste</h3>
+</div>
+<div id="export-wizard" class="section level3">
+<h3>Export Wizard</h3>
+</div>
+</div>
 </div>
 
 

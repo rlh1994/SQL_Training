@@ -41,6 +41,8 @@ FROM
 
 ## Checking for Nulls
 
+## Combining comparisons (boolean logic)
+
 # Variables i.e. Columns
 ## Choosing Variables
 ### Return all variables
@@ -192,18 +194,12 @@ FROM
 	flights;
 ```
 
-## Dates
+### New variable based on a condition
+We've now seen how to create new variables based on transformations or calculations of current ones, but often we will want to create a new variable that is based on a condition (which could be based on another variable).
 
-## Case When
-We've now seen how to create new variables based on transformations or calculations of current ones, but often
-we will want to create a new variable that is based on a condition (which could be based on another variable).
+Here we introduce the concept of boolean logic, that something can be either TRUE or FALSE. Logic is more strict than human language because it needs to be well defined. We can use a boolean condition, combined using boolean logic, that will evaluate to TRUE or FALSE and make a decision for the new variable based on this.
 
-Here we introduce the concept of boolean logic, that something can be either TRUE or FALSE. Logic is more
-strict than human language because it needs to be well defined. We can use a boolean condition, combined using
-boolean logic, that will evaluate to TRUE or FALSE and make a decision for the new variable based on this.
-
-In SQL, the format of this is known as a CASE statement. This is a statement, not a function, but like a 
-function returns a new variable/column, with one record per record in the rest of the SELECT statement. The format is:
+In SQL, the format of this is known as a CASE statement. This is a statement, not a function, but like a function returns a new variable/column, with one record per record in the rest of the SELECT statement. The format is:
 
 CASE 
 	WHEN <CONDITION> THEN <VALUE>
@@ -389,7 +385,7 @@ The main functions you might come across are:
 ## Date Functions
 The main functions you might come across are:
 
-* DATE '*yyyy-mm-dd* - 
+* DATE '*yyyy-mm-dd*' - 
 * TRUNC(*column*) - 
 * SYSDATE - 
 * NEXT_DAY(*column, day*)

@@ -53,6 +53,11 @@ produce and how to fix them
 
 Missing values i.e. no data for a variable for a given record has a special type in SQL, it is null. null is not
 a string, or NA, but a specific type of null. You cannot have a record where all variables are null.
+
+Next let's cover a quick primer on strings. Strings, also called text, characters, varchar etc are a datatype within Oracle SQL.
+When using strings in your queries, you use SINGLE QUOTES ONLY. This means if you are using them as a value or to match a condition,
+you use single quotes. Double quotes are used only to refer to the name of database objects e.g. tables, columns, schemas, as where
+single quotes are using for individual values. If in doubt, you probably want single quotes 99% of the time.
 */
 
 ---------------------------------------------------------------------------------------------------

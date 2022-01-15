@@ -1,0 +1,252 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>SQL Training.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2 class="r-fit-text">SQL Training</h2>	
+				</section>
+				<!-- Part 0 Start -->
+				<section>
+					<section data-auto-animate >
+						<h1 class="r-big" style = "color: teal;">Part 0:</h1>
+						<h2>Comments,</h2>
+						<h2>Syntax, </h2>
+						<h2> & Error messages</h2>
+					</section>
+					
+					<section comments data-auto-animate>
+						<h1 class = "r-big"> Comments</h1 > 
+						<p>A comment is the most important thing in any language.</p>
+					</section>
+
+					<section comments data-auto-animate >
+						<h1 class = "r-big"> Comments</h1 >
+						<p>A comment is the most important thing in any language.</p>
+						<p>They let you write notes in and around your code that the computer ignores.</p>
+					</section>
+
+					<section comments data-auto-animate>
+						<h1 class = "r-big"> Comments</h1 >
+						<p>A comment is the most important thing in any language.</p>
+						<p>They let you write notes in and around your code that the computer ignores.</p>
+						<pre data-id="comment-code"><code data-trim data-line-numbers>
+							-- Comments in SQL are done like this
+					  </code></pre>
+					</section>
+
+					<section comments data-auto-animate >
+						<h1 class = "r-big"> Comments</h1 >
+						<p>A comment is the most important thing in any language.</p>
+						<p>They let you write notes in and around your code that the computer ignores.</p>
+						<pre data-id="comment-code"><code data-trim data-line-numbers= "2-3">
+							-- Comments in SQL are done like this
+							/* Or multi-line comments
+								are done like this */
+					  </code></pre>
+					</section>
+
+					<section comments data-auto-animate >
+						<h1 class = "r-big"> Comments</h1 >
+						<p>A comment is the most important thing in any language.</p>
+						<p>They let you write notes in and around your code that the computer ignores.</p>
+						<pre data-id="comment-code"><code data-trim data-line-numbers= "4-5">
+							-- Comments in SQL are done like this
+							/* Or multi-line comments
+								are done like this */
+							select * from table; -- you can comment at the end of a line
+							select * /* or even in the middle*/ table;
+					  </code></pre>
+					</section>
+
+					<section syntax data-auto-animate >
+						<h1 class = "r-big"> Syntax</h1 >
+					</section>
+					<section syntax data-auto-animate >
+						<h1 class = "r-big"> Syntax</h1>
+						<p>Keywords in SQL are case <em>insensitive</em> so you can type them however you like.</p>	
+					</section>
+					<section syntax data-auto-animate >
+						<h1 class = "r-big"> Syntax</h1>
+						<p>Keywords in SQL are case <em>insensitive</em> so you can type them however you like.</p>
+						<pre data-id="comment-code"><code data-trim data-line-numbers= "4-5">
+							SELECT ORIGIN, DEST FROM FLIGHTS;
+					  </code></pre>
+					</section>
+					<section syntax data-auto-animate >
+						<h1 class = "r-big"> Syntax</h1>
+						<p>Keywords in SQL are case <em>insensitive</em> so you can type them however you like.</p>
+						<p>Whiteshape is also ignored in SQL, so you can layout your code however you like.</p>
+						<pre data-id="comment-code"><code data-trim data-line-numbers= "1">
+							SELECT ORIGIN, DEST FROM FLIGHTS;
+					  </code></pre>
+					</section>
+					<section syntax data-auto-animate >
+						<h1 class = "r-big"> Syntax</h1>
+						<p>Keywords in SQL are case <em>insensitive</em> so you can type them however you like.</p>
+						<p>Whiteshape is also ignored in SQL, so you can layout your code however you like.</p>
+						<pre data-id="comment-code"><code data-trim data-line-numbers= "3-7">
+							SELECT ORIGIN, DEST FROM FLIGHTS;
+
+							select 
+								origin, 
+								dest 
+							from 
+								flights;
+					  </code></pre>
+					</section>
+					<section syntax data-auto-animate >
+						<h1 class = "r-big"> Syntax</h1>
+						<p>However, being consistent and making your code easy to read is important.</p>
+						<pre data-id="comment-code"><code data-trim data-line-numbers>
+							SELECT ORIGIN, DEST FROM FLIGHTS;
+
+							select 
+								origin, 
+								dest 
+							from 
+								flights;
+					  </code></pre>
+					</section>
+					<section syntax data-auto-animate >
+						<h1 class = "r-big"> Syntax</h1>
+							<p>However, being consistent and making your code easy to read is important.</p>
+						<pre data-id="comment-code"><code data-trim data-line-numbers= "10">
+							/* Three equivalent queries despite case and whitespace */
+							SELECT ORIGIN, DEST FROM FLIGHTS;
+
+							select 
+								origin, 
+								dest 
+							from 
+								flights;
+
+							SeLeCt      OrIgIn,DeSt        fRoM      fLiGhTs;
+					  </code></pre>
+					</section>
+
+					<section syntax data-auto-animate >
+						<h1 class = "r-big">Error Messages</h1 >
+					</section>
+					<section syntax data-auto-animate >
+						<h1 class = "r-big"> Error Messages</h1>
+						<p>Error messages try to tell you what you've done wrong in your code when it doesn't work.</p>
+					</section>
+					<section syntax data-auto-animate >
+						<h1 class = "r-big"> Error Messages</h1>
+						<p>Error messages try to tell you what you've done wrong in your code when it doesn't work.</p>
+						<p>Learning to read them and understand what they mean is invaluable, and we will see some as we go through.</p>
+					</section>
+					<section syntax data-auto-animate >
+						<h1 class = "r-big"> Nulls</h1>
+						<p>Finally, empty values in SQL have a special type call <em>null</em>. </p>
+					</section>
+					<section syntax data-auto-animate >
+						<h1 class = "r-big"> Nulls</h1>
+						<p>Finally, empty values in SQL have a special type call <em>null</em>. </p>
+						<p>This isn't an empty string or 0 or NA, it is a special thing all by itself.</p>
+					</section>
+				</section>
+				<!-- Part 0 end  -->
+
+				<!-- Part 1 Start -->
+				<section>
+					<section data-auto-animate >
+						<h1 class="r-big" style = "color: teal;">Part 1:</h1>
+						<h2>Variables</h2>
+						<h4>Selecting and creating them</h4>
+					</section data-auto-animate >
+
+					<section data-auto-animate >
+						<h1>Variables</h1>
+						<p>When you write a query, you are asking the database to produce you a table. This table need to have columns, so we need to tell the database which variables we need.</p>
+					</section>
+					<section data-auto-animate >
+						<h1>Variables</h1>
+						<p>When you write a query, you are asking the database to produce you a table. This table need to have columns, so we need to tell the database which variables we need.</p>
+						<p>Some of these variables might already exist, some might need to be created - we'll learn how to do both.</p>
+					</section>
+
+					<section data-auto-animate >
+						<h1>Variables</h1>
+						<p>All SQL queries take the following minimum form.</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers>
+							SELECT
+								variables
+							FROM
+								DATABASE.SCHEMA.TABLE
+						</code></pre>
+					</section>
+
+
+					<section data-auto-animate >
+						<h1>Variables</h1>
+						<p>All SQL queries take the following minimum form.</p>
+						<p>Every query has a <em>FROM</em> keyword followed by a reference to a table, this tells the database where to look for our variables.</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers = "3-4">
+							SELECT
+								variables
+							FROM
+								DATABASE.SCHEMA.TABLE;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate >
+						<h1>Variables</h1>
+						<p>All SQL queries take the following minimum form.</p>
+						<p>Every query has a <em>SELECT</em> keyword followed by list of variables; these might be existing columns in the table or ones created.</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers = "1-2">
+							SELECT
+								variables
+							FROM
+								DATABASE.SCHEMA.TABLE;
+						</code></pre>
+					</section>
+
+					<section syntax data-auto-animate >
+						<h1 class = "r-big"> Test</h1>
+						<pre data-id="select-code"><code data-trim data-line-numbers>
+							SELECT
+								*
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					
+				</section>
+
+				<!-- Part 1 End -->
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>

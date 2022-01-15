@@ -5,6 +5,3 @@ The files here are used in the setup and running of a self-designed Oracle SQL t
 You will need to replace all instances of "SCHEMA_NAME" across all files with the name of the schema you wish to create the tables in and query them from. The answers to exercises are provided as a guidance and as such there may be better or other ways to answer these questions.
 
 Feel free to use the data and training material as you want, but where relevant credit me.
-
-# Planned Work
-Once the current introductory course has been finalised there are plans to introduce a further follow-on set of documents that cover more topics such as using INSERTs and UPDATEs, creating procedures and functions and PL/SQL in general.

@@ -8,7 +8,7 @@
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+		<link rel="stylesheet" href="dist/theme/moon.css">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
@@ -28,31 +28,26 @@
 						<h2> & Error messages</h2>
 					</section>
 					
-					<section comments data-auto-animate>
-						<h1 class = "r-big"> Comments</h1 > 
-						<p>A comment is the most important thing in any language.</p>
-					</section>
-
 					<section comments data-auto-animate >
-						<h1 class = "r-big"> Comments</h1 >
-						<p>A comment is the most important thing in any language.</p>
-						<p>They let you write notes in and around your code that the computer ignores.</p>
+						<h2 class = "r-big"> Comments</h2>
+						<p class="fragment" data-fragment-index="1">A comment is the most important thing in any language.</p>
+						<p class="fragment" data-fragment-index="2">They let you write notes in and around your code that the computer ignores.</p>
 					</section>
 
 					<section comments data-auto-animate>
-						<h1 class = "r-big"> Comments</h1 >
+						<h2 class = "r-big"> Comments</h2>
 						<p>A comment is the most important thing in any language.</p>
 						<p>They let you write notes in and around your code that the computer ignores.</p>
-						<pre data-id="comment-code"><code data-trim data-line-numbers>
+						<pre data-id="comment-code"><code class = "language-sql" data-trim data-line-numbers>
 							-- Comments in SQL are done like this
 					  </code></pre>
 					</section>
 
 					<section comments data-auto-animate >
-						<h1 class = "r-big"> Comments</h1 >
+						<h2 class = "r-big"> Comments</h2>
 						<p>A comment is the most important thing in any language.</p>
 						<p>They let you write notes in and around your code that the computer ignores.</p>
-						<pre data-id="comment-code"><code data-trim data-line-numbers= "2-3">
+						<pre data-id="comment-code"><code class = "language-sql" data-trim data-line-numbers= "2-3">
 							-- Comments in SQL are done like this
 							/* Or multi-line comments
 								are done like this */
@@ -60,10 +55,10 @@
 					</section>
 
 					<section comments data-auto-animate >
-						<h1 class = "r-big"> Comments</h1 >
+						<h2 class = "r-big"> Comments</h2>
 						<p>A comment is the most important thing in any language.</p>
 						<p>They let you write notes in and around your code that the computer ignores.</p>
-						<pre data-id="comment-code"><code data-trim data-line-numbers= "4-5">
+						<pre data-id="comment-code"><code class = "language-sql" data-trim data-line-numbers= "4-5">
 							-- Comments in SQL are done like this
 							/* Or multi-line comments
 								are done like this */
@@ -72,33 +67,31 @@
 					  </code></pre>
 					</section>
 
+
 					<section syntax data-auto-animate >
-						<h1 class = "r-big"> Syntax</h1 >
+						<h2 class = "r-big"> Syntax</h2>
+						<p class="fragment" data-fragment-index="1">Keywords in SQL are case <em>insensitive</em> so you can type them however you like.</p>	
 					</section>
 					<section syntax data-auto-animate >
-						<h1 class = "r-big"> Syntax</h1>
-						<p>Keywords in SQL are case <em>insensitive</em> so you can type them however you like.</p>	
-					</section>
-					<section syntax data-auto-animate >
-						<h1 class = "r-big"> Syntax</h1>
+						<h2 class = "r-big"> Syntax</h2>
 						<p>Keywords in SQL are case <em>insensitive</em> so you can type them however you like.</p>
-						<pre data-id="comment-code"><code data-trim data-line-numbers= "4-5">
+						<pre data-id="comment-code"><code class = "language-sql" data-trim data-line-numbers= "4-5">
 							SELECT ORIGIN, DEST FROM FLIGHTS;
 					  </code></pre>
 					</section>
 					<section syntax data-auto-animate >
-						<h1 class = "r-big"> Syntax</h1>
+						<h2 class = "r-big"> Syntax</h2>
 						<p>Keywords in SQL are case <em>insensitive</em> so you can type them however you like.</p>
 						<p>Whiteshape is also ignored in SQL, so you can layout your code however you like.</p>
-						<pre data-id="comment-code"><code data-trim data-line-numbers= "1">
+						<pre data-id="comment-code"><code class = "language-sql" data-trim data-line-numbers= "1">
 							SELECT ORIGIN, DEST FROM FLIGHTS;
 					  </code></pre>
 					</section>
 					<section syntax data-auto-animate >
-						<h1 class = "r-big"> Syntax</h1>
+						<h2 class = "r-big"> Syntax</h2>
 						<p>Keywords in SQL are case <em>insensitive</em> so you can type them however you like.</p>
 						<p>Whiteshape is also ignored in SQL, so you can layout your code however you like.</p>
-						<pre data-id="comment-code"><code data-trim data-line-numbers= "3-7">
+						<pre data-id="comment-code"><code class = "language-sql" data-trim data-line-numbers= "3-7">
 							SELECT ORIGIN, DEST FROM FLIGHTS;
 
 							select 
@@ -109,9 +102,9 @@
 					  </code></pre>
 					</section>
 					<section syntax data-auto-animate >
-						<h1 class = "r-big"> Syntax</h1>
+						<h2 class = "r-big"> Syntax</h2>
 						<p>However, being consistent and making your code easy to read is important.</p>
-						<pre data-id="comment-code"><code data-trim data-line-numbers>
+						<pre data-id="comment-code"><code class = "language-sql" data-trim data-line-numbers>
 							SELECT ORIGIN, DEST FROM FLIGHTS;
 
 							select 
@@ -122,9 +115,9 @@
 					  </code></pre>
 					</section>
 					<section syntax data-auto-animate >
-						<h1 class = "r-big"> Syntax</h1>
+						<h2 class = "r-big"> Syntax</h2>
 							<p>However, being consistent and making your code easy to read is important.</p>
-						<pre data-id="comment-code"><code data-trim data-line-numbers= "10">
+						<pre data-id="comment-code"><code class = "language-sql" data-trim data-line-numbers= "10">
 							/* Three equivalent queries despite case and whitespace */
 							SELECT ORIGIN, DEST FROM FLIGHTS;
 
@@ -139,25 +132,15 @@
 					</section>
 
 					<section syntax data-auto-animate >
-						<h1 class = "r-big">Error Messages</h1 >
+						<h2 class = "r-big"> Error Messages</h2>
+						<p class="fragment" data-fragment-index="1">Error messages try to tell you what you've done wrong in your code when it doesn't work.</p>
+						<p class="fragment" data-fragment-index="2">Learning to read them and understand what they mean is invaluable, and we will see some as we go through.</p>
 					</section>
+
 					<section syntax data-auto-animate >
-						<h1 class = "r-big"> Error Messages</h1>
-						<p>Error messages try to tell you what you've done wrong in your code when it doesn't work.</p>
-					</section>
-					<section syntax data-auto-animate >
-						<h1 class = "r-big"> Error Messages</h1>
-						<p>Error messages try to tell you what you've done wrong in your code when it doesn't work.</p>
-						<p>Learning to read them and understand what they mean is invaluable, and we will see some as we go through.</p>
-					</section>
-					<section syntax data-auto-animate >
-						<h1 class = "r-big"> Nulls</h1>
-						<p>Finally, empty values in SQL have a special type call <em>null</em>. </p>
-					</section>
-					<section syntax data-auto-animate >
-						<h1 class = "r-big"> Nulls</h1>
-						<p>Finally, empty values in SQL have a special type call <em>null</em>. </p>
-						<p>This isn't an empty string or 0 or NA, it is a special thing all by itself.</p>
+						<h2 class = "r-big"> Nulls</h2>
+						<p class="fragment" data-fragment-index="1">Finally, empty values in SQL have a special type call <em>null</em>. </p>
+						<p class="fragment" data-fragment-index="2">This isn't an empty string or 0 or NA, it is a special thing all by itself.</p>
 					</section>
 				</section>
 				<!-- Part 0 end  -->
@@ -171,29 +154,25 @@
 					</section data-auto-animate >
 
 					<section data-auto-animate >
-						<h1>Variables</h1>
-						<p>When you write a query, you are asking the database to produce you a table. This table need to have columns, so we need to tell the database which variables we need.</p>
-					</section>
-					<section data-auto-animate >
-						<h1>Variables</h1>
-						<p>When you write a query, you are asking the database to produce you a table. This table need to have columns, so we need to tell the database which variables we need.</p>
-						<p>Some of these variables might already exist, some might need to be created - we'll learn how to do both.</p>
+						<h2>Variables</h2>
+						<p class="fragment" data-fragment-index="1">When you write a query, you are asking the database to produce you a table. This table need to have columns, so we need to tell the database which variables we need.</p>
+						<p class="fragment" data-fragment-index="2">Some of these variables might already exist, some might need to be created - we'll learn how to do both.</p>
 					</section>
 
 					<section data-auto-animate >
-						<h1>Variables</h1>
+						<h2>Variables</h2>
 						<p>All SQL queries take the following minimum form.</p>
 						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers>
 							SELECT
 								variables
 							FROM
-								DATABASE.SCHEMA.TABLE
+								DATABASE.SCHEMA.TABLE;
 						</code></pre>
 					</section>
 
 
 					<section data-auto-animate >
-						<h1>Variables</h1>
+						<h2>Variables</h2>
 						<p>All SQL queries take the following minimum form.</p>
 						<p>Every query has a <em>FROM</em> keyword followed by a reference to a table, this tells the database where to look for our variables.</p>
 						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers = "3-4">
@@ -205,7 +184,7 @@
 					</section>
 
 					<section data-auto-animate >
-						<h1>Variables</h1>
+						<h2>Variables</h2>
 						<p>All SQL queries take the following minimum form.</p>
 						<p>Every query has a <em>SELECT</em> keyword followed by list of variables; these might be existing columns in the table or ones created.</p>
 						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers = "1-2">
@@ -216,9 +195,22 @@
 						</code></pre>
 					</section>
 
-					<section syntax data-auto-animate >
-						<h1 class = "r-big"> Test</h1>
-						<pre data-id="select-code"><code data-trim data-line-numbers>
+					<section data-auto-animate >
+						<h2>Variables</h2>
+						<p>All SQL queries take the following minimum form.</p>
+						<p>Every query ends with a semi-colon. This is like a full stop for the database so it knows where one query stops and the next one begins.</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers = "4">
+							SELECT
+								variables
+							FROM
+								DATABASE.SCHEMA.TABLE;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - Existing</h2>
+						<p>We can select every veriable from our table using the <em>*</em> special character.</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers>
 							SELECT
 								*
 							FROM
@@ -226,12 +218,703 @@
 						</code></pre>
 					</section>
 
+					<section data-auto-animate>
+						<h2>Variables - Existing</h2>
+						<p>We can select every veriable from our table using the <em>*</em> special character.</p>
+						<p>Or we can swap out the * and list the column names ourselves, seperated by a comma</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers="2">
+							SELECT
+								*
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - Existing</h2>
+						<p>Or we can swap out the * and list the column names ourselves, seperated by a comma</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers="2-20">
+							SELECT
+								year, 
+								month, 
+								day, 
+								dep_time, 
+								sched_dep_time, 
+								dep_delay, 
+								arr_time, 
+								sched_arr_time, 
+								arr_delay, 
+								carrier, 
+								flight, 
+								tailnum, 
+								origin, 
+								dest, 
+								air_time, 
+								distance, 
+								hour, 
+								minute, 
+								time_hour
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - Existing</h2>
+						<p>Or we can just select some of them</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers="2-11">
+							SELECT
+								year, 
+								month, 
+								day, 
+								dep_time, 
+								sched_dep_time, 
+								carrier, 
+								flight, 
+								tailnum, 
+								origin, 
+								dest
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
 					
+					<section data-auto-animate>
+						<h1>Live View</h1>
+						<p>Run some of these queries so far and see the results.</p>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - New</h2>
+						<p>We can ask the database for variables that aren't in our table, we just need to tell it what the data is. In this case, that data is the value 123.</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers="12">
+							SELECT
+								year, 
+								month, 
+								day, 
+								dep_time, 
+								sched_dep_time, 
+								carrier, 
+								flight, 
+								tailnum, 
+								origin, 
+								dest,
+								123
+							FROM
+								schema_name.flights;
+						</code></pre>
+
+						<small><em>Note that we had to add a comma to the end of the list before our new variable.</small></em>
+					</section>
+
+
+					<section data-auto-animate>
+						<h2>Variables - New</h2>
+						<p>It would be nice to give this variable a name, we can do that using the <em>as</em> keyword and call it whatever we like (within reason). This is known as <b>aliasing</b>.</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers="12">
+							SELECT
+								year, 
+								month, 
+								day, 
+								dep_time, 
+								sched_dep_time, 
+								carrier, 
+								flight, 
+								tailnum, 
+								origin, 
+								dest,
+								123 as new_column
+							FROM
+								schema_name.flights;
+						</code></pre>
+
+						<small><em>Column names should start with a letter, have only _ as punctuation and be less than 30 characters long. Some of these rules can but should not be broken.</small></em>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - New</h2>
+						<p>Technically we don't need to use <em>as</em> but for column names it is good practice.</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers="12">
+							SELECT
+								year, 
+								month, 
+								day, 
+								dep_time, 
+								sched_dep_time, 
+								carrier, 
+								flight, 
+								tailnum, 
+								origin, 
+								dest,
+								123 new_column
+							FROM
+								schema_name.flights;
+						</code></pre>
+
+						<small><em>We'll see in a second you can alias a table as well, but you cannot use the <em>as</em> word there!</small></em>
+					</section>
+
+					<section data-auto-animate>
+						<h1>Live View</h1>
+						<p>Run some of these queries so far and see the results.</p>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - New</h2>
+						<p><b>NOTE</b> that we can't mix * and extra variables.</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers>
+							-- This code will error
+							SELECT 
+								*,
+								123 as new_column
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - New</h2>
+						<p><b>NOTE</b> that we can't mix * and extra variables.</p>
+						<p>This is because * doesn't mean everything from our table, it means <em>EVERYTHING</em>, and we can't ask for more than everything (it's like taking infinity+1).</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers>
+							-- This code will error
+							SELECT 
+								*,
+								123 as new_column
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - New</h2>
+						<p>What we need to do it tell the database we want everything from the table and note the universe. So first, it's important to understand the following are the same query, one is shorthand for the other.</p>
+						<pre  class="fragment" data-fragment-index="1" data-id="select-code2"><code class = "language-sql" data-trim data-line-numbers>
+							SELECT 
+								tailnum
+							FROM
+								schema_name.flights;
+
+							SELECT 
+								schema_name.flights.tailnum
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - New</h2>
+						<p>So if we want everything from the table, we could write the following, and this will work, but is pretty annoying to type.</p>
+						<pre data-id="select-code2"><code class = "language-sql" data-trim data-line-numbers>
+							SELECT 
+								schema_name.flights.*,
+								123 as new_column
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - New</h2>
+						<p>So if we want everything from the table, we could write the following, and this will work, but is pretty annoying to type.</p>
+						<p>What if the same way we aliased columns we alias our table? Let's call it <em>a</em></p>
+						<pre data-id="select-code2"><code class = "language-sql" data-trim data-line-numbers="2,5">
+							SELECT 
+								a.*,
+								123 as new_column
+							FROM
+								schema_name.flights a;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - New</h2>
+						<p><b>SIDENOTE:</b> You can break some of those column name rules using double quotes ("), these are used when you talk about database objects (tables, columns etc). Use single quotes (') for text data <em>in</em> the database.</p>
+						<pre data-id="select-code2"><code class = "language-sql" data-trim data-line-numbers="3">
+							SELECT 
+								a.*,
+								123 as "new column"
+							FROM
+								schema_name.flights a;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h1>Live View</h1>
+						<p>Run some of these queries so far and see the results.</p>
+					</section>
+
+					<section data-auto-animate>
+						<h1>Exercise time!</h1>
+						<p>Attempt questions 1-4.</p>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - Functions</h2>
+						<p class="fragment" data-fragment-index="1">Having a column with all the same value isn't really that useful.</p>
+						<p class="fragment" data-fragment-index="2">Let's create create some variables using existing ones next.</p>
+						<small><em>From now on for simplicity we will only show the relevant parts of the code, not all the variables as shown in the training file.</em></small>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - Functions</h2>
+						<p>We can start by doing some basic maths on a numeric column.</p>
+						<pre data-id="select-code3"><code class = "language-sql" data-trim data-line-numbers="2-3">
+							SELECT 
+								month,
+								month + 1 AS next_month, 
+								...
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Functions</h2>
+						<p>We can start by doing some basic maths on a numeric column.</p>
+						<p>We don't even have to keep the original column.</p>
+						<pre data-id="select-code3"><code class = "language-sql" data-trim data-line-numbers="2">
+							SELECT 
+								month + 1 AS next_month, 
+								...
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Functions</h2>
+						<p>We <b>CAN'T</b> use our new column in another calculation (we'll see  way to do this later).</p>
+						<pre data-id="select-code3"><code class = "language-sql" data-trim data-line-numbers="1,4">
+							-- This code will error
+							SELECT 
+								month + 1 AS next_month,
+								next_month + 1 AS next_next_month 
+								...
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Functions</h2>
+						<p>Now let's take a look at some string functions that will be useful for when we're working with text.</p>
+						<pre data-id="select-code3"><code class = "language-sql" data-trim data-line-numbers>
+							SELECT
+								carrier, 
+								...
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Functions</h2>
+						<p><em><font style = "color: white;">lower</font></em> takes a string and makes it lowercase.</p>
+						<pre data-id="select-code3"><code class = "language-sql" data-trim data-line-numbers="3">
+							SELECT
+								carrier, 
+								lower(carrier),
+								...
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Functions</h2>
+						<p><em><font style = "color: white;">upper</font></em> takes a string and makes it uppercase.</p>
+						
+						<pre data-id="select-code3"><code class = "language-sql" data-trim data-line-numbers="4">
+							SELECT
+								carrier, 
+								lower(carrier),
+								upper(lower(carrier)),
+								...
+							FROM
+								schema_name.flights;
+						</code></pre>
+						<small><em>Notice how we've nested functions here, this is a useful trick.</em></small>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Functions</h2>
+						<p><em><font style = "color: white;">substr</font></em> takes 3 arguments, the first 2 are required and are the string to <em>cut</em> ad the start position. The third argument is optional and is the length of the substring.</p>
+						
+						<pre data-id="select-code3"><code class = "language-sql" data-trim data-line-numbers="6-8">
+							SELECT
+								carrier, 
+								lower(carrier),
+								upper(lower(carrier)),
+								tailnum,
+								substr(tailnum, 3),
+								substr(tailnum, 1, 3),
+								substr(tailnum, 3, 2),
+								...
+							FROM
+								schema_name.flights;
+						</code></pre>
+						<small><em>This is like LEFT, MID, and RIGHT from Excel all in one.</em></small>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Functions</h2>
+						<p><em><font style = "color: white;">length</font></em> tells you have many characters are in a string.</p>
+						
+						<pre data-id="select-code3"><code class = "language-sql" data-trim data-line-numbers="9">
+							SELECT
+								carrier, 
+								lower(carrier),
+								upper(lower(carrier)),
+								tailnum,
+								substr(tailnum, 3),
+								substr(tailnum, 1, 3),
+								substr(tailnum, 3, 2),
+								length(tailnum)
+								...
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+					
+					<section data-auto-animate>
+						<h1>Live View</h1>
+						<p>Run some of these queries so far and see the results.</p>
+					</section>
+
+					<section data-auto-animate>
+						<h1>Exercise time!</h1>
+						<p>Attempt questions 5-7.</p>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p class="fragment" data-fragment-index="1">Sometimes we don't want to do the same thing to every record, we might want to do different calculations based on some conditions.</p>
+						<p class="fragment" data-fragment-index="2">We do this by something called a <em>case</em> statement.</p>
+					</section>
+
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>Case statements take this form:</p>
+						<pre data-id="select-code4"><code class = "language-sql" data-trim data-line-numbers>
+							CASE 
+								WHEN condition THEN value_1
+								WHEN condition THEN value_2
+								...
+								WHEN condition THEN value_n
+								ELSE value_default
+							END
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>Case statements take this form:</p>
+						<li><em><font style = "color: white;">condition</font></em> is some boolean statement (TRUE or FALSE test)</li>
+						<pre data-id="select-code4"><code class = "language-sql" data-trim data-line-numbers="2-5">
+							CASE 
+								WHEN condition THEN value_1
+								WHEN condition THEN value_2
+								...
+								WHEN condition THEN value_n
+								ELSE value_default
+							END
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>Case statements take this form:</p>
+						<li><em><font style = "color: white;">condition</font></em> is some boolean statement (TRUE or FALSE test)</li>
+						<li><em><font style = "color: white;">value</font></em> is the output for record if the test is TRUE</li>
+						<pre data-id="select-code4"><code class = "language-sql" data-trim data-line-numbers="205">
+							CASE 
+								WHEN condition THEN value_1
+								WHEN condition THEN value_2
+								...
+								WHEN condition THEN value_n
+								ELSE value_default
+							END
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>Case statements take this form:</p>
+						<li><em><font style = "color: white;">condition</font></em> is some boolean statement (TRUE or FALSE test)</li>
+						<li><em><font style = "color: white;">value</font></em> is the output for record if the test is TRUE</li>
+						<li>Test are evaluated in order, if the first test is true it won't check the rest.</li>
+						<pre data-id="select-code4"><code class = "language-sql" data-trim data-line-numbers="2-5">
+							CASE 
+								WHEN condition THEN value_1
+								WHEN condition THEN value_2
+								...
+								WHEN condition THEN value_n
+								ELSE value_default
+							END
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>Case statements take this form:</p>
+						<li><em><font style = "color: white;">condition</font></em> is some boolean statement (TRUE or FALSE test)</li>
+						<li><em><font style = "color: white;">value</font></em> is the output for record if the test is TRUE</li>
+						<li>Test are evaluated in order, if the first test is true it won't check the rest.</li>
+						<li>If none are true, the <em><font style = "color: white;">ELSE</font></em>  condition triggers (id you don't provide one, it defaults to <em><font style = "color: white;">NULL</font></em>.</li>
+						<pre data-id="select-code4"><code class = "language-sql" data-trim data-line-numbers="6">
+							CASE 
+								WHEN condition THEN value_1
+								WHEN condition THEN value_2
+								...
+								WHEN condition THEN value_n
+								ELSE value_default
+							END
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p><b>REMEMBER:</b> every <em><font style = "color: white;">CASE</font></em> must have an <em><font style = "color: white;">END</font></em> and every <em><font style = "color: white;">WHEN</font></em> must have a <em><font style = "color: white;">THEN</font></em>.</p>
+						<pre data-id="select-code4"><code class = "language-sql" data-trim data-line-numbers="9">
+							CASE 
+								WHEN condition THEN value_1
+								WHEN condition THEN value_2
+								...
+								WHEN condition THEN value_n
+								ELSE value_default
+							END
+						</code></pre>
+					</section>
+					
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>To write these boolean/logical tests we use comparison operators like the following:</p>
+						<span style = "font-size: 50%;">
+						<table  class="fragment" data-fragment-index="1">
+							<thead>
+								<tr>
+								<th>Symbol</th>
+								<th>Comparison</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="fragment" data-fragment-index="2">
+								<td>=</td>
+								<td>Equal</td>
+								</tr>
+								<tr class="fragment" data-fragment-index="3">
+								<td>!=, &lt;&gt;, ^=</td>
+								<td>Unequal (not equal)</td>
+								</tr>
+								<tr class="fragment" data-fragment-index="4">
+								<td>&lt;, &lt;=</td>
+								<td>Less than, Less than or equal to</td>
+								</tr>
+								<tr class="fragment" data-fragment-index="5">
+								<td rowspan="4">&gt;, &gt;=</td>
+								<td rowspan="4">Greater than, Greater than or equal to</td>
+								</tr>
+								<tr>
+								</tr>
+								<tr>
+								</tr>
+								<tr>
+								</tr>
+								<tr  class="fragment" data-fragment-index="6">
+								<td rowspan="3">[NOT] IN</td>
+								<td rowspan="3">Set membership (is the element in the set/list provided). Set provided in ('Elem1', 'Elem2', ..., 'ElemN') format</td>
+								</tr>
+								<tr>
+								</tr>
+								<tr>
+								</tr>
+								<tr  class="fragment" data-fragment-index="7">
+								<td rowspan="3">[NOT] LIKE</td>
+								<td rowspan="3">Pattern match (is the element like the provided pattern). Uses % as 0-Inf character wildcard, _ for single character wildcard</td>
+								</tr>
+								<tr>
+								</tr>
+								<tr>
+								</tr>
+								<tr class="fragment" data-fragment-index="8">
+								<td rowspan="3">[NOT] BETWEEN</td>
+								<td rowspan="3">Shorthand for x &lt;= y and y &lt;= z becomes y between x and z</td>
+								</tr>
+								<tr>
+								</tr>
+								<tr>
+								</tr>
+							</tbody>
+							</table>
+						</span>
+						<small class="fragment" data-fragment-index="6"><em>The [NOT] is optional</em></small>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>And we can combine them using the logical operators:</p>
+						<span style = "font-size: 50%;">
+						<table class="fragment" data-fragment-index="1">
+							<thead>
+								<tr>
+								<th>Operation</th>
+								<th>Meaning</th>
+								</tr>
+							</thead>
+							<tbody>
+							<tr class="fragment" data-fragment-index="2">
+								<td>AND</td>
+								<td></td>
+							</tr>
+							<tr class="fragment" data-fragment-index="3">
+								<td>OR</td>
+								<td></td>
+							</tr>
+							<tr class="fragment" data-fragment-index="4">
+								<td>NOT</td>
+								<td></td>
+							</tr>
+							<tr class="fragment" data-fragment-index="5">
+								<td rowspan="4">()</td>
+								<td rowspan="4"></td>
+							</tr>
+							</tbody>
+							</table>
+						</span>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Truth Table Quiz!</h2>
+						<span style = "font-size: 50%;">
+							<table  class="fragment" data-fragment-index="1">
+								<thead>
+									<tr>
+										<th>A</th>
+										<th>B</th>
+										<th><em>A AND B</em></th>
+										<th><em>A OR B</em></th>
+										<th><em>NOT A</em></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>TRUE</td>
+										<td>TRUE</td>
+										<td  class="fragment" data-fragment-index="2">TRUE</td>
+										<td class="fragment" data-fragment-index="6">TRUE</td>
+										<td class="fragment" data-fragment-index="10">FALSE</td>
+									</tr>
+									<tr>
+										<td>TRUE</td>
+										<td>FALSE</td>
+										<td  class="fragment" data-fragment-index="3">FALSE</td>
+										<td class="fragment" data-fragment-index="7">TRUE</td>
+										<td>-</td>
+									</tr>
+									<tr>
+										<td>FALSE</td>
+										<td>TRUE</td>
+										<td class="fragment" data-fragment-index="4">FALSE</td>
+										<td class="fragment" data-fragment-index="8">TRUE</td>
+										<td class="fragment" data-fragment-index="11">TRUE</td>
+									</tr>
+									<tr>
+										<td>FALSE</td>
+										<td>FALSE</td>
+										<td class="fragment" data-fragment-index="5">FALSE</td>
+										<td class="fragment" data-fragment-index="9">FALSE</td>
+										<td>-</td>
+									</tr>
+								</tbody>
+								</table>
+						</span>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>And we can combine them using the logical operators:</p>
+						<span style = "font-size: 50%;">
+						<table>
+							<thead>
+								<tr>
+								<th>Operation</th>
+								<th>Meaning</th>
+								</tr>
+							</thead>
+							<tbody>
+							<tr">
+								<td>AND</td>
+								<td class="fragment" data-fragment-index="1">Logical AND, both statements must be TRUE</td>
+							</tr>
+							<tr>
+								<td>OR</td>
+								<td class="fragment" data-fragment-index="2">Logical OR, at least one statement must be TRUE</td>
+							</tr>
+							<tr>
+								<td>NOT</td>
+								<td class="fragment" data-fragment-index="3">Logical negation, converts TRUE to FALSE and vice versa</td>
+							</tr>
+							<tr>
+								<td rowspan="4">()</td>
+								<td  class="fragment" data-fragment-index="4" rowspan="4">Brackets, force the evaluation of the logical statement inside before any outside, i.e. (2+7)*5 != 2+7*5</td>
+							</tr>
+							</tbody>
+							</table>
+						</span>
+					</section>
+
+
+
 				</section>
 
 				<!-- Part 1 End -->
 			</div>
 		</div>
+
+
+		<style type="text/css">
+			/* 1. Style header/footer <div> so they are positioned as desired. */
+			#header-left {
+				position: absolute;
+				top: 0%;
+				left: 0%;
+			}
+			#header-right {
+				position: absolute;
+				top: 0%;
+				right: 0%;
+			}
+			#footer-left {
+				position: absolute;
+				bottom: 0%;
+				left: 0%;
+				font-size: small;
+				color: grey;
+			}
+		</style>
+
+		<div id="hidden" style="display:none;">
+			<div id="header">
+				<!-- <div id="header-left">HEADER-LEFT</div> -->
+				<!-- <div id="header-right">HEADER-RIGHT</div> -->
+				<div id="footer-left">Credit: @rlh1994 on github<div>
+			</div>
+		</div>
+		<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+		<script type="text/javascript">
+		    // 3. On Reveal.js ready event, copy header/footer <div> into each `.slide-background` <div>
+						var header = $('#header').html();
+			if ( window.location.search.match( /print-pdf/gi ) ) {
+				Reveal.addEventListener( 'ready', function( event ) {
+					$('.slide-background').append(header);
+				});
+			}
+			else {
+				$('div.reveal').append(header);
+		}
+		</script>
 
 		<script src="dist/reveal.js"></script>
 		<script src="plugin/notes/notes.js"></script>

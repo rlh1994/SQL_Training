@@ -309,11 +309,11 @@ In SQL, the format of this is known as a CASE statement. This is a statement, no
 function returns a new variable/column, with one record per record in the rest of the SELECT statement. The format is:
 
 CASE 
-	WHEN <CONDITION> THEN <VALUE>
-	WHEN <CONDITION> THEN <VALUE>
+	WHEN <CONDITION> THEN <VALUE_1>
+	WHEN <CONDITION> THEN <VALUE_2>
 	...
-	WHEN <CONDITION> THEN <VALUE>
-	ELSE <VALUE>
+	WHEN <CONDITION> THEN <VALUE_N>
+	ELSE <VALUE_DEFAULT>
 END
 
 Where:

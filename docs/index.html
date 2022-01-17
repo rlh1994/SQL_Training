@@ -885,7 +885,117 @@
 					</section>
 
 
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>Let's look at some examples</p>
+						<pre data-id="select-code5"><code class = "language-sql" data-trim data-line-numbers="1-4|6-12|14-19">
+							CASE 
+								WHEN sched_dep_time < 1200 THEN 'AM'
+								ELSE 'PM'
+							END AS DEP_AM_PM,
 
+							CASE 
+								WHEN sched_dep_time BETWEEN 0 AND 0800 THEN 'Early Morning'
+								WHEN sched_dep_time BETWEEN 0801 AND 1159 THEN 'Morning'
+								WHEN sched_dep_time BETWEEN 1200 AND 1800 THEN 'Afternoon'
+								WHEN sched_dep_time BETWEEN 1801 AND 2100 THEN 'Evening'
+								WHEN sched_dep_time BETWEEN 2100 AND 2359 THEN 'Night'
+							END AS DEP_TIME_DETAIL, -- Notice no ELSE
+
+							CASE 
+								WHEN length(sched_arr_time) != 4 THEN 'AM'
+								WHEN substr(sched_arr_time, 1, 2) < 12 THEN 'AM'
+								WHEN substr(sched_arr_time, 1, 2) > 12 THEN 'PM'
+								ELSE 'Midday'
+							END AS ARR_AM_PM,
+							...
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>Now examples using in</p>
+						<pre data-id="select-code6"><code class = "language-sql" data-trim data-line-numbers="1-4|6-10">
+							CASE
+								WHEN dest in ('JFK', 'LGA', 'EWR') THEN 'NYC'
+								ELSE 'Other'
+							END AS dest_nyc_check_in,
+
+							-- see how much easier it is than writing ors
+							CASE
+								WHEN dest = 'JFK' or dest = 'LGA' or dest = 'EWR' THEN 'NYC'
+								ELSE 'Other'
+							END AS dest_nyc_check_ors
+							...
+						</code></pre>
+						<small class="fragment" data-fragment-index="5"><em>Notice that comparisons always have to have a left and a right hand side, even when it's the same LHS</em></small>
+					</section>
+					
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>String values are case <b>sensitive</b></p>
+						<pre data-id="select-code7"><code class = "language-sql" data-trim data-line-numbers="1-4|6-9|11-14">
+							CASE
+								WHEN origin in ('JFK', 'LGA', 'EWR') THEN 'NYC'
+								ELSE 'Other'
+							END AS origin_nyc_check1,
+
+							CASE
+								WHEN lower(origin) in ('JFK', 'LGA', 'EWR') THEN 'NYC'
+								ELSE 'Other'
+							END AS origin_nyc_check2,
+
+							CASE
+								WHEN origin in ('JFK', 'lga', 'ewr') THEN 'NYC'
+								ELSE 'Other'
+							END AS origin_nyc_check3
+							...
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>And finally the <em><font style = "color: white;">like</font></em> matches.</p>
+						<pre data-id="select-code8"><code class = "language-sql" data-trim data-line-numbers="1-5|7-11|13-17|19-23">
+							-- Any number of character (including 0) before, and after a 7
+							CASE
+								WHEN tailnum LIKE '%7%' THEN 1
+								ELSE 0
+							END AS contains_7,
+
+							-- Any number of characters before a capital Q
+							CASE 
+								WHEN tailnum LIKE '%Q'	THEN 1 
+								ELSE 0
+							END AS ends_in_q,
+
+							-- A NOT acting on the output of a logical statement
+							CASE 
+								WHEN NOT (tailnum LIKE '%Q') THEN 1 
+								ELSE 0
+							END AS ends_in_not_q,
+
+							-- A NOT LIKE, specifically any record that doesn't match the pattern, 
+							-- slightly different to above
+							CASE WHEN tailnum NOT LIKE 'N5_5%' THEN 1 
+								ELSE 0
+							END AS weird_test
+							...
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h1>Live View</h1>
+						<p>Run some of these queries so far and see the results.</p>
+					</section>
+
+					<section data-auto-animate>
+						<h1>Exercise time!</h1>
+						<p>Attempt questions 8-11.</p>
+					</section>
+
+
+					
 				</section>
 
 				<!-- Part 1 End -->

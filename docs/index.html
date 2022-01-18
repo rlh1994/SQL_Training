@@ -1121,7 +1121,7 @@
 				</section>
 
 				<section data-auto-animate >
-					<h1 class="r-big" style = "color: teal;">Part 0:</h1>
+					<h1 class="r-big" style = "color: teal;">Part 1:</h1>
 					<h3>In this section you learned to:</h3>
 					<li class="fragment" data-fragment-index="1">Return all or some columns from a table</li>
 					<li class="fragment" data-fragment-index="2">Create and return your own columns based on functions</li>
@@ -1259,7 +1259,7 @@
 
 				<section data-auto-animate >
 					<h2>Records - Filtering</h2>
-					<p>An upside of this is that you can filter on a column that you don't actual output.</p>
+					<p>An upside of this is that you can filter on a column that you don't actually output.</p>
 					<pre data-id="wherecode3" class="fragment" data-fragment-index="1"><code class = "language-sql" data-trim data-line-numbers>
 					SELECT 
 						tailnum 
@@ -1385,7 +1385,7 @@
 					<h2>Records - Ordering</h2>
 					<p>Finally, we can be a bit lazy and because the <em><font style = "color: white;">ORDER BY</font></em> runs after the <em><font style = "color: white;">SELECT</font></em> we can actually just use numbers instead of column names.</p>
 					<p>This is also why we can use column aliases in the <em><font style = "color: white;">ORDER BY</font></em> and can't use columns we didn't <em><font style = "color: white;">SELECT</font></em></p>
-					<pre data-id="ordercode1"><code class = "language-sql" data-trim data-line-numbers=8,10>
+					<pre data-id="ordercode1"><code class = "language-sql" data-trim data-line-numbers=10-11>
 					SELECT 
 						flight,
 						dep_delay,
@@ -1428,7 +1428,7 @@
 				<section data-auto-animate>
 					<h2>Records - Combining</h2>
 					<p class="fragment" data-fragment-index="1">Sometimes we want to combine our records in one way or another, if they are from the same table there is often a clever way to do this using <em><font style = "color: white;">OR</font></em>s and <em><font style = "color: white;">CASE</font></em> statements, but not always. Other times we might want to:</p>
-					<li class="fragment" data-fragment-index="2">Combine records (with or without checking for duplicates) and return them all (<em><font style = "color: white;">UNION [ALL}</font></em>)</li>
+					<li class="fragment" data-fragment-index="2">Combine records (with or without checking for duplicates) and return them all (<em><font style = "color: white;">UNION [ALL]</font></em>)</li>
 					<li class="fragment" data-fragment-index="3">Find records that exist in both record sets and just return those (<em><font style = "color: white;">INTERSECT</font></em>)</li>
 					<li class="fragment" data-fragment-index="4">Find records that exist in one set, but not in another and return those from the first (<em><font style = "color: white;">MINUS</font></em>)</li>
 				</section>
@@ -1570,7 +1570,7 @@
 				</section>
 
 				<section data-auto-animate >
-					<h1 class="r-big" style = "color: teal;">Part 0:</h1>
+					<h1 class="r-big" style = "color: teal;">Part 2:</h1>
 					<h3>In this section you learned to:</h3>
 					<li class="fragment" data-fragment-index="1">Filter records based on conditions</li>
 					<li class="fragment" data-fragment-index="2">Order and only return a fixed number of records</li>

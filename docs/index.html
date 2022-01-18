@@ -1424,12 +1424,159 @@
 					<h1>Exercise time!</h1>
 					<p>Attempt questions 20-21.</p>
 				</section>
+				
+				<section data-auto-animate>
+					<h2>Records - Combining</h2>
+					<p class="fragment" data-fragment-index="1">Sometimes we want to combine our records in one way or another, if they are from the same table there is often a clever way to do this using <em><font style = "color: white;">OR</font></em>s and <em><font style = "color: white;">CASE</font></em> statements, but not always. Other times we might want to:</p>
+					<li class="fragment" data-fragment-index="2">Combine records (with or without checking for duplicates) and return them all (<em><font style = "color: white;">UNION [ALL}</font></em>)</li>
+					<li class="fragment" data-fragment-index="3">Find records that exist in both record sets and just return those (<em><font style = "color: white;">INTERSECT</font></em>)</li>
+					<li class="fragment" data-fragment-index="4">Find records that exist in one set, but not in another and return those from the first (<em><font style = "color: white;">MINUS</font></em>)</li>
+				</section>
 
 				<section data-auto-animate>
 					<h2>Records - Combining</h2>
 					<img class="r-frame" style="background: rgba(255,255,255,0.1)"; data-src="./assets/unions.jpg" alt="Union types in SQL">
 				</section>
 
+				<section data-auto-animate>
+					<h2>Records - Combining</h2>
+					<small>We'll use the airlines table with some specific filters to illustrate these concepts</small>
+					<pre data-id="combinecode"><code class = "language-sql" data-trim data-line-numbers="1-14|17-30|33-46|49-62">
+						/* UNION records without duplicates */
+						SELECT 
+							*
+						FROM 
+							schema_name.airlines
+						WHERE
+							carrier in ('9E', 'AA', 'AS')
+						UNION
+						SELECT 
+							*
+						FROM 
+							schema_name.airlines
+						WHERE
+							carrier in ('AS', 'B6', 'DL');
+						
+						
+						/* UNION ALL records with duplicates */
+						SELECT 
+							*
+						FROM 
+							schema_name.airlines
+						WHERE
+							carrier in ('9E', 'AA', 'AS')
+						UNION ALL
+						SELECT 
+							*
+						FROM 
+							schema_name.airlines
+						WHERE
+							carrier in ('AS', 'B6', 'DL');
+						
+						
+						/* Find INTERESECTion of records */
+						SELECT 
+							*
+						FROM 
+							schema_name.airlines
+						WHERE
+							carrier in ('9E', 'AA', 'AS')
+						INTERSECT
+						SELECT 
+							*
+						FROM 
+							schema_name.airlines
+						WHERE
+							carrier in ('AS', 'B6', 'DL');
+						
+						
+						/* MINUS any matching records from the second table from the first */
+						SELECT 
+							*
+						FROM 
+							schema_name.airlines
+						WHERE
+							carrier in ('9E', 'AA', 'AS')
+						MINUS
+						SELECT 
+							*
+						FROM 
+							schema_name.airlines
+						WHERE
+							carrier in ('AS', 'B6', 'DL');
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Records - Fetch</h2>
+					<p class="fragment" data-fragment-index="1">Though it is very rare, sometimes you might only want to return a specific number of rows.</p>
+					<p class="fragment" data-fragment-index="2">For this we use the keyword <em><font style = "color: white;">FETCH</font></em> and it's associated terms.</p>
+					<small class="fragment" data-fragment-index="3"><em><font style = "color: white;">FETCH</font></em> is the very last thing a database will run as it has to complete ordering first, so it would be any quicker to just return 5 rows instead of 500</small>
+					<pre class="fragment" data-fragment-index="4" data-id="fetchcode"><code class = "language-sql" data-trim data-line-numbers="9-10">
+						SELECT
+							columns
+						FROM
+							tables
+						WHERE
+							condition
+						ORDER BY 
+							columns
+						[OFFSET number ROWS]
+						FETCH NEXT number [PERCENT] ROWS ONLY/WITH TIES;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Records - Fetch</h2>
+					<p>Though it is very rare, sometimes you might only want to return a specific number of rows.</p>
+					<p>For this we use the keyword <em><font style = "color: white;">FETCH</font></em> and it's associated terms.</p>
+					<pre data-id="fetchcode"><code class = "language-sql" data-trim data-line-numbers="9-10">
+						SELECT 
+							*
+						FROM
+							schema_name.flights
+						ORDER BY 
+							distance desc
+						OFFSET 5 ROWS
+						FETCH NEXT 5 ROWS WITH TIES;
+					</code></pre>
+					<small>This will return more than 5 records because of the option with ties.</small>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Records - Fetch</h2>
+					<p>Though it is very rare, sometimes you might only want to return a specific number of rows.</p>
+					<p>For this we use the keyword <em><font style = "color: white;">FETCH</font></em> and it's associated terms.</p>
+					<pre data-id="fetchcode"><code class = "language-sql" data-trim data-line-numbers="9-10">
+						SELECT 
+							*
+						FROM
+							schema_name.flights
+						ORDER BY 
+							distance desc
+						OFFSET 5 ROWS
+						FETCH NEXT 5 ROWS ONLY;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Live View</h1>
+					<p>Run some of these queries so far and see the results.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Exercise time!</h1>
+					<p>Attempt questions 22-24</p>
+				</section>
+
+				<section data-auto-animate >
+					<h1 class="r-big" style = "color: teal;">Part 0:</h1>
+					<h3>In this section you learned to:</h3>
+					<li class="fragment" data-fragment-index="1">Filter records based on conditions</li>
+					<li class="fragment" data-fragment-index="2">Order and only return a fixed number of records</li>
+					<li class="fragment" data-fragment-index="3">Combine record sets into a single output</li>
+				<small class="fragment" data-fragment-index="6" >Don't forget to run the error message examples to see common examples of variable based errors!</small>
+				
 			</section>
 			<!-- Part 2 End -->
 			</div>
@@ -1450,7 +1597,7 @@
 			}
 			#footer-left {
 				position: absolute;
-				bottom: 2%;
+				bottom: 1%;
 				left: 0%;
 				font-size: small;
 				color: grey;

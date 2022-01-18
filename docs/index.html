@@ -21,6 +21,7 @@
 				</section>
 				<!-- Part 0 Start -->
 				<section>
+
 					<section data-auto-animate >
 						<h1 class="r-big" style = "color: teal;">Part 0:</h1>
 						<h2>Comments,</h2>
@@ -49,7 +50,7 @@
 						<p>They let you write notes in and around your code that the computer ignores.</p>
 						<pre data-id="comment-code"><code class = "language-sql" data-trim data-line-numbers>
 							-- Comments in SQL are done like this
-					  </code></pre>
+						</code></pre>
 					</section>
 
 					<section comments data-auto-animate >
@@ -60,7 +61,7 @@
 							-- Comments in SQL are done like this
 							/* Or multi-line comments
 								are done like this */
-					  </code></pre>
+						</code></pre>
 					</section>
 
 					<section comments data-auto-animate >
@@ -73,7 +74,7 @@
 								are done like this */
 							select * from table; -- you can comment at the end of a line
 							select * /* or even in the middle*/ table;
-					  </code></pre>
+						</code></pre>
 					</section>
 
 
@@ -86,7 +87,7 @@
 						<p>Keywords in SQL are case <em>insensitive</em> so you can type them however you like.</p>
 						<pre data-id="comment-code"><code class = "language-sql" data-trim data-line-numbers= "4-5">
 							SELECT ORIGIN, DEST FROM FLIGHTS;
-					  </code></pre>
+						</code></pre>
 					</section>
 					<section syntax data-auto-animate >
 						<h2 class = "r-big"> Syntax</h2>
@@ -94,7 +95,7 @@
 						<p>Whiteshape is also ignored in SQL, so you can layout your code however you like.</p>
 						<pre data-id="comment-code"><code class = "language-sql" data-trim data-line-numbers= "1">
 							SELECT ORIGIN, DEST FROM FLIGHTS;
-					  </code></pre>
+						</code></pre>
 					</section>
 					<section syntax data-auto-animate >
 						<h2 class = "r-big"> Syntax</h2>
@@ -108,7 +109,7 @@
 								dest 
 							from 
 								flights;
-					  </code></pre>
+						</code></pre>
 					</section>
 					<section syntax data-auto-animate >
 						<h2 class = "r-big"> Syntax</h2>
@@ -121,7 +122,7 @@
 								dest 
 							from 
 								flights;
-					  </code></pre>
+						</code></pre>
 					</section>
 					<section syntax data-auto-animate >
 						<h2 class = "r-big"> Syntax</h2>
@@ -137,7 +138,7 @@
 								flights;
 
 							SeLeCt      OrIgIn,DeSt        fRoM      fLiGhTs;
-					  </code></pre>
+						</code></pre>
 					</section>
 
 					<section syntax data-auto-animate >
@@ -151,6 +152,7 @@
 						<p class="fragment" data-fragment-index="1">Finally, empty values in SQL have a special type call <em>null</em>. </p>
 						<p class="fragment" data-fragment-index="2">This isn't an empty string or 0 or NA, it is a special thing all by itself.</p>
 					</section>
+
 				</section>
 				<!-- Part 0 end  -->
 
@@ -994,11 +996,442 @@
 						<p>Attempt questions 8-11.</p>
 					</section>
 
-
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Dates</h2>
+						<p class="fragment" data-fragment-index="1"> Finally let's look at dates in Oracle SQL.</p>
+						<p class="fragment" data-fragment-index="2">Date data types include both a date and a time, there is no time only value in Oracle.</p>
+						<p class="fragment" data-fragment-index="3">There is another type called a timestamp that contains milliseconds and timezones, most functions that work on dates also work on timestamps.</p>
+					</section>
 					
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Dates</h2>
+						<p> Just like in Excel, dates in Oracle are just numbers - meaning a difference of 24 hours is 1, 12 hours is 0.5 etc.</p>
+						<p class="fragment" data-fragment-index="1">However unlike excel because they are a specific datatype there's some specific functions to work with them.</p>
+					</section>
+					
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Dates</h2>
+						<span style = "font-size: 50%;">
+						<table>
+							<thead>
+								<tr>
+									<th>Function</th>
+									<th>Description</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="fragment" data-fragment-index="1">
+									<td>TO_DATE(variable,&nbsp;&nbsp;&nbsp;fmt)</td>
+									<td>Converts the variable (or string) into a date&nbsp;&nbsp;&nbsp;by giving it the format the variable is in</td>
+								</tr>
+								<tr class="fragment" data-fragment-index="2">
+									<td>TRUNC(date [, fmt])</td>
+									<td>Sets the time component of the date to 00:00:00 by default, or will round&nbsp;&nbsp;&nbsp;down to the format if provided</td>
+								</tr>
+								<tr class="fragment" data-fragment-index="3">
+									<td>sysdate</td>
+									<td>A system variable that is the current (local) date and time</td>
+								</tr>
+								<tr class="fragment" data-fragment-index="4">
+									<td>NEXT_DAY(date, day)</td>
+									<td>Returns the next date of the given day, after the date provided e.g.&nbsp;&nbsp;&nbsp;takes a Saturday at 00:00:01 to the NEXT Saturday</td>
+								</tr>
+								<tr class="fragment" data-fragment-index="5">
+									<td>TO_CHAR(variable, fmt)</td>
+									<td>Converts the variable (usually a date or a number) into the given format.&nbsp;&nbsp;&nbsp;This is the method to format a date in a given way NOT substr</td>
+								</tr>
+								<tr class="fragment" data-fragment-index="6">
+									<td>EXTRACT(value FROM date)</td>
+									<td>Returns the given value e.g. year from the date and returns it as a&nbsp;&nbsp;&nbsp;number. To extract units less than a day you must use a timestamp</td>
+								</tr>
+								<tr class="fragment" data-fragment-index="7">
+									<td>TO_TIMESTAMP(variable, fmt)</td>
+									<td>Converts the variable (or string) into a timestamp by giving it the&nbsp;&nbsp;&nbsp;format the variable is in</td>
+								</tr>
+							</tbody>
+							</table>
+						</span>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Dates</h2>
+						<small> I'm going to use <em><font style = "color: white;">||</font></em> in the code which concatenates (pastes) 2 strings together.</small> 
+						<pre><code class = "language-sql" data-trim data-line-numbers = "3-4|5|6|6|7|8-9|10-11">
+						SELECT 
+							time_hour,
+							time_hour + 1, -- add 1 day
+							time_hour + 5/24/60, -- add 5 minutes
+							TRUNC(time_hour), -- set time component to 0
+							TRUNC(time_hour, 'MM'), -- set to first of month
+							NEXT_DAY(time_hour, 'Saturday') - 1, -- Set to Friday inclusive for a week
+							TO_CHAR(time_hour, 'HH24:MI DAY DD MONTH YYYY'), -- format date in a specific format
+							TO_CHAR(time_hour, 'HH24:MI Day dd month yyyy'), -- notice how case changes the output
+							-- convert our columns into a date
+							TO_DATE(year||'-'||month||'-'||day||' '||hour||':'||minute, 'YYYY-MM-DD HH24:MI') -- convert our columns into a date
+						FROM
+							schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Dates</h2>
+						<p> Using <em><font style = "color: white;">TO_DATE</font></em> every time can be annoying, so we can specify a date in another way. This is easier to read and more efficient for the database as well.</p> 
+						<pre><code class = "language-sql" data-trim data-line-numbers="2" >
+						SELECT 
+							DATE '2019-01-20' AS fixed_date
+						FROM
+							schema_name.flights;
+						</code></pre>
+					<small>The format is ALWAYS YYYY-MM-DD and is a string.</small>
 				</section>
 
+				<section data-auto-animate>
+					<h2 class = 'r-big'>Variables - Dates</h2>
+					<p> You should <b>NEVER</b> use <em><font style = "color: white;">substr</font></em> on a date because the result you gets depend on how the user has their system set up. </p> 
+					<pre><code class = "language-sql" data-trim data-line-numbers="1-8|10-17" >
+						-- Set a specific date format for your local session and sub-string our dates
+						ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MM-YYYY HH24:MI:SS';
+						SELECT 
+							time_hour,
+							substr(time_hour, 9, 2)
+						FROM
+							schema_name.flights;
+						-- returns 2 digit year
+						
+						-- Change the format and check the results
+						ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-DD-MM HH24:MI:SS';
+						SELECT 
+							time_hour,
+							substr(time_hour, 9, 2)
+						FROM
+							schema_name.flights;
+						-- returns 2 digit month
+					</code></pre>
+				<small>Always use <em><font style = "color: white;">to_char</font></em> instead.</small>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Live View</h1>
+					<p>Run some of these queries so far and see the results.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Exercise time!</h1>
+					<p>Attempt questions 12-15.</p>
+				</section>
+
+				<section data-auto-animate >
+					<h1 class="r-big" style = "color: teal;">Part 0:</h1>
+					<h3>In this section you learned to:</h3>
+					<li class="fragment" data-fragment-index="1">Return all or some columns from a table</li>
+					<li class="fragment" data-fragment-index="2">Create and return your own columns based on functions</li>
+					<li class="fragment" data-fragment-index="3">Create columns with conditional values</li>
+					<li class="fragment" data-fragment-index="4">Alias columns and tables</li>
+					<li class="fragment" data-fragment-index="5">Use common string functions</li>
+				<small class="fragment" data-fragment-index="6" >Don't forget to run the error message examples to see common examples of variable based errors!</small>
+				</section>
+
+			</section>
 				<!-- Part 1 End -->
+
+				<!-- Part 2 Start -->
+			<section>
+				<section data-auto-animate >
+					<h1 class="r-big" style = "color: teal;">Part 2:</h1>
+					<h2>Records</h2>
+					<h4>Filtering and ordering them</h4>
+				</section data-auto-animate >
+
+				<section data-auto-animate >
+					<h1 class="r-big" style = "color: teal;">Part 2:</h1>
+					<h3>By the end of this section you will be able to:</h3>
+					<li class="fragment" data-fragment-index="1">Filter records based on conditions</li>
+					<li class="fragment" data-fragment-index="2">Order and only return a fixed number of records</li>
+					<li class="fragment" data-fragment-index="3">Combine record sets into a single output</li>
+				</section data-auto-animate >
+
+				<section data-auto-animate >
+					<h2>Records - Filtering</h2>
+					<p class="fragment" data-fragment-index="1">We will start by learning how to filter records, we do this using a <em><font style = "color: white;">WHERE</font></em> clause, which goes after the <em><font style = "color: white;">FROM</font></em> clause.</p>
+					<pre data-id="wherecode" class="fragment" data-fragment-index="2" ><code class = "language-sql" data-trim data-line-numbers="|5-6">
+					SELECT
+						columns
+					FROM
+						tables
+					WHERE
+						condition
+					;
+					</code></pre>
+					<small class="fragment" data-fragment-index="3">The condition in this clause is the same type as those we saw in the <em><font style = "color: white;">CASE</font></em> statements.</small>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Filtering</h2>
+					<p >Let's take a look at some examples:</p>
+					<pre data-id="wherecode"><code class = "language-sql" data-trim data-line-numbers="6-7">
+					SELECT 
+						*
+					FROM
+						schema_name.flights
+					WHERE
+						arr_delay = 0
+						AND dep_delay = 0;
+					;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Filtering</h2>
+					<p >Let's take a look at some examples:</p>
+					<p>Bonus tip: You can use an always true condition to make it easier to comment out individual checks when you're still developing your code</p>
+					<pre data-id="wherecode"><code class = "language-sql" data-trim data-line-numbers="6-8">
+					SELECT 
+						*
+					FROM
+						schema_name.flights
+					WHERE
+						1 = 1
+						--AND arr_delay = 0
+						AND dep_delay = 0;
+					;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Filtering</h2>
+					<p >Let's take a look at some examples:</p>
+					<p>and of course we can use our favourite boolean logic!</p>
+					<pre data-id="wherecode"><code class = "language-sql" data-trim data-line-numbers="6-9">
+						SELECT
+						*
+					FROM
+						schema_name.flights
+					WHERE
+						1 = 1
+						-- flights scheduled to depart in the first 10 or last 5 hours of a day
+						AND (hour < 10 OR hour > 19)
+						AND dep_delay = 0 -- left on time
+					;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Filtering</h2>
+					<p >Let's take a look at some examples:</p>
+					<p>A reminder that we can use <em><font style = "color: white;">IS [NOT] NULL</font></em> as a comparison. Useful when we want to check how many records have missing (or not) data</p>
+					<pre data-id="wherecode"><code class = "language-sql" data-trim data-line-numbers="6-9">
+					SELECT
+						*
+					FROM
+						schema_name.flights
+					WHERE
+						dep_delay IS NULL
+					;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Filtering</h2>
+					<p >Just like before, we can't use a renamed column in a <em><font style = "color: white;">WHERE</font></em> clause.</p>
+					<pre data-id="wherecode2" class="fragment" data-fragment-index="1"><code class = "language-sql" data-trim data-line-numbers="1-7|9-14">
+					-- Both of these will error
+					SELECT 
+						TRUNC(time_hour) AS flight_day
+					FROM
+						schema_name.flights
+					WHERE
+						flight_day > DATE '2013-06-01';
+					
+					SELECT 
+						tailnum AS tailnumber
+					FROM
+						schema_name.flights
+					WHERE
+						tailnumber LIKE 'N%';
+					</code></pre>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Filtering</h2>
+					<p>Just like before, we can't use a renamed column in a <em><font style = "color: white;">WHERE</font></em> clause.</p>
+					<p>The reason for this is because the <em><font style = "color: white;">WHERE</font></em> clause runs <b>before</b> the <em><font style = "color: white;">SELECT</font></em> does (even though it's written after).</p>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Filtering</h2>
+					<p>An upside of this is that you can filter on a column that you don't actual output.</p>
+					<pre data-id="wherecode3" class="fragment" data-fragment-index="1"><code class = "language-sql" data-trim data-line-numbers>
+					SELECT 
+						tailnum 
+					FROM
+						schema_name.flights
+					WHERE
+						origin = 'JFK'; -- only flights out of JFK airport
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Live View</h1>
+					<p>Run some of these queries so far and see the results.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Exercise time!</h1>
+					<p>Attempt questions 16-19.</p>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Ordering</h2>
+					<p class="fragment" data-fragment-index="1">Next let's look at how we can order our data</p>
+					<small class="fragment" data-fragment-index="2">Ordering data is one of the most inefficient things a computer can do and databases are not designed to be fast at it, try to avoid ordering unless you have to, only do it once, or consider doing it in some other tool after exporting the data</small>
+					<pre data-id="ordercode1" class="fragment" data-fragment-index="3"><code class = "language-sql" data-trim data-line-numbers= '|7-8'>
+					SELECT
+						columns
+					FROM
+						tables
+					WHERE
+						condition
+					ORDER BY 
+						columns;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Ordering</h2>
+					<p>We can order by a single column</p>
+					<pre data-id="ordercode1"><code class = "language-sql" data-trim data-line-numbers>
+					SELECT 
+						*
+					FROM
+						schema_name.flights
+					WHERE 
+						dep_delay > 0
+					ORDER BY 
+						dep_delay;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Ordering</h2>
+					<p>Or multiple columns for when there is a tie</p>
+					<pre data-id="ordercode1"><code class = "language-sql" data-trim data-line-numbers=|7-10>
+					SELECT 
+						*
+					FROM
+						schema_name.flights
+					WHERE 
+						dep_delay > 0
+					ORDER BY 
+					-- sort by departure delay THEN arrival delay if there is a tie.
+						dep_delay, 
+						arr_delay; 
+					</code></pre>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Ordering</h2>
+					<p>By default records are ordered in <b>ascending</b> order</p>
+					<pre data-id="ordercode1"><code class = "language-sql" data-trim data-line-numbers=|7-10>
+					SELECT 
+						*
+					FROM
+						schema_name.flights
+					WHERE 
+						dep_delay > 0
+					ORDER BY 
+					-- Least delayed departing, ties are sorted by least delayed when arriving.
+						dep_delay, 
+						arr_delay; 
+					</code></pre>
+				</section>
+				<section data-auto-animate >
+					<h2>Records - Ordering</h2>
+					<p>By default records are ordered in <b>ascending</b> order</p>
+					<p>but we can change that</p>
+					<pre data-id="ordercode1"><code class = "language-sql" data-trim data-line-numbers=8-9>
+					SELECT 
+						*
+					FROM
+						schema_name.flights
+					WHERE 
+						dep_delay > 0
+					ORDER BY 
+					-- MOST delayed departing, ties are sorted by least delayed when arriving.
+						dep_delay DESC, 
+						arr_delay; 
+					</code></pre>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Ordering</h2>
+					<p>By default records are ordered in <b>ascending</b> order</p>
+					<p>but we can change that</p>
+					<p>and we have to specify it for each column.</p>
+					<pre data-id="ordercode1"><code class = "language-sql" data-trim data-line-numbers=8,10>
+					SELECT 
+						*
+					FROM
+						schema_name.flights
+					WHERE 
+						dep_delay > 0
+					ORDER BY 
+					-- MOST delayed departing, ties are sorted by MOST delayed when arriving.
+						dep_delay DESC, 
+						arr_delay DESC; 
+					</code></pre>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Ordering</h2>
+					<p>Finally, we can be a bit lazy and because the <em><font style = "color: white;">ORDER BY</font></em> runs after the <em><font style = "color: white;">SELECT</font></em> we can actually just use numbers instead of column names.</p>
+					<p>This is also why we can use column aliases in the <em><font style = "color: white;">ORDER BY</font></em> and can't use columns we didn't <em><font style = "color: white;">SELECT</font></em></p>
+					<pre data-id="ordercode1"><code class = "language-sql" data-trim data-line-numbers=8,10>
+					SELECT 
+						flight,
+						dep_delay,
+						arr_delay
+					FROM
+						schema_name.flights
+					WHERE 
+						dep_delay > 0
+					ORDER BY 
+						2 desc, 
+						3; 
+					</code></pre>
+					<small>Generally this is a bad idea, it's hard to read and if you change the order in your <em><font style = "color: white;">SELECT</font></em> it will break.</small>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Distinct</h2>
+					<p>It's rare that you want duplicates in your data. Usually it means you've done a join (next section) wrong, or your source data has an issue, or you removed too many variables.</p>
+					<p class="fragment" data-fragment-index="1">If you are comfortable as to why you have duplicates but want to remove them you can use a <em><font style = "color: white;">SELECT DISTINCT</font></em> to just get unique records.</p>
+					<pre data-id="distinctcode1" class="fragment" data-fragment-index="2"><code class = "language-sql" data-trim data-line-numbers>
+					SELECT DISTINCT 
+						origin,
+						dest
+					FROM
+						schema_name.flights;
+					</code></pre>
+					<small class="fragment" data-fragment-index="3"><em><font style = "color: white;">DISTINCT</font></em> acts on all selected columns, not just the first one.</small>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Live View</h1>
+					<p>Run some of these queries so far and see the results.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Exercise time!</h1>
+					<p>Attempt questions 20-21.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Records - Combining</h2>
+					<img class="r-frame" style="background: rgba(255,255,255,0.1)"; data-src="./assets/unions.jpg" alt="Union types in SQL">
+				</section>
+
+			</section>
+			<!-- Part 2 End -->
 			</div>
 		</div>
 
@@ -1017,7 +1450,7 @@
 			}
 			#footer-left {
 				position: absolute;
-				bottom: 0%;
+				bottom: 2%;
 				left: 0%;
 				font-size: small;
 				color: grey;

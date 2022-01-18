@@ -491,7 +491,7 @@ SELECT
 	time_hour + 1, -- add 1 day
 	time_hour + 5/24/60, -- add 5 minutes
 	TRUNC(time_hour), -- set time component to 0
-	TRUNC(time_hour, 'MM'), -- set to first of month TODO: check if strips time as well
+	TRUNC(time_hour, 'MM'), -- set to first of month 
 	NEXT_DAY(time_hour, 'Saturday') - 1, -- Set to Friday inclusive for a week
 	TO_CHAR(time_hour, 'HH24:MI DAY DD MONTH YYYY'), -- format date in a specific format
 	TO_CHAR(time_hour, 'HH24:MI Day dd month yyyy'), -- notice how case changes the output
@@ -670,7 +670,7 @@ FROM
 	schema_name.flights
 WHERE
 	1 = 1
-	AND (hour < 10 or hour > 19) -- flights scheduled to depart in the first 10 or last 5 hours of a day
+	AND (hour < 10 OR hour > 19) -- flights scheduled to depart in the first 10 or last 5 hours of a day
 	AND dep_delay = 0; -- left on time
 
 

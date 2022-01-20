@@ -1825,7 +1825,7 @@ ORDER BY
 
 /* 
 Now we have this table we can answer the question ... sort of. Because of the choices we made with regards to deciles over all airports
-we actually in many cases on have one airport per decile! Overall there seems to be a spike of delays in the 10th decile, and a small but not
+we actually in many cases only have one airport per decile! Overall there seems to be a spike of delays in the 10th decile, and a small but not
 smooth trend upwards in the lower deciles, which suggest there isn't much of a correlation except for extreme amounts of rain. La Guardia seems 
 to cope best with high volumes of rain, potentially because they most often see more rain than the other airports, but using just this data in the 
 way we created it I wouldn't be super confident in my findings as there is such a high standard deviation for each decile.

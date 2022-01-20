@@ -1576,9 +1576,533 @@
 					<li class="fragment" data-fragment-index="2">Order and only return a fixed number of records</li>
 					<li class="fragment" data-fragment-index="3">Combine record sets into a single output</li>
 				<small class="fragment" data-fragment-index="6" >Don't forget to run the error message examples to see common examples of variable based errors!</small>
-				
+				</section>
 			</section>
 			<!-- Part 2 End -->
+
+
+			<!-- Part 3 Start -->
+			<section>
+				<section data-auto-animate >
+					<h1 class="r-big" style = "color: teal;">Part 3:</h1>
+					<h2>Tables</h2>
+					<h4>Reusing and joinging them</h4>
+				</section data-auto-animate >
+
+				<section data-auto-animate >
+					<h1 class="r-big" style = "color: teal;">Part 3:</h1>
+					<h3>By the end of this section you will be able to:</h3>
+					<li class="fragment" data-fragment-index="1">Use the dummy table for testing queries</li>
+					<li class="fragment" data-fragment-index="2">Use the table output by one query in another</li>
+					<li class="fragment" data-fragment-index="3">Join tables together</li>
+				</section data-auto-animate >
+				
+
+				<section data-auto-animate>
+					<h2>Tables - Dual</h2>
+					<p class="fragment" data-fragment-index="1">Sometimes we want to test our query or a function and don't want to query a whole table to do it.</p>
+					<p class="fragment" data-fragment-index="2">To do this we can use a special table called <em><font style = "color: white;">dual</font></em> which has a single row and a single column, with a value of <em>'X'</em>.</p>
+					<pre class="fragment" data-fragment-index="3" data-id="dualcode"><code class = "language-sql" data-trim data-line-numbers>
+						SELECT
+							* 
+						FROM
+							dual;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Dual</h2>
+					<p>One good use for this is often to test out some date or string functions on dummy data to make sure you get it right</p>
+					<pre data-id="dualcode"><code class = "language-sql" data-trim data-line-numbers>
+					SELECT
+						--Some random date manipulation as a test
+						TRUNC(SYSDATE) - 5 + 1/24 + 14/24/60, 
+						-- should return Friday
+						NEXT_DAY(TRUNC(SYSDATE), 'SAT') - 1 AS week_end_date 
+					FROM
+						dual;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Reusing</h2>
+					<p class="fragment" data-fragment-index="1">We've seen multiple times that we can't use a column we create/alias in a query within the same query (except in ordering). This was because of the order the query actualy runs in vs how we see it written.</p>
+					<p class="fragment" data-fragment-index="2">But we know that a query returns a table, so we could use <em>that</em> table as the input to another query!</p>
+					<pre class="fragment" data-fragment-index="3" data-id="nestcode"><code class = "language-sql" data-trim data-line-numbers = '|4'>
+					SELECT
+						columns
+					FROM
+						table
+					WHERE
+						condition;
+					</code></pre>
+				</section>
+
+			
+				<section data-auto-animate>
+					<h2>Tables - Reusing</h2>
+					<p>We've seen multiple times that we can't use a column we create/alias in a query within the same query (except in ordering). This was because of the order the query actualy runs in vs how we see it written.</p>
+					<p>But we know that a query returns a table, so we could use <em>that</em> table as the input to another query!</p>
+					<pre data-id="nestcode"><code class = "language-sql" data-trim data-line-numbers= '4-10'>
+					SELECT
+						columns
+					FROM
+						(SELECT
+							columns
+						FROM
+							tables
+						WHERE
+							condition
+						)
+					WHERE
+						condition;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Reusing</h2>
+					<p>This is known as a <em><font style = "color: white;">nested query</font></em> because the inner query is nested entirely within the outer one.</p>
+					<p class="fragment" data-fragment-index="1">We can do this as many times as we like, but the database does have to complete an inner query before it can run the outer one, so filter as early (more nested) as possible, and order as late as possible.</p>
+					<pre data-id="nestcode"><code class = "language-sql" data-trim data-line-numbers= '4-10'>
+					SELECT
+						columns
+					FROM
+						(SELECT
+							columns
+						FROM
+							tables
+						WHERE
+							condition
+						)
+					WHERE
+						condition;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Reusing</h2>
+					<p>We need a way to refer to the attributes in the output of this inner query, we do that by aliasing the inner query - just like we would a table.</p>
+					<pre data-id="nestcode"><code class = "language-sql" data-trim data-line-numbers= '9-10'>
+					SELECT
+						b.*
+					FROM
+						(
+						SELECT
+							a.*,
+							distance * 1.60934 AS distance_km
+						FROM
+							schema_name.flights a
+						) b
+					WHERE
+						distance_km > 1000;
+					</code></pre>
+					<small class="fragment" data-fragment-index="1">People often use a/b/c etc. for aliases - for short code this is fine but for longer code try to use a short but descriptive alias for each table instead.</small>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Reusing</h2>
+					<p>Nested queries are great when the inner query is short and you only need to use it once. But what about if you want to use that inner query in multiple places, or the nesting gets very deep and complex?</p>
+					<p class="fragment" data-fragment-index="1">The solution is <em><font style = "color: white;">Common Table Expressions (CTEs)</font></em> which allow you to alias a whole query and refer to it at any later point in your code <em>without</em> having to write it out in full every time. These use the <em><font style = "color: white;">WITH</font></em> keyboard</p>
+					<pre class="fragment" data-fragment-index="2" data-id="withcode"><code class = "language-sql" data-trim data-line-numbers= '|1|3|5|7-10'>
+						WITH alias AS (QUERY),
+
+						alias2 AS (QUERY),
+
+						alias3 AS (QUERY)
+						
+						SELECT
+							columns
+						FROM
+							tables;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Reusing</h2>
+					<small>The database will optimise if it needs to reuse a table and will temporarily store it vs just running it once when needed - CTEs can be more efficient than nested queries, not just easier to read!</small>
+					<pre data-id="withcode"><code class = "language-sql" data-trim data-line-numbers= '1-8|10-22|13,20'>
+						WITH km_table as 
+						(
+							SELECT
+								a.*,
+								distance * 1.60934 AS distance_km
+							FROM
+								schema_name.flights a
+						)
+
+						SELECT
+							*
+						FROM
+							km_table
+						WHERE
+							distance_km > 1000
+						UNION
+						SELECT
+							*
+						FROM
+							km_table
+						WHERE
+							distance_km < 1000;
+					</code></pre>
+				</section>
+				
+
+				<section data-auto-animate>
+					<h1>Live View</h1>
+					<p>Run some of these queries so far and see the results.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Exercise time!</h1>
+					<p>Attempt questions 25-28</p>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Reusing</h2>
+					<p class="fragment" data-fragment-index="1"> Finally we can keep a table for a longer period by storing it permanently in the database. To do this we use the <em><font style = "color: white;">CREATE TABLE</font></em> statement.</p>
+					<small class="fragment" data-fragment-index="2">Remember that a statement is different to a a query - a query reads the database and returns a table, a statement can interact with the database in other ways.</small>
+					<pre class="fragment" data-fragment-index="3" data-id="createcode"><code class = "language-sql" data-trim data-line-numbers>
+						-- Nologging optionally turns off logs for the table creation
+						CREATE TABLE your_table_name [NOLOGGING] AS
+							query;
+					</code></pre>
+					<small class="fragment" data-fragment-index="4">It is possible to use <em><font style = "color: white;">CREATE TABLE</font></em> to create tables without a query by just specifying column names and types, but that is beyond the scope of this training.</small>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Reusing</h2>
+					<p> Once created you can query the table like any other.Because you created it in your schema, you don't have to specify the schema name. </p>
+					<small class="fragment" data-fragment-index="1">Remember only you can see this table, to share it with others you have to grant them access.</small>
+					<pre data-id="createcode"><code class = "language-sql" data-trim data-line-numbers = '1-6|8-11'>
+						CREATE TABLE flights_km NOLOGGING AS
+						SELECT
+							a.*,
+							distance * 1.60934 AS distance_km
+						FROM
+							schema_name.flights a;
+
+						SELECT
+							*
+						FROM 
+							flights_km;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Reusing</h2>
+					<p> Once we're done we want to <em><font style = "color: white;">DROP</font></em> the table to delete it from the database. </p>
+					<pre data-id="dropcode"><code class = "language-sql" data-trim data-line-numbers>
+						DROP TABLE your_table_name [PURGE];
+					</code></pre>
+					<small><em><font style = "color: white;">PURGE</font></em> removes it from your recycling bin, you can leave it out but make sure to empty the bin in the case!</small>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Reusing</h2>
+					<pre data-id="dropcode"><code class = "language-sql" data-trim data-line-numbers>
+						DROP TABLE flights_km PURGE;
+
+						SELECT
+							*
+						FROM 
+							flights_km; -- the table no longer exist.
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Reusing</h2>
+					<p>There are plenty of other statements in SQL that interact with tables, you can use <em><font style = "color: white;">TRUNCATE</font></em> to empty a table, <em><font style = "color: white;">INSERT</font></em> to add new records, <em><font style = "color: white;">DELETE</font></em> to remove specific records, and <em><font style = "color: white;">UPDATE</font></em> to alter existing records.</p>
+					<p>However, these are beyond the scope of this training.</p>
+				</section>
+
+
+				<section data-auto-animate>
+					<h1>Live View</h1>
+					<p>Run some of these queries so far and see the results.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Exercise time!</h1>
+					<p>Attempt questions 29</p>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Joining</h2>
+					<p class="fragment" data-fragment-index="1">We now come to one of the most powerful parts of using a relational databases, <em>joining</em> tables.</p>
+					<p class="fragment" data-fragment-index="2">Joins take place in the <em><font style = "color: white;">FROM</font></em> part of the query and have the following form:</p>
+					<pre class="fragment" data-fragment-index="3" data-id="joincode"><code class = "language-sql" data-trim data-line-numbers= '|4-6'>
+						SELECT
+							columns
+						FROM
+							table1
+							join_type JOIN table2
+							ON condition;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Joining</h2>
+					<p>There are 4 types of joins you can do:</p>
+					<span style="font-size: 50%;">
+					<table>
+						<thead>
+						  <tr>
+							<th>Join type</th>
+							<th>Description</th>
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr class="fragment" data-fragment-index="1">
+							<td>INNER JOIN</td>
+							<td>Only return records where they exist in both tables</td>
+						  </tr>
+						  <tr class="fragment" data-fragment-index="2">
+							<td>LEFT/RIGHT JOIN</td>
+							<td>Return all records in the left/right table and any match in the right/left one if it exists</td>
+						  </tr>
+						  <tr class="fragment" data-fragment-index="3">
+							<td>FULL OUTER JOIN </td>
+							<td>Return all records in both tables and any match if it exists</td>
+						  </tr>
+						  <tr class="fragment" data-fragment-index="4">
+							<td>CROSS JOIN</td>
+							<td>Return all combinations of rows across both tables (the Cartesian product of the rows). Not often useful.</td>
+						  </tr>
+						</tbody>
+						</table>
+					</span>
+					<small class="fragment" data-fragment-index="5">Note that <em><font style = "color: white;">CROSS JOIN</font></em> does not have an ON condition.</small>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Joining</h2>
+					<p>There are 4 types of joins you can do:</p>
+					<img class="r-frame" style="background: rgba(255,255,255,0.1); max-height: 400px;" data-src="./assets/joins.jpg" alt="Join types in SQL">
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Joining</h2>
+					<h3>WARNING:</h3>
+					<p class="fragment" data-fragment-index="1">When you specify a condition in your join that defines where a match is returned to the record or not, when you specify it in the <em><font style = "color: white;">WHERE</font></em> this specifies whether the <em>whole</em> record is returned or not.</p>
+					<p class="fragment" data-fragment-index="2">In the case of an inner join these are the same thing, but for other joins they are not.</p>
+					<p class="fragment" data-fragment-index="3">First define your join logic, then define your filter criteria <b>separately</b>.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Joining</h2>
+					<p>For the join examples we're going to use a slim version of the planes table so we can see how each join behaves; let's create that first.</p>
+					<pre data-id="joincreatecode"><code class = "language-sql" data-trim data-line-numbers>
+						CREATE TABLE planes_short NOLOGGING AS
+						SELECT
+							* 
+						FROM 
+							schema_name.planes
+						WHERE
+							tailnum = 'N108UW';
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Joining</h2>
+					<p>First let's look at an inner join, where only records that find a match are returned</p>
+					<pre data-id="joincode2"><code class = "language-sql" data-trim data-line-numbers= '|5,6,9|2-3'>
+						SELECT 
+							a.*,
+							b.*
+						FROM 
+							schema_name.flights a
+							INNER JOIN planes_short b
+							/* In this case the columns had the same names, 
+							but that won't always (in fact will rarely) be the case */
+							ON a.tailnum = b.tailnum; 
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Joining</h2>
+					<p>Next the left join, where all records from the first table are returned, plus any matching data from the second</p>
+					<pre data-id="joincode2"><code class = "language-sql" data-trim data-line-numbers= '6'>
+						SELECT 
+							a.*,
+							b.*
+						FROM 
+							schema_name.flights a
+							LEFT JOIN planes_short b
+							ON a.tailnum = b.tailnum; 
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Joining</h2>
+					<p>And a right join, just the other way round to the left.</p>
+					<pre data-id="joincode2"><code class = "language-sql" data-trim data-line-numbers= '6'>
+						SELECT 
+							a.*,
+							b.*
+						FROM 
+							schema_name.flights a
+							RIGHT JOIN planes_short b
+							ON a.tailnum = b.tailnum; 
+					</code></pre>
+				</section>
+				<small class="fragment" data-fragment-index="1"> Despire the planes_short table having 1 row per plane, because of the join we now have multiple - we'll talk about this in a bit!</small>
+
+				<section data-auto-animate>
+					<h2>Tables - Joining</h2>
+					<p>And a full outer join - we'll use a dummy table to create a fake plane to show that it returns all records from both tables regardless of if they match.</p>
+					<pre data-id="joincode2"><code class = "language-sql" data-trim data-line-numbers= '6'>
+						SELECT 
+							a.*,
+							b.*
+						FROM 
+							schema_name.flights a
+							FULL OUTER JOIN (SELECT 'FAKETAIL' AS tailnum_2 FROM dual) b
+						ON a.tailnum = b.tailnum_2
+						-- Defaults to nulls first for descending.
+						ORDER BY a.flight DESC; 
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Joining</h2>
+					<p>Lastly the cross join - the least used of them all. We'll use 2 tables with 3 rows each to show we get all matches back in 9 rows (3x3).</p>
+					<pre data-id="joincode2"><code class = "language-sql" data-trim data-line-numbers>
+						SELECT
+							*
+						FROM 
+							(SELECT '1' AS num FROM DUAL
+								UNION
+							SELECT '2' AS num FROM DUAL
+								UNION
+							SELECT '3' AS num FROM DUAL) A
+						CROSS JOIN
+							(SELECT 'A' AS let FROM DUAL
+								UNION
+							SELECT 'B' AS let FROM DUAL
+								UNION
+							SELECT 'C' AS let FROM DUAL) B;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Joining</h2>
+					<h3>A note about join conditions</h3>
+					<p class="fragment" data-fragment-index="1">Joins are the place you are most likely to make a mistake that leads to duplicates in your data and going from millions of records to billions.</p>
+					<p class="fragment" data-fragment-index="2">The reason is if your join is not unique on at least one of the tables (i.e. the condition you give can be used to define each record and distinguish it from others) then each record in <b>both</b> tables will join to multiple in the other, getting out of hand very fast.</p>
+					<p class="fragment" data-fragment-index="3">Always ask yourself; does my join link 1 row to 1/many rows in my other table? If the answer is no, you need to rethink your logic.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Live View</h1>
+					<p>Run some of these queries so far and see the results.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Exercise time!</h1>
+					<p>Attempt questions 30-32</p>
+				</section>
+
+				<section data-auto-animate >
+					<h1 class="r-big" style = "color: teal;">Part 3:</h1>
+					<h3>In this section you learned to:</h3>
+					<li class="fragment" data-fragment-index="1">Use the dummy table for testing queries</li>
+					<li class="fragment" data-fragment-index="2">Use the table output by one query in another</li>
+					<li class="fragment" data-fragment-index="3">Join tables together</li>
+				<small class="fragment" data-fragment-index="6" >Don't forget to run the error message examples to see common examples of variable based errors!</small>
+				</section data-auto-animate >
+
+			</section>
+			<!-- Part 3 End -->
+
+
+			<!-- Part 4 Start -->
+			<section>
+				<section data-auto-animate >
+					<h1 class="r-big" style = "color: teal;">Part 4:</h1>
+					<h2>Aggregation</h2>
+					<h4>Grouping and window functions</h4>
+				</section data-auto-animate >
+
+				<section data-auto-animate >
+					<h1 class="r-big" style = "color: teal;">Part 4:</h1>
+					<h3>By the end of this section you will be able to:</h3>
+					<li class="fragment" data-fragment-index="1">Summarise data in defined groups</li>
+					<li class="fragment" data-fragment-index="2">Add aggregated information to existing tables</li>
+				</section data-auto-animate >
+
+				<section data-auto-animate>
+					<h2>Aggregation - Grouping</h2>
+					<p class="fragment" data-fragment-index="1">Often we want to get aggregate information of our data and group it by values in another column - this is similar to what we do in PivotTables in Excel.</p>
+					<p class="fragment" data-fragment-index="2">To do this we use the <em><font style = "color: white;">GROUP BY</font></em> clause and summary functions. This goes after <em><font style = "color: white;">WHERE</font></em> but before <em><font style = "color: white;">ORDER BY</font></em>.</p>
+					<pre class="fragment" data-fragment-index="3" data-id="groupcode"><code class = "language-sql" data-trim data-line-numbers='|8-9|2-3'>
+						SELECT
+							group_columns,
+							summary_columns
+						FROM
+							tables
+						WHERE
+							condition
+						GROUP BY 
+							group_columns
+						ORDER BY 
+							columns;
+					</code></pre>
+				<small class="fragment" data-fragment-index="4">Any non-summarised variable <b>must</b> be listed in your <em><font style = "color: white;">GROUP BY</font></em> otherwise it will error. You can group by something you don't select but it's a bad idea.</small>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Aggregation - Grouping</h2>
+					<p >There are plenty of aggergation functions and the most common are listed below:</p>
+					<span style="font-size: 50%;">
+					<table>
+						<thead>
+						  <tr>
+							<th>Agg type</th>
+							<th>Description</th>
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr class="fragment" data-fragment-index="1">
+							<td>COUNT(*)</td>
+							<td>The total number of records per group</td>
+						  </tr>
+						  <tr class="fragment" data-fragment-index="2">
+							<td>COUNT(column)</td>
+							<td>The total number of records that are non-null in that variable</td>
+						  </tr>
+						  <tr class="fragment" data-fragment-index="3">
+							<td>SUM(column)</td>
+							<td>The sum of that variable, must be numeric</td>
+						  </tr>
+						  <tr class="fragment" data-fragment-index="4">
+							<td>AVG(column)</td>
+							<td>The mean of that variable, must be numeric</td>
+						  </tr>
+						  <tr class="fragment" data-fragment-index="5">
+							<td>MAX(column)</td>
+							<td>The maximum of that variable</td>
+						  </tr>
+						  <tr class="fragment" data-fragment-index="6">
+							<td>MIN(column)</td>
+							<td>The minimum of that variable</td>
+						  </tr>
+						</tbody>
+						</table>
+					</span>
+						<small class="fragment" data-fragment-index="7">For a full list visit <a href='https://docs.oracle.com/database/121/SQLRF/functions003.htmc#SQLRF20035'>the Oracle site.</a></small>
+				</section>
+
+
+
+				<section data-auto-animate >
+					<h1 class="r-big" style = "color: teal;">Part 4:</h1>
+					<h3>In this section you learned to:</h3>
+					<li class="fragment" data-fragment-index="1">Summarise data in defined groups</li>
+						<li class="fragment" data-fragment-index="2">Add aggregated information to existing tables</li>
+				<small class="fragment" data-fragment-index="6" >Don't forget to run the error message examples to see common examples of variable based errors!</small>
+			</section data-auto-animate >
+
+		</section>
 			</div>
 		</div>
 

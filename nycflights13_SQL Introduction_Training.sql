@@ -1057,7 +1057,7 @@ FROM
 	dual;
 
 
-/* You can now attempt question 23 */
+/* You can now attempt question 25 */
 
 
 /*
@@ -1109,14 +1109,15 @@ in a query. We can alias as many query output tables as we want this way, and ca
 
 WITH alias AS (<QUERY>),
 
-alias2 AS (<QUERY>)
+alias2 AS (<QUERY>),
+
+alias3 AS (<QUERY>)
 
 SELECT
 	<COLUMNS>
 FROM
 	<TABLES>
-WHERE
-	<CONDITION>;
+;
 
 From a database point of view, sometimes it will store the result of a WITH statement as a temporary table, and sometimes it will just run the query when it 
 is used within another query. 
@@ -1154,7 +1155,7 @@ The final way we can use the output of our queries is to store the resulting tab
 we use a CREATE TABLE statement. Whilst it is possible to create an empty table by specifying the variables and their type we will not cover 
 that in this course. Instead, we will just cover how to create a table from a SELECT statement.
 
-CREATE TABLE <TABLE> NOLOGGING AS
+CREATE TABLE <TABLE> [NOLOGGING] AS
 <QUERY>;
 
 The NOLOGGING keyword just removed logs of this creation from the database to slightly improve speed.
@@ -1178,7 +1179,7 @@ FROM
 Once we are done with the table we want to remove it so we could reuse the name and free up space in the database. We do this using a 
 DROP TABLE statement.
 
-DROP TABLE <TABLE> PURGE;
+DROP TABLE <TABLE> [PURGE];
 
 Where PURGE is a keyword to remove it from the recycling bin immediately.
 */
@@ -1217,8 +1218,7 @@ LEFT/RIGHT JOIN - Return all records in the left/right table and any match in th
 FULL OUTER JOIN - Return all records in both tables and any match if it exists
 CROSS JOIN - Return all combinations of rows across both tables (the Cartesian product of the rows). Not often useful.
 
-Note that the CROSS JOIN does not have an ON condition. Sometimes it is possible to choose to have a condition in either
-the join statement or the where statement. Both are equally fine and the database will optimise for what is best. 
+Note that the CROSS JOIN does not have an ON condition.
 
 Let's look at a few examples, but first let's create a smaller version of the PLANES table to help illustrate the different types
 */
@@ -1297,6 +1297,7 @@ CROSS JOIN
 -- Remove our table as we no longer need it.
 DROP TABLE planes_short PURGE;
 
+/* An important thing about joins is making sure you avoid generating duplicates of your data. Every join (except the cross join) should (usually) have at least one of the tables be uniquely defined by your join logic i.e. one row per record when using just those columns used in your join. If both tables aren't unique on the join, you're going to get huge duplication and massive amounts of rows.*/
 
 /* You can now attempt questions 30-32 */
 

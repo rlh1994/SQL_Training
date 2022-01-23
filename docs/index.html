@@ -47,7 +47,7 @@
 						<li class="fragment" data-fragment-index="2">Explain the use of whitespace and case in SQL</li>
 						<li class="fragment" data-fragment-index="3">Explain the benefit of error messages</li>
 						<li class="fragment" data-fragment-index="4">Explain what a null value is</li>
-					</section data-auto-animate >
+					</section>
 					
 					<section comments data-auto-animate >
 						<h2 class = "r-big"> Comments</h2>
@@ -173,7 +173,7 @@
 						<h1 class="r-big" style = "color: teal;">Part 1:</h1>
 						<h2>Variables</h2>
 						<h4>Selecting and creating them</h4>
-					</section data-auto-animate >
+					</section>
 
 					<section data-auto-animate >
 						<h1 class="r-big" style = "color: teal;">Part 1:</h1>
@@ -183,7 +183,7 @@
 						<li class="fragment" data-fragment-index="3">Create columns with conditional values</li>
 						<li class="fragment" data-fragment-index="4">Alias columns and tables</li>
 						<li class="fragment" data-fragment-index="5">Use common string functions</li>
-					</section data-auto-animate >
+					</section>
 
 					<section data-auto-animate >
 						<h2>Variables</h2>
@@ -1151,7 +1151,7 @@
 					<h1 class="r-big" style = "color: teal;">Part 2:</h1>
 					<h2>Records</h2>
 					<h4>Filtering and ordering them</h4>
-				</section data-auto-animate >
+				</section>
 
 				<section data-auto-animate >
 					<h1 class="r-big" style = "color: teal;">Part 2:</h1>
@@ -1159,7 +1159,7 @@
 					<li class="fragment" data-fragment-index="1">Filter records based on conditions</li>
 					<li class="fragment" data-fragment-index="2">Order and only return a fixed number of records</li>
 					<li class="fragment" data-fragment-index="3">Combine record sets into a single output</li>
-				</section data-auto-animate >
+				</section>
 
 				<section data-auto-animate >
 					<h2>Records - Filtering</h2>
@@ -1598,7 +1598,7 @@
 					<h1 class="r-big" style = "color: teal;">Part 3:</h1>
 					<h2>Tables</h2>
 					<h4>Reusing and joinging them</h4>
-				</section data-auto-animate >
+				</section>
 
 				<section data-auto-animate >
 					<h1 class="r-big" style = "color: teal;">Part 3:</h1>
@@ -1606,7 +1606,7 @@
 					<li class="fragment" data-fragment-index="1">Use the dummy table for testing queries</li>
 					<li class="fragment" data-fragment-index="2">Use the table output by one query in another</li>
 					<li class="fragment" data-fragment-index="3">Join tables together</li>
-				</section data-auto-animate >
+				</section>
 				
 
 				<section data-auto-animate>
@@ -2021,7 +2021,7 @@
 					<li class="fragment" data-fragment-index="2">Use the table output by one query in another</li>
 					<li class="fragment" data-fragment-index="3">Join tables together</li>
 				<small class="fragment" data-fragment-index="6" >Don't forget to run the error message examples to see common examples of variable based errors!</small>
-				</section data-auto-animate >
+				</section>
 
 			</section>
 			<!-- Part 3 End -->
@@ -2033,14 +2033,14 @@
 					<h1 class="r-big" style = "color: teal;">Part 4:</h1>
 					<h2>Aggregation</h2>
 					<h4>Grouping and window functions</h4>
-				</section data-auto-animate >
+				</section>
 
 				<section data-auto-animate >
 					<h1 class="r-big" style = "color: teal;">Part 4:</h1>
 					<h3>By the end of this section you will be able to:</h3>
 					<li class="fragment" data-fragment-index="1">Summarise data in defined groups</li>
 					<li class="fragment" data-fragment-index="2">Add aggregated information to existing tables</li>
-				</section data-auto-animate >
+				</section>
 
 				<section data-auto-animate>
 					<h2>Aggregation - Grouping</h2>
@@ -2105,11 +2105,197 @@
 				</section>
 
 
+				<section data-auto-animate>
+					<h2>Aggregation - Grouping</h2>
+					<p>Let's look at information about flights out of each airport</p>
+					<pre class="fragment" data-fragment-index="1" data-id="groupcode2"><code class = "language-sql" data-trim data-line-numbers='|11-12|2,12|3-8'>
+						SELECT
+							origin,
+							COUNT(*) AS num_flights,
+							COUNT(dep_time) as num_departed_flights, -- doesn't count records with a null departure time
+							SUM(air_time) AS total_airtime,
+							AVG(air_time) AS mean_airtime,
+							MAX(dep_delay) AS latest_dep,
+							MIN(dep_delay) AS earliest_dep
+						FROM 
+							schema_name.flights
+						GROUP BY 
+							origin;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Aggregation - Grouping</h2>
+					<p>Let's look at information about flights out of each airport</p>
+					<p>AND by each destination airport.</p>
+					<pre data-id="groupcode2"><code class = "language-sql" data-trim data-line-numbers='3,14'>
+						SELECT
+							origin,
+							dest,
+							COUNT(*) AS num_flights,
+							COUNT(dep_time) as num_departed_flights,
+							SUM(air_time) AS total_airtime,
+							AVG(air_time) AS mean_airtime,
+							MAX(dep_delay) AS latest_dep,
+							MIN(dep_delay) AS earliest_dep
+						FROM 
+							schema_name.flights
+						GROUP BY 
+							origin,
+							dest;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Aggregation - Grouping</h2>
+					<p>We don't have to group by everything if we want details about the whole dataset.</p>
+					<pre data-id="groupcode2"><code class = "language-sql" data-trim data-line-numbers>
+						SELECT 
+							COUNT(*) AS num_flights,
+							MAX(dep_delay) AS latest_dep,
+							MIN(dep_delay) AS earliest_dep
+						FROM
+							schema_name.flights;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Aggregation - Grouping</h2>
+					<p>These aggergations becomes even more powerful when combined with a <em><font style = "color: white;">CASE</font></em> statement.</p>
+					<pre class="fragment" data-fragment-index="1" data-id="groupcode3"><code class = "language-sql" data-trim data-line-numbers='3-9|10-16'>
+						SELECT 
+							origin,
+							SUM( -- SUM uses 1 and 0 as the values
+								CASE 
+									WHEN dep_delay = 0 AND arr_delay = 0 
+										THEN 1 
+									ELSE 0 
+								END 
+								) AS perfect_flights,
+							COUNT( -- COUNT uses anything and null as the values
+								CASE 
+									WHEN dep_delay = 0 AND arr_delay = 0 
+										THEN 1 
+									ELSE null 
+								END 
+								) AS perfect_flights2 
+						FROM
+							schema_name.flights
+						GROUP BY
+							origin;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Aggregation - Grouping</h2>
+					<p>You can filter on the results on an aggretation by using the <em><font style = "color: white;">HAVING</font></em> keyword (as a <em><font style = "color: white;">WHERE</font></em> filters records <em>before</em> they are aggregated).</p>
+					<pre data-id="groupcode4"><code class = "language-sql" data-trim data-line-numbers='8-10'>
+						SELECT
+							tailnum,
+							COUNT(*)
+						FROM
+							schema_name.flights
+						GROUP BY
+							tailnum
+						HAVING
+						-- only planes that had at least 50 flights in 2013
+							COUNT(*) > 50; 
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Live View</h1>
+					<p>Run some of these queries so far and see the results.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Exercise time!</h1>
+					<p>Attempt questions 33-34</p>
+				</section>
 
 
+				<section data-auto-animate>
+					<h2>Aggregation - Windowing</h2>
+					<p class="fragment" data-fragment-index="1">There are times we want to add aggregate information to our data but keep it at the record level. We could group and then join back on, but this is inefficient.</p>
+					<p class="fragment" data-fragment-index="2">Instead we can use something called <em><font style = "color: white;">WINDOW FUNCTIONS</font></em> (also known as <em><font style = "color: white;">ANALYTICAL FUNCTIONS</font></em>).</p>
+					<p class="fragment" data-fragment-index="3">Pretty much all of them have the same format:</p> 
+					<pre class="fragment" data-fragment-index="4" data-id="groupcode"><code class = "language-sql" data-trim data-line-numbers>
+						WINDOW_FUNCTION(column) OVER (PARTITION BY columns ORDER BY columns)
+					</code></pre>
+				<small class="fragment" data-fragment-index="5">Not all of the functions have an argument to the main function, or an <em><font style = "color: white;">ORDER BY</font></em> clause, but most do.</small>
+				<p class="fragment" data-fragment-index="6">The <em><font style = "color: white;">PARTITION BY</font></em> defines your group for that record, and the <em><font style = "color: white;">ORDER BY</font></em> defines the order within that group.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Aggregation - Windowing</h2>
+					<p>Most <em><font style = "color: white;">GROUP BY</font></em> functions have an equivalent window function, but there are a few extras as well:</p>
+					<span style = 'font-size: 50%;'>
+					<table>
+						<thead>
+						  <tr>
+							<th>Window Function</th>
+							<th>Description</th>
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr class="fragment" data-fragment-index="1">
+							<td>ROW_NUMBER()</td>
+							<td>Numbers records in group from 1 to N (number in group) based on order by</td>
+						  </tr>
+						  <tr class="fragment" data-fragment-index="2">
+							<td>RANK(column)</td>
+							<td>Rank value within that group, same value for ties (with gaps)</td>
+						  </tr>
+						  <tr class="fragment" data-fragment-index="3">
+							<td>DENSE_RANK(column)</td>
+							<td>Rank value within that group, same value for ties (with no gaps)</td>
+						  </tr>
+						  <tr class="fragment" data-fragment-index="4">
+							<td>FIRST/LAST_VALUE(column)</td>
+							<td>The first/last value within that group.</td>
+						  </tr>
+						  <tr class="fragment" data-fragment-index="5">
+							<td>LEAD/LAG(column)</td>
+							<td>The next/previous value within that group.</td>
+						  </tr>
+						</tbody>
+						</table>
+					</span>
+					<small class="fragment" data-fragment-index="6">For a full list visit <a href='https://docs.oracle.com/cd/E11882_01/server.112/e41084/functions004.htm#SQLRF06174'>the Oracle site.</a></small>
+					<small class="fragment" data-fragment-index="7">Not covered here is a few extra (optional) arguments to these functions that let you do the calculation to only some range of the rows (e.g. only previous rows for cumulative values, or the previous and next X records for rolling values etc.) For more info see the documentation.</small>
+				</section>
 
 
+				<section data-auto-animate>
+					<h2>Aggregation - Windowing</h2>
+					<p>Let's look at an example.</p>
+					<pre data-id="windowcode"><code class = "language-sql" data-trim data-line-numbers='3-6|7-9|10-12'>
+						SELECT
+							a.*,
+							ROW_NUMBER() OVER (
+								PARTITION BY year, month, day, carrier 
+								ORDER BY sched_dep_time
+								) AS day_carrier_flight,
+							COUNT(*) OVER (
+								PARTITION BY year, month, day, carrier
+								) AS day_carrier_flight_total,
+							AVG(dep_delay) OVER (
+								PARTITION BY year, month, day, carrier
+								) AS day_carrier_avg_dep_delay
+						FROM
+							schema_name.flights a;
+					</code></pre>
+				</section>
 
+				<section data-auto-animate>
+					<h1>Live View</h1>
+					<p>Run some of these queries so far and see the results.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Exercise time!</h1>
+					<p>Attempt questions 35-36</p>
+				</section>
 
 
 				<section data-auto-animate >
@@ -2118,9 +2304,11 @@
 					<li class="fragment" data-fragment-index="1">Summarise data in defined groups</li>
 						<li class="fragment" data-fragment-index="2">Add aggregated information to existing tables</li>
 				<small class="fragment" data-fragment-index="6" >Don't forget to run the error message examples to see common examples of variable based errors!</small>
-			</section data-auto-animate >
+					</section>
+					
 
 		</section>
+		
 
 		<!-- Part 4 End -->
 
@@ -2138,7 +2326,7 @@
 		<!-- Murder mystery end -->
 
 		<section>
-			<h1 class="r-big" style = "color: teal;">Thank you, and I hope you found this useful.</h1>
+			<h1 class="r-big" style = "color: teal;">Thank you, and I hope you found this useful!</h1>
 		</section>
 
 			</div>

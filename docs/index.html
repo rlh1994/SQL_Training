@@ -2389,6 +2389,15 @@
 				// Learn about plugins: https://revealjs.com/plugins/
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
 			});
+			// Remap to allow my clicker to work!
+			Reveal.configure({
+				keyboard: {
+					37: 'prev',
+					38: 'prev',
+					39: 'next',
+					40: 'next'
+				}
+			});
 		</script>
 	</body>
 </html>

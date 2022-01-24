@@ -21,14 +21,192 @@
 				</section>
 
 				<!-- Def and intro start -->
-				<!-- <section>
+				<section>
 					<section>
-						<h1 class="r-big" style = "color: teal;">Introduction & Definitions</h1>
+						<h1 class="r-big" style = "color: teal;">Purpose & Definitions</h1>
+					</section>
+
+					<section data-auto-animate >
+						<h2 >Purpose</h2>
+						<p>The goal of this content is to provide A good foundational understanding of Oracle SQL for querying databases to get you at a level to perform analysis on data.</p>
+						<p>It won't cover management of data within databases, or any way to automate your scripts and code, that is beyond the scope of this content.</p>
+					</section>
+
+					<section data-auto-animate >
+						<h1 class="r-big" style = "color: teal;">Why Use a Database?</h1>
+					</section>
+
+
+					<section data-auto-animate  data-background-iframe = https://www.youtube.com/embed/ICloNwrg-_w>
+
+					</section>
+
+					<section data-auto-animate >
+						<h2>What <font style = 'color: green;'>can</font> Databases do? What <font style = 'color: red;'>can't</font> they do?</h2>
+						<span style = 'color:green; font-size:80%;'>
+							<li class="fragment" data-fragment-index="1">Our databases are designed to work with relational data – meaning they are great and efficient for bringing data together and combining it.
+							</li>
+							<li class="fragment" data-fragment-index="2">Databases are an effective way to store and share information, to make sure everyone has the same and up-to-date versions.
+							</li>
+							<li class="fragment" data-fragment-index="3">Database tables can have millions of rows, more than excel can handle!
+							</li>
+							<li class="fragment" data-fragment-index="4">Databases are fast at working with large volumes of data.
+							</li>
+							<li class="fragment" data-fragment-index="5">The same script can be used to bring back the same output every time, no more having to manually work with the data each time!
+							</li>
+						</span>
+
+						<span style = 'color:red; font-size:80%;'>
+							<li class="fragment" data-fragment-index="6">Make graphs (at least not that look anywhere near good)
+							</li>
+							<li class="fragment" data-fragment-index="7">Drag and drop interface (again, technically yes but not recommended)
+							</li>
+							<li class="fragment" data-fragment-index="8">Many things that R/Python is better for
+							</li>
+							
+						</span>
+					</section>
+
+					<section data-auto-animate >
+						<h1 class="r-big" style = "color: teal;">How to access a database?</h1>
+					</section>
+
+					<section data-auto-animate >
+						<h2>SQL Developer</h2>
+						<p>A free software produced by Oracle it has a basic and clean interface but more complex features for power users.</p>
+						<img class="r-frame" style="background: rgba(255,255,255,0.1);" data-src="./assets/sql_dev.png" alt="Screenshot of SQL developer">
+					</section>
+
+					<section data-auto-animate >
+						<h2>Toad</h2>
+						<p>An alternative SQL IDE, a license is required for usage.</p>
+						<img class="r-frame" style="background: rgba(255,255,255,0.1);" data-src="./assets/Toad_sql.png" alt="Screenshot of Toad SQL IDE">
+					</section>
+
+					<section data-auto-animate >
+						<h2>Many more!</h2>
+						<p>SQL is just instructions that are sent to the database, so you can edit that plain text code in any text editor, and many tools offer database connections, including VSCode, RStudio, and many more!</p>
+					</section>
+
+					<section data-auto-animate >
+						<h1 class="r-big" style = "color: teal;">Some terminology...</h1>
+					</section>
+
+					<section data-auto-animate >
+						<h2>What is Google?</h2>
+						<li class="fragment" data-fragment-index="1">In our context it is a search engine</li>
+						<li  class="fragment" data-fragment-index="2">Used to find all sorts of information and help</li>
+						<li  class="fragment" data-fragment-index="3">Learning how to Google something is a very important skill!</li>
 					</section>
 				
-			
+					<section data-auto-animate >
+						<h2>What is SQL?</h2>
+						<li class="fragment" data-fragment-index="1">Structured Query Language</li>
+						<li  class="fragment" data-fragment-index="2">A language used to access and manipulate information stored in a database</li>
+						<li  class="fragment" data-fragment-index="3">Technically it is used to interact with the database, not just the data stored within it</li>
+						<li  class="fragment" data-fragment-index="4">A set of keywords, rules, and inputs that produce an action as an output.</li>
+					</section>
 
-				</section> -->
+					<section data-auto-animate >
+						<h2>What is Oracle SQL?</h2>
+						<li class="fragment" data-fragment-index="1">SQL has many different variants, like colloquialisms or accents</li>
+						<li  class="fragment" data-fragment-index="2">Most of the words and rules are the same, but some bits may be slightly different. Somethings will work in one variant, but not another or at least have to be done a different way</li>
+						<li  class="fragment" data-fragment-index="3">Oracle SQL is the database product and variant sold and supported by Oracle. Oracle SQL has traditionally been the main industry supplier of large business databases, but this is changing in favour of the big 3 cloud vendors</li>
+						<li  class="fragment" data-fragment-index="4">There are other differences such as speed, costs, support, and much more that goes into choosing a database variant</li>
+						<li  class="fragment" data-fragment-index="5">Other key players in the market are MySQL, SQLServer (Microsoft), SQLite, and many new cloud based solutions such as Google’s BigQuery</li>
+					</section>
+
+					<section data-auto-animate >
+						<h2>What is Oracle SQL?</h2>
+						<li>The important thing is when you google something about SQL, always include the word “Oracle” in your search</li>
+						<li class="fragment" data-fragment-index="1">NEVER use the Oracle site for help, it’s designed for database experts and is useless to 99% of people</li>
+					</section>
+					
+					<section data-auto-animate >
+						<h2>What is a database?</h2>
+						<li class="fragment" data-fragment-index="1">A data storage solution, traditionally represented by 3 disks on top of each other, representing different harddisks, designed to be optimised for certain operations.</li>
+						<li  class="fragment" data-fragment-index="2">We will focus on relational databases that are organised into tables with rows and columns</li>
+						<li  class="fragment" data-fragment-index="3">Within the database there are Schemas, small workspaces for a user or set of users</li>
+						<span style = 'font-size:75%';>
+							<li  class="fragment" data-fragment-index="4">A Schema contains tables (and other things)</li>
+							<li  class="fragment" data-fragment-index="5">A Table contains records (rows) and variables (columns)</li>
+						</span>
+						<li  class="fragment" data-fragment-index="6">In Excel terms, a database if a folder on your laptop, the schema is an excel file (workbook), a table is a sheet, and the rows and columns are rows and columns</li>
+						<li  class="fragment" data-fragment-index="7">Tables within a schema are only accessible to that schema’s users, unless rights are granted to other schemas to access them</li>
+					</section>
+
+					<section data-auto-animate >
+						<h2>What is a database?</h2>
+						<img class="r-frame" style="background: rgba(255,255,255,0.1);" data-src="./assets/schemas.png" alt="Display of schema structure in a datbase">
+					</section>
+
+
+					<section data-auto-animate >
+						<h2>What is a query?</h2>
+						<li class="fragment" data-fragment-index="1">A single complete piece of SQL code</li>
+						<li  class="fragment" data-fragment-index="2">It must have a certain minimum level of detail (e.g. contain reference to at least one table and a list of columns to return)</li>
+						<li  class="fragment" data-fragment-index="3"><em><font style = "color: white;"><b>Returns a table</b></font></em></li>
+						<li  class="fragment" data-fragment-index="4">Are executed one at a time</li>
+						<li  class="fragment" data-fragment-index="5">Many queries can be stored in a single .sql file, or script</li>
+						<li  class="fragment" data-fragment-index="6">Are a subset of statements, these however include code that will create tables, or update information i.e. perform an action that doesn’t have to return a table</li>
+					</section>
+					<section data-auto-animate >
+						<h2>What is a table?</h2>
+						<li class="fragment" data-fragment-index="1">It is the foundation of relational databases, a collection of records (rows) and variables (columns)
+						</li>
+						<li  class="fragment" data-fragment-index="2">All entried in a given column are of the same <em>type</em></li>
+						<li  class="fragment" data-fragment-index="3">Tables are stored within a schema and have a name – usually the name has no spaces, doesn’t start with a number, and is in all caps (but not always because some people are sadists)</li>
+						<li  class="fragment" data-fragment-index="4">Tables are the output/return type of a query or SELECT statement</li>
+						<li  class="fragment" data-fragment-index="5">Can have 0 rows, must have at least 1 column</li>
+					</section>
+
+
+
+					<section data-auto-animate >
+						<h2>What is a data type?</h2>
+						<li class="fragment" data-fragment-index="1">The type of a data column determines what it can contain and what operations/functions you can perform on it</li>
+						<li  class="fragment" data-fragment-index="2"><em><font style = "color: white;">Numeric</font></em> objects in Oracle are usually either integer (whole number) or number (decimal number). Databases are usually pretty good at automatically converting integers to decimal numbers if required
+						</li>
+						
+					</section>
+					<section data-auto-animate >
+						<h2>What is a data type?</h2>
+						<li >The type of a data column determines what it can contain and what operations/functions you can perform on it</li>
+						
+						<li><em><font style = "color: white;">Character</font></em> objects in Oracle are usually either char/nchar (a fixed length, padded with usually a space) or varchar2/nvarchar2 (a variable length). These are also referred to as strings, as in a string of characters. </li>
+							<small class="fragment" data-fragment-index="1">Strings as data in Oracle are written using single quotes ‘string’</small>
+							<small class="fragment" data-fragment-index="2">Strings as database objects (e.g. tables, column names etc) in Oracle are written using double quotes “table_name”
+							</small>
+						
+						
+					</section>
+
+					<section data-auto-animate >
+						<h2>What is a data type?</h2>
+						<li>The type of a data column determines what it can contain and what operations/functions you can perform on it</li>
+						<li><em><font style = "color: white;">Date</font></em> objects in Oracle are usually stored as date, sometimes timestamp. In Oracle ALL date data has a time component – there is no data type without a time component – you can set it to zero but it’s still there. Date formatting is also based on local settings so there are special functions to interact with dates, but we’ll see more about this later on…
+						</li>
+						
+					</section>
+
+					<section data-auto-animate >
+						<h2>What is a data type?</h2>
+						<li>The type of a data column determines what it can contain and what operations/functions you can perform on it</li>
+						<li><em><font style = "color: white;">Boolean</font></em> objects do not exist as a data type for a variable in Oracle; these are TRUE and FALSE values so you must store any column for this as either a string or a number (1/0)
+						</li>
+					</section>
+
+
+					<section data-auto-animate >
+						<h2>What is a function?</h2>
+						<li class="fragment" data-fragment-index="1">Generally, a function is something that takes an input (arguments), does a calculation/computation, and in all our cases will return an output</li>
+						<li  class="fragment" data-fragment-index="2">For the purposes of this content, functions will usually take a variable (column) and potentially some additional information as arguments</li>
+						<li  class="fragment" data-fragment-index="3">For the purposes of this content, functions will usually return a variable (column) as an output, with the same number of rows as the input</li>
+						<li  class="fragment" data-fragment-index="4">Many functions will look like function_name(arg1, arg2, …, argn) but not all as we will see…</li>
+					</section>
+					
+
+				</section>
 				<!-- Def and intro end -->
 				<!-- Part 0 Start -->
 				<section>
@@ -162,6 +340,11 @@
 						<h2 class = "r-big"> Nulls</h2>
 						<p class="fragment" data-fragment-index="1">Finally, empty values in SQL have a special type call <em>null</em>. </p>
 						<p class="fragment" data-fragment-index="2">This isn't an empty string or 0 or NA, it is a special thing all by itself.</p>
+					</section>
+
+					<section data-auto-animate >
+						<h2>Our Data</h2>
+						<img class="r-frame" style="background: rgba(255,255,255,0.1);" data-src="./assets/flights.png" alt="Display of schema structure in a datbase">
 					</section>
 
 				</section>
@@ -485,7 +668,7 @@
 						<h2>Variables - Functions</h2>
 						<p class="fragment" data-fragment-index="1">Having a column with all the same value isn't really that useful.</p>
 						<p class="fragment" data-fragment-index="2">Let's create create some variables using existing ones next.</p>
-						<small><em>From now on for simplicity we will only show the relevant parts of the code, not all the variables as shown in the training file.</em></small>
+						<small  class="fragment" data-fragment-index="3"><em>From now on for simplicity we will only show the relevant parts of the code, not all the variables as shown in the training file.</em></small>
 					</section>
 
 					<section data-auto-animate>

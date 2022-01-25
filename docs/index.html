@@ -42,8 +42,8 @@
 					</section>
 
 					<section data-auto-animate >
-						<h2>What <font style = 'color: green;'>can</font> Databases do? What <font style = 'color: red;'>can't</font> they do?</h2>
-						<span style = 'color:green; font-size:80%;'>
+						<h2>What <font style = 'color: lightgreen;'>can</font> Databases do? What <font style = 'color: red;'>can't</font> they do?</h2>
+						<span style = 'color:lightgreen; font-size:80%;'>
 							<li class="fragment" data-fragment-index="1">Our databases are designed to work with relational data – meaning they are great and efficient for bringing data together and combining it.
 							</li>
 							<li class="fragment" data-fragment-index="2">Databases are an effective way to store and share information, to make sure everyone has the same and up-to-date versions.
@@ -155,7 +155,10 @@
 						<li  class="fragment" data-fragment-index="5">Can have 0 rows, must have at least 1 column</li>
 					</section>
 
-
+					<section data-auto-animate >
+						<h2>What is a database?</h2>
+						<img class="r-frame" style="background: rgba(255,255,255,0.1);" data-src="./assets/schemas.png" alt="Display of schema structure in a datbase">
+					</section>
 
 					<section data-auto-animate >
 						<h2>What is a data type?</h2>
@@ -175,9 +178,7 @@
 							</small>
 						</section>
 
-					<section data-auto-animate data-background-image = https://c.tenor.com/Zkg9wzRfGhoAAAAC/whats-even-the-point-confused.gif>
-					</section>
-						
+					
 					
 
 					<section data-auto-animate >
@@ -204,9 +205,9 @@
 						<li  class="fragment" data-fragment-index="4">Many functions will look like function_name(arg1, arg2, …, argn) but not all as we will see…</li>
 					</section>
 
-					<section data-auto-animate >
-						<h2>What is a database?</h2>
-						<img class="r-frame" style="background: rgba(255,255,255,0.1);" data-src="./assets/schemas.png" alt="Display of schema structure in a datbase">
+					
+
+					<section data-auto-animate data-background-image = https://c.tenor.com/Zkg9wzRfGhoAAAAC/whats-even-the-point-confused.gif>
 					</section>
 					
 
@@ -758,7 +759,7 @@
 
 					<section data-auto-animate>
 						<h2 class = 'r-big'>Variables - Functions</h2>
-						<p><em><font style = "color: white;">substr</font></em> takes 3 arguments, the first 2 are required and are the string to <em>cut</em> ad the start position. The third argument is optional and is the length of the substring.</p>
+						<p><em><font style = "color: white;">substr</font></em> takes 3 arguments, the first 2 are required and are the string to <em>cut</em> and the start position. The third argument is optional and is the length of the substring.</p>
 						
 						<pre data-id="select-code3"><code class = "language-sql" data-trim data-line-numbers="6-8">
 							SELECT
@@ -1373,7 +1374,7 @@
 						schema_name.flights
 					WHERE
 						arr_delay = 0
-						AND dep_delay = 0;
+						AND dep_delay = 0
 					;
 					</code></pre>
 				</section>

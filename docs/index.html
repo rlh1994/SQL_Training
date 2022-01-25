@@ -135,6 +135,10 @@
 						<li  class="fragment" data-fragment-index="7">Tables within a schema are only accessible to that schema’s users, unless rights are granted to other schemas to access them</li>
 					</section>
 
+					<section data-auto-animate >
+						<h2>What is a database?</h2>
+						<img class="r-frame" style="background: rgba(255,255,255,0.1);" data-src="./assets/schemas.png" alt="Display of schema structure in a datbase">
+					</section>
 
 					<section data-auto-animate >
 						<h2>What is a query?</h2>
@@ -155,10 +159,7 @@
 						<li  class="fragment" data-fragment-index="5">Can have 0 rows, must have at least 1 column</li>
 					</section>
 
-					<section data-auto-animate >
-						<h2>What is a database?</h2>
-						<img class="r-frame" style="background: rgba(255,255,255,0.1);" data-src="./assets/schemas.png" alt="Display of schema structure in a datbase">
-					</section>
+					
 
 					<section data-auto-animate >
 						<h2>What is a data type?</h2>
@@ -429,7 +430,7 @@
 
 					<section data-auto-animate>
 						<h2>Variables - Existing</h2>
-						<p>We can select every veriable from our table using the <em>*</em> special character.</p>
+						<p>We can select every variable from our table using the <em>*</em> special character.</p>
 						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers>
 							SELECT
 								*
@@ -2500,7 +2501,28 @@
 
 		<!-- Part 4 End -->
 
+		<!-- Exec Order start -->
+		<section>
+			<section >
+				<h1 class="r-big" style = "color: teal;">Order of writing vs execution.</h1>
+			</section>
+
+			<section>
+				
+				<p>We have seen that often the order we write our code in is not the same order that the database runs it in. Let's quickly review the order of writing a full query, then compare it with how the database will (usually) execute it.</p>
+				
+			</section>
+
+			<section data-background-image = './assets/written_order.jpg' data-background-size = 'contain'>
+			</section>
+
+			<section data-background-image = './assets/logical_order.jpg' data-background-size = 'contain'>
+			</section>
 		
+	
+
+		</section>
+		<!-- Exec Order end -->		
 
 		<!-- Murder mystery start -->
 		<section>

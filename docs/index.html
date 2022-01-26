@@ -1,0 +1,2626 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>SQL Training.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/moon.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2 class="r-fit-text">SQL Training</h2>	
+				</section>
+
+				<!-- Def and intro start -->
+				<section>
+					<section>
+						<h1 class="r-big" style = "color: teal;">Purpose & Definitions</h1>
+					</section>
+
+					<section data-auto-animate >
+						<h2 >Purpose</h2>
+						<p>The goal of this content is to provide A good foundational understanding of Oracle SQL for querying databases to get you at a level to perform analysis on data.</p>
+						<p>It won't cover management of data within databases, or any way to automate your scripts and code, that is beyond the scope of this content.</p>
+					</section>
+
+					<section data-auto-animate >
+						<h1 class="r-big" style = "color: teal;">Why Use a Database?</h1>
+					</section>
+
+
+					<section data-auto-animate  data-background-iframe = https://www.youtube.com/embed/ICloNwrg-_w>
+
+					</section>
+
+					<section data-auto-animate >
+						<h2>What <font style = 'color: lightgreen;'>can</font> Databases do? What <font style = 'color: red;'>can't</font> they do?</h2>
+						<span style = 'color:lightgreen; font-size:80%;'>
+							<li class="fragment" data-fragment-index="1">Our databases are designed to work with relational data – meaning they are great and efficient for bringing data together and combining it.
+							</li>
+							<li class="fragment" data-fragment-index="2">Databases are an effective way to store and share information, to make sure everyone has the same and up-to-date versions.
+							</li>
+							<li class="fragment" data-fragment-index="3">Database tables can have millions of rows, more than excel can handle!
+							</li>
+							<li class="fragment" data-fragment-index="4">Databases are fast at working with large volumes of data.
+							</li>
+							<li class="fragment" data-fragment-index="5">The same script can be used to bring back the same output every time, no more having to manually work with the data each time!
+							</li>
+						</span>
+
+						<span style = 'color:red; font-size:80%;'>
+							<li class="fragment" data-fragment-index="6">Make graphs (at least not that look anywhere near good)
+							</li>
+							<li class="fragment" data-fragment-index="7">Drag and drop interface (again, technically yes but not recommended)
+							</li>
+							<li class="fragment" data-fragment-index="8">Many things that R/Python is better for
+							</li>
+							
+						</span>
+					</section>
+
+					<section data-auto-animate >
+						<h1 class="r-big" style = "color: teal;">How to access a database?</h1>
+					</section>
+
+					<section data-auto-animate >
+						<h2>SQL Developer</h2>
+						<p>A free software produced by Oracle it has a basic and clean interface but more complex features for power users.</p>
+						<img class="r-frame" style="background: rgba(255,255,255,0.1);" data-src="./assets/sql_dev.png" alt="Screenshot of SQL developer">
+					</section>
+
+					<section data-auto-animate >
+						<h2>Toad</h2>
+						<p>An alternative SQL IDE, a license is required for usage.</p>
+						<img class="r-frame" style="background: rgba(255,255,255,0.1);" data-src="./assets/Toad_sql.png" alt="Screenshot of Toad SQL IDE">
+					</section>
+
+					<section data-auto-animate >
+						<h2>Many more!</h2>
+						<p>SQL is just instructions that are sent to the database, so you can edit that plain text code in any text editor, and many tools offer database connections, including VSCode, RStudio, and many more!</p>
+					</section>
+
+					<section data-auto-animate data-background-image = https://c.tenor.com/tvFWFDXRrmMAAAAd/blow-mind-mind-blown.gif>
+						<h1 class="r-big" style = "color: teal;">Some terminology...</h1>
+					</section>
+
+					<section data-auto-animate >
+						<h2>What is Google?</h2>
+						<li class="fragment" data-fragment-index="1">In our context it is a search engine</li>
+						<li  class="fragment" data-fragment-index="2">Used to find all sorts of information and help</li>
+						<li  class="fragment" data-fragment-index="3">Learning how to Google something is a very important skill!</li>
+					</section>
+				
+					<section data-auto-animate >
+						<h2>What is SQL?</h2>
+						<li class="fragment" data-fragment-index="1">Structured Query Language</li>
+						<li  class="fragment" data-fragment-index="2">A language used to access and manipulate information stored in a database</li>
+						<li  class="fragment" data-fragment-index="3">Technically it is used to interact with the database, not just the data stored within it</li>
+						<li  class="fragment" data-fragment-index="4">A set of keywords, rules, and inputs that produce an action as an output.</li>
+					</section>
+
+					<section data-auto-animate >
+						<h2>What is Oracle SQL?</h2>
+						<li class="fragment" data-fragment-index="1">SQL has many different variants, like colloquialisms or accents</li>
+						<li  class="fragment" data-fragment-index="2">Most of the words and rules are the same, but some bits may be slightly different. Somethings will work in one variant, but not another or at least have to be done a different way</li>
+						<li  class="fragment" data-fragment-index="3">Oracle SQL is the database product and variant sold and supported by Oracle. Oracle SQL has traditionally been the main industry supplier of large business databases, but this is changing in favour of the big 3 cloud vendors</li>
+						<li  class="fragment" data-fragment-index="4">There are other differences such as speed, costs, support, and much more that goes into choosing a database variant</li>
+						<li  class="fragment" data-fragment-index="5">Other key players in the market are MySQL, SQLServer (Microsoft), SQLite, and many new cloud based solutions such as Google’s BigQuery</li>
+					</section>
+
+					<section data-auto-animate >
+						<h2>What is Oracle SQL?</h2>
+						<li>The important thing is when you google something about SQL, always include the word “Oracle” in your search</li>
+						<li class="fragment" data-fragment-index="1">NEVER use the Oracle site for help, it’s designed for database experts and is useless to 99% of people</li>
+					</section>
+					
+					<section data-auto-animate >
+						<h2>What is a database?</h2>
+						<li class="fragment" data-fragment-index="1">A data storage solution, traditionally represented by 3 disks on top of each other, representing different harddisks, designed to be optimised for certain operations.</li>
+						<li  class="fragment" data-fragment-index="2">We will focus on relational databases that are organised into tables with rows and columns</li>
+						<li  class="fragment" data-fragment-index="3">Within the database there are Schemas, small workspaces for a user or set of users</li>
+						<span style = 'font-size:75%';>
+							<li  class="fragment" data-fragment-index="4">A Schema contains tables (and other things)</li>
+							<li  class="fragment" data-fragment-index="5">A Table contains records (rows) and variables (columns)</li>
+						</span>
+						<li  class="fragment" data-fragment-index="6">In Excel terms, a database if a folder on your laptop, the schema is an excel file (workbook), a table is a sheet, and the rows and columns are rows and columns</li>
+						<li  class="fragment" data-fragment-index="7">Tables within a schema are only accessible to that schema’s users, unless rights are granted to other schemas to access them</li>
+					</section>
+
+					<section data-auto-animate >
+						<h2>What is a database?</h2>
+						<img class="r-frame" style="background: rgba(255,255,255,0.1);" data-src="./assets/schemas.png" alt="Display of schema structure in a datbase">
+					</section>
+
+					<section data-auto-animate >
+						<h2>What is a query?</h2>
+						<li class="fragment" data-fragment-index="1">A single complete piece of SQL code</li>
+						<li  class="fragment" data-fragment-index="2">It must have a certain minimum level of detail (e.g. contain reference to at least one table and a list of columns to return)</li>
+						<li  class="fragment" data-fragment-index="3"><em><font style = "color: white;"><b>Returns a table</b></font></em></li>
+						<li  class="fragment" data-fragment-index="4">Are executed one at a time</li>
+						<li  class="fragment" data-fragment-index="5">Many queries can be stored in a single .sql file, or script</li>
+						<li  class="fragment" data-fragment-index="6">Are a subset of statements, these however include code that will create tables, or update information i.e. perform an action that doesn’t have to return a table</li>
+					</section>
+					<section data-auto-animate >
+						<h2>What is a table?</h2>
+						<li class="fragment" data-fragment-index="1">It is the foundation of relational databases, a collection of records (rows) and variables (columns)
+						</li>
+						<li  class="fragment" data-fragment-index="2">All entried in a given column are of the same <em>type</em></li>
+						<li  class="fragment" data-fragment-index="3">Tables are stored within a schema and have a name – usually the name has no spaces, doesn’t start with a number, and is in all caps (but not always because some people are sadists)</li>
+						<li  class="fragment" data-fragment-index="4">Tables are the output/return type of a query or SELECT statement</li>
+						<li  class="fragment" data-fragment-index="5">Can have 0 rows, must have at least 1 column</li>
+					</section>
+
+					
+
+					<section data-auto-animate >
+						<h2>What is a data type?</h2>
+						<li class="fragment" data-fragment-index="1">The type of a data column determines what it can contain and what operations/functions you can perform on it</li>
+						<li  class="fragment" data-fragment-index="2"><em><font style = "color: white;">Numeric</font></em> objects in Oracle are usually either integer (whole number) or number (decimal number). Databases are usually pretty good at automatically converting integers to decimal numbers if required
+						</li>
+						
+					</section>
+
+					<section data-auto-animate >
+						<h2>What is a data type?</h2>
+						<li >The type of a data column determines what it can contain and what operations/functions you can perform on it</li>
+						
+						<li><em><font style = "color: white;">Character</font></em> objects in Oracle are usually either char/nchar (a fixed length, padded with usually a space) or varchar2/nvarchar2 (a variable length). These are also referred to as strings, as in a string of characters. </li>
+							<small class="fragment" data-fragment-index="1">Strings as data in Oracle are written using single quotes ‘string’</small>
+							<small class="fragment" data-fragment-index="2">Strings as database objects (e.g. tables, column names etc) in Oracle are written using double quotes “table_name”
+							</small>
+						</section>
+
+					
+					
+
+					<section data-auto-animate >
+						<h2>What is a data type?</h2>
+						<li>The type of a data column determines what it can contain and what operations/functions you can perform on it</li>
+						<li><em><font style = "color: white;">Date</font></em> objects in Oracle are usually stored as date, sometimes timestamp. In Oracle ALL date data has a time component – there is no data type without a time component – you can set it to zero but it’s still there. Date formatting is also based on local settings so there are special functions to interact with dates, but we’ll see more about this later on…
+						</li>
+						
+					</section>
+
+					<section data-auto-animate >
+						<h2>What is a data type?</h2>
+						<li>The type of a data column determines what it can contain and what operations/functions you can perform on it</li>
+						<li><em><font style = "color: white;">Boolean</font></em> objects do not exist as a data type for a variable in Oracle; these are TRUE and FALSE values so you must store any column for this as either a string or a number (1/0)
+						</li>
+					</section>
+
+
+					<section data-auto-animate >
+						<h2>What is a function?</h2>
+						<li class="fragment" data-fragment-index="1">Generally, a function is something that takes an input (arguments), does a calculation/computation, and in all our cases will return an output</li>
+						<li  class="fragment" data-fragment-index="2">For the purposes of this content, functions will usually take a variable (column) and potentially some additional information as arguments</li>
+						<li  class="fragment" data-fragment-index="3">For the purposes of this content, functions will usually return a variable (column) as an output, with the same number of rows as the input</li>
+						<li  class="fragment" data-fragment-index="4">Many functions will look like function_name(arg1, arg2, …, argn) but not all as we will see…</li>
+					</section>
+
+					
+
+					<section data-auto-animate data-background-image = https://c.tenor.com/Zkg9wzRfGhoAAAAC/whats-even-the-point-confused.gif>
+					</section>
+					
+
+				</section>
+				<!-- Def and intro end -->
+				<!-- Part 0 Start -->
+				<section>
+
+					<section data-auto-animate >
+						<h1 class="r-big" style = "color: teal;">Part 0:</h1>
+						<h2>Comments,</h2>
+						<h2>Syntax, </h2>
+						<h2> & Error messages</h2>
+					</section>
+
+					<section data-auto-animate >
+						<h1 class="r-big" style = "color: teal;">Part 0:</h1>
+						<h3>By the end of this section you will be able to:</h3>
+						<li class="fragment" data-fragment-index="1">Explain the use of comments in code</li>
+						<li class="fragment" data-fragment-index="2">Explain the use of whitespace and case in SQL</li>
+						<li class="fragment" data-fragment-index="3">Explain the benefit of error messages</li>
+						<li class="fragment" data-fragment-index="4">Explain what a null value is</li>
+					</section>
+					
+					<section comments data-auto-animate >
+						<h2 class = "r-big"> Comments</h2>
+						<p class="fragment" data-fragment-index="1">A comment is the most important thing in any language.</p>
+						<p class="fragment" data-fragment-index="2">They let you write notes in and around your code that the computer ignores.</p>
+					</section>
+
+					<section comments data-auto-animate>
+						<h2 class = "r-big"> Comments</h2>
+						<p>A comment is the most important thing in any language.</p>
+						<p>They let you write notes in and around your code that the computer ignores.</p>
+						<pre data-id="comment-code"><code class = "language-sql" data-trim data-line-numbers>
+							-- Comments in SQL are done like this
+						</code></pre>
+					</section>
+
+					<section comments data-auto-animate >
+						<h2 class = "r-big"> Comments</h2>
+						<p>A comment is the most important thing in any language.</p>
+						<p>They let you write notes in and around your code that the computer ignores.</p>
+						<pre data-id="comment-code"><code class = "language-sql" data-trim data-line-numbers= "2-3">
+							-- Comments in SQL are done like this
+							/* Or multi-line comments
+								are done like this */
+						</code></pre>
+					</section>
+
+					<section comments data-auto-animate >
+						<h2 class = "r-big"> Comments</h2>
+						<p>A comment is the most important thing in any language.</p>
+						<p>They let you write notes in and around your code that the computer ignores.</p>
+						<pre data-id="comment-code"><code class = "language-sql" data-trim data-line-numbers= "4-5">
+							-- Comments in SQL are done like this
+							/* Or multi-line comments
+								are done like this */
+							select * from table; -- you can comment at the end of a line
+							select * /* or even in the middle*/ table;
+						</code></pre>
+					</section>
+
+
+					<section syntax data-auto-animate >
+						<h2 class = "r-big"> Syntax</h2>
+						<p class="fragment" data-fragment-index="1">Keywords in SQL are case <em>insensitive</em> so you can type them however you like.</p>	
+					</section>
+					<section syntax data-auto-animate >
+						<h2 class = "r-big"> Syntax</h2>
+						<p>Keywords in SQL are case <em>insensitive</em> so you can type them however you like.</p>
+						<pre data-id="comment-code"><code class = "language-sql" data-trim data-line-numbers= "4-5">
+							SELECT ORIGIN, DEST FROM FLIGHTS;
+						</code></pre>
+					</section>
+					<section syntax data-auto-animate >
+						<h2 class = "r-big"> Syntax</h2>
+						<p>Keywords in SQL are case <em>insensitive</em> so you can type them however you like.</p>
+						<p>Whiteshape is also ignored in SQL, so you can layout your code however you like.</p>
+						<pre data-id="comment-code"><code class = "language-sql" data-trim data-line-numbers= "1">
+							SELECT ORIGIN, DEST FROM FLIGHTS;
+						</code></pre>
+					</section>
+					<section syntax data-auto-animate >
+						<h2 class = "r-big"> Syntax</h2>
+						<p>Keywords in SQL are case <em>insensitive</em> so you can type them however you like.</p>
+						<p>Whiteshape is also ignored in SQL, so you can layout your code however you like.</p>
+						<pre data-id="comment-code"><code class = "language-sql" data-trim data-line-numbers= "3-7">
+							SELECT ORIGIN, DEST FROM FLIGHTS;
+
+							select 
+								origin, 
+								dest 
+							from 
+								flights;
+						</code></pre>
+					</section>
+					<section syntax data-auto-animate >
+						<h2 class = "r-big"> Syntax</h2>
+						<p>However, being consistent and making your code easy to read is important.</p>
+						<pre data-id="comment-code"><code class = "language-sql" data-trim data-line-numbers>
+							SELECT ORIGIN, DEST FROM FLIGHTS;
+
+							select 
+								origin, 
+								dest 
+							from 
+								flights;
+						</code></pre>
+					</section>
+					<section syntax data-auto-animate >
+						<h2 class = "r-big"> Syntax</h2>
+							<p>However, being consistent and making your code easy to read is important.</p>
+						<pre data-id="comment-code"><code class = "language-sql" data-trim data-line-numbers= "10">
+							/* Three equivalent queries despite case and whitespace */
+							SELECT ORIGIN, DEST FROM FLIGHTS;
+
+							select 
+								origin, 
+								dest 
+							from 
+								flights;
+
+							SeLeCt      OrIgIn,DeSt        fRoM      fLiGhTs;
+						</code></pre>
+					</section>
+
+					<section syntax data-auto-animate >
+						<h2 class = "r-big"> Error Messages</h2>
+						<p class="fragment" data-fragment-index="1">Error messages try to tell you what you've done wrong in your code when it doesn't work.</p>
+						<p class="fragment" data-fragment-index="2">Learning to read them and understand what they mean is invaluable, and we will see some as we go through.</p>
+					</section>
+
+					<section syntax data-auto-animate >
+						<h2 class = "r-big"> Nulls</h2>
+						<p class="fragment" data-fragment-index="1">Finally, empty values in SQL have a special type call <em>null</em>. </p>
+						<p class="fragment" data-fragment-index="2">This isn't an empty string or 0 or NA, it is a special thing all by itself.</p>
+					</section>
+
+					<section data-auto-animate >
+						<h2>Our Data</h2>
+						<img class="r-frame" style="background: rgba(255,255,255,0.1);" data-src="./assets/flights.png" alt="Display of schema structure in a datbase">
+					</section>
+
+				</section>
+				<!-- Part 0 end  -->
+
+				<!-- Part 1 Start -->
+				<section>
+					<section data-auto-animate >
+						<h1 class="r-big" style = "color: teal;">Part 1:</h1>
+						<h2>Variables</h2>
+						<h4>Selecting and creating them</h4>
+					</section>
+
+					<section data-auto-animate >
+						<h1 class="r-big" style = "color: teal;">Part 1:</h1>
+						<h3>By the end of this section you will be able to:</h3>
+						<li class="fragment" data-fragment-index="1">Return all or some columns from a table</li>
+						<li class="fragment" data-fragment-index="2">Create and return your own columns based on functions</li>
+						<li class="fragment" data-fragment-index="3">Create columns with conditional values</li>
+						<li class="fragment" data-fragment-index="4">Alias columns and tables</li>
+						<li class="fragment" data-fragment-index="5">Use common string functions</li>
+					</section>
+
+					<section data-auto-animate >
+						<h2>Variables</h2>
+						<p class="fragment" data-fragment-index="1">When you write a query, you are asking the database to produce you a table. This table need to have columns, so we need to tell the database which variables we need.</p>
+						<p class="fragment" data-fragment-index="2">Some of these variables might already exist, some might need to be created - we'll learn how to do both.</p>
+					</section>
+
+					<section data-auto-animate >
+						<h2>Variables</h2>
+						<p>All SQL queries take the following minimum form.</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers>
+							SELECT
+								variables
+							FROM
+								DATABASE.SCHEMA.TABLE;
+						</code></pre>
+					</section>
+
+
+					<section data-auto-animate >
+						<h2>Variables</h2>
+						<p>All SQL queries take the following minimum form.</p>
+						<p>Every query has a <em>FROM</em> keyword followed by a reference to a table, this tells the database where to look for our variables.</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers = "3-4">
+							SELECT
+								variables
+							FROM
+								DATABASE.SCHEMA.TABLE;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate >
+						<h2>Variables</h2>
+						<p>All SQL queries take the following minimum form.</p>
+						<p>Every query has a <em>SELECT</em> keyword followed by list of variables; these might be existing columns in the table or ones created.</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers = "1-2">
+							SELECT
+								variables
+							FROM
+								DATABASE.SCHEMA.TABLE;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate >
+						<h2>Variables</h2>
+						<p>All SQL queries take the following minimum form.</p>
+						<p>Every query ends with a semi-colon. This is like a full stop for the database so it knows where one query stops and the next one begins.</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers = "4">
+							SELECT
+								variables
+							FROM
+								DATABASE.SCHEMA.TABLE;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - Existing</h2>
+						<p>We can select every variable from our table using the <em>*</em> special character.</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers>
+							SELECT
+								*
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - Existing</h2>
+						<p>We can select every veriable from our table using the <em>*</em> special character.</p>
+						<p>Or we can swap out the * and list the column names ourselves, seperated by a comma</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers="2">
+							SELECT
+								*
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - Existing</h2>
+						<p>Or we can swap out the * and list the column names ourselves, seperated by a comma</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers="2-20">
+							SELECT
+								year, 
+								month, 
+								day, 
+								dep_time, 
+								sched_dep_time, 
+								dep_delay, 
+								arr_time, 
+								sched_arr_time, 
+								arr_delay, 
+								carrier, 
+								flight, 
+								tailnum, 
+								origin, 
+								dest, 
+								air_time, 
+								distance, 
+								hour, 
+								minute, 
+								time_hour
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - Existing</h2>
+						<p>Or we can just select some of them</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers="2-11">
+							SELECT
+								year, 
+								month, 
+								day, 
+								dep_time, 
+								sched_dep_time, 
+								carrier, 
+								flight, 
+								tailnum, 
+								origin, 
+								dest
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+					
+					<section data-auto-animate>
+						<h1>Live View</h1>
+						<p>Run some of these queries so far and see the results.</p>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - New</h2>
+						<p>We can ask the database for variables that aren't in our table, we just need to tell it what the data is. In this case, that data is the value 123.</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers="12">
+							SELECT
+								year, 
+								month, 
+								day, 
+								dep_time, 
+								sched_dep_time, 
+								carrier, 
+								flight, 
+								tailnum, 
+								origin, 
+								dest,
+								123
+							FROM
+								schema_name.flights;
+						</code></pre>
+
+						<small><em>Note that we had to add a comma to the end of the list before our new variable.</small></em>
+					</section>
+
+
+					<section data-auto-animate>
+						<h2>Variables - New</h2>
+						<p>It would be nice to give this variable a name, we can do that using the <em>as</em> keyword and call it whatever we like (within reason). This is known as <b>aliasing</b>.</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers="12">
+							SELECT
+								year, 
+								month, 
+								day, 
+								dep_time, 
+								sched_dep_time, 
+								carrier, 
+								flight, 
+								tailnum, 
+								origin, 
+								dest,
+								123 as new_column
+							FROM
+								schema_name.flights;
+						</code></pre>
+
+						<small><em>Column names should start with a letter, have only _ as punctuation and be less than 30 characters long. Some of these rules can but should not be broken.</small></em>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - New</h2>
+						<p>Technically we don't need to use <em>as</em> but for column names it is good practice.</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers="12">
+							SELECT
+								year, 
+								month, 
+								day, 
+								dep_time, 
+								sched_dep_time, 
+								carrier, 
+								flight, 
+								tailnum, 
+								origin, 
+								dest,
+								123 new_column
+							FROM
+								schema_name.flights;
+						</code></pre>
+
+						<small><em>We'll see in a second you can alias a table as well, but you cannot use the <em>as</em> word there!</small></em>
+					</section>
+
+					<section data-auto-animate>
+						<h1>Live View</h1>
+						<p>Run some of these queries so far and see the results.</p>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - New</h2>
+						<p><b>NOTE</b> that we can't mix * and extra variables.</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers>
+							-- This code will error
+							SELECT 
+								*,
+								123 as new_column
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - New</h2>
+						<p><b>NOTE</b> that we can't mix * and extra variables.</p>
+						<p>This is because * doesn't mean everything from our table, it means <em>EVERYTHING</em>, and we can't ask for more than everything (it's like taking infinity+1).</p>
+						<pre data-id="select-code"><code class = "language-sql" data-trim data-line-numbers>
+							-- This code will error
+							SELECT 
+								*,
+								123 as new_column
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - New</h2>
+						<p>What we need to do it tell the database we want everything from the table and note the universe. So first, it's important to understand the following are the same query, one is shorthand for the other.</p>
+						<pre  class="fragment" data-fragment-index="1" data-id="select-code2"><code class = "language-sql" data-trim data-line-numbers>
+							SELECT 
+								tailnum
+							FROM
+								schema_name.flights;
+
+							SELECT 
+								schema_name.flights.tailnum
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - New</h2>
+						<p>So if we want everything from the table, we could write the following, and this will work, but is pretty annoying to type.</p>
+						<pre data-id="select-code2"><code class = "language-sql" data-trim data-line-numbers>
+							SELECT 
+								schema_name.flights.*,
+								123 as new_column
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - New</h2>
+						<p>So if we want everything from the table, we could write the following, and this will work, but is pretty annoying to type.</p>
+						<p>What if the same way we aliased columns we alias our table? Let's call it <em>a</em></p>
+						<pre data-id="select-code2"><code class = "language-sql" data-trim data-line-numbers="2,5">
+							SELECT 
+								a.*,
+								123 as new_column
+							FROM
+								schema_name.flights a;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - New</h2>
+						<p><b>SIDENOTE:</b> You can break some of those column name rules using double quotes ("), these are used when you talk about database objects (tables, columns etc). Use single quotes (') for text data <em>in</em> the database.</p>
+						<pre data-id="select-code2"><code class = "language-sql" data-trim data-line-numbers="3">
+							SELECT 
+								a.*,
+								123 as "new column"
+							FROM
+								schema_name.flights a;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h1>Live View</h1>
+						<p>Run some of these queries so far and see the results.</p>
+					</section>
+
+					<section data-auto-animate>
+						<h1>Exercise time!</h1>
+						<p>Attempt questions 1-4.</p>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - Functions</h2>
+						<p class="fragment" data-fragment-index="1">Having a column with all the same value isn't really that useful.</p>
+						<p class="fragment" data-fragment-index="2">Let's create create some variables using existing ones next.</p>
+						<small  class="fragment" data-fragment-index="3"><em>From now on for simplicity we will only show the relevant parts of the code, not all the variables as shown in the training file.</em></small>
+					</section>
+
+					<section data-auto-animate>
+						<h2>Variables - Functions</h2>
+						<p>We can start by doing some basic maths on a numeric column.</p>
+						<pre data-id="select-code3"><code class = "language-sql" data-trim data-line-numbers="2-3">
+							SELECT 
+								month,
+								month + 1 AS next_month, 
+								...
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Functions</h2>
+						<p>We can start by doing some basic maths on a numeric column.</p>
+						<p>We don't even have to keep the original column.</p>
+						<pre data-id="select-code3"><code class = "language-sql" data-trim data-line-numbers="2">
+							SELECT 
+								month + 1 AS next_month, 
+								...
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Functions</h2>
+						<p>We <b>CAN'T</b> use our new column in another calculation (we'll see  way to do this later).</p>
+						<pre data-id="select-code3"><code class = "language-sql" data-trim data-line-numbers="1,4">
+							-- This code will error
+							SELECT 
+								month + 1 AS next_month,
+								next_month + 1 AS next_next_month 
+								...
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Functions</h2>
+						<p>Now let's take a look at some string functions that will be useful for when we're working with text.</p>
+						<pre data-id="select-code3"><code class = "language-sql" data-trim data-line-numbers>
+							SELECT
+								carrier, 
+								...
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Functions</h2>
+						<p><em><font style = "color: white;">lower</font></em> takes a string and makes it lowercase.</p>
+						<pre data-id="select-code3"><code class = "language-sql" data-trim data-line-numbers="3">
+							SELECT
+								carrier, 
+								lower(carrier),
+								...
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Functions</h2>
+						<p><em><font style = "color: white;">upper</font></em> takes a string and makes it uppercase.</p>
+						
+						<pre data-id="select-code3"><code class = "language-sql" data-trim data-line-numbers="4">
+							SELECT
+								carrier, 
+								lower(carrier),
+								upper(lower(carrier)),
+								...
+							FROM
+								schema_name.flights;
+						</code></pre>
+						<small><em>Notice how we've nested functions here, this is a useful trick.</em></small>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Functions</h2>
+						<p><em><font style = "color: white;">substr</font></em> takes 3 arguments, the first 2 are required and are the string to <em>cut</em> and the start position. The third argument is optional and is the length of the substring.</p>
+						
+						<pre data-id="select-code3"><code class = "language-sql" data-trim data-line-numbers="6-8">
+							SELECT
+								carrier, 
+								lower(carrier),
+								upper(lower(carrier)),
+								tailnum,
+								substr(tailnum, 3),
+								substr(tailnum, 1, 3),
+								substr(tailnum, 3, 2),
+								...
+							FROM
+								schema_name.flights;
+						</code></pre>
+						<small><em>This is like LEFT, MID, and RIGHT from Excel all in one.</em></small>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Functions</h2>
+						<p><em><font style = "color: white;">length</font></em> tells you have many characters are in a string.</p>
+						
+						<pre data-id="select-code3"><code class = "language-sql" data-trim data-line-numbers="9">
+							SELECT
+								carrier, 
+								lower(carrier),
+								upper(lower(carrier)),
+								tailnum,
+								substr(tailnum, 3),
+								substr(tailnum, 1, 3),
+								substr(tailnum, 3, 2),
+								length(tailnum)
+								...
+							FROM
+								schema_name.flights;
+						</code></pre>
+					</section>
+					
+					<section data-auto-animate>
+						<h1>Live View</h1>
+						<p>Run some of these queries so far and see the results.</p>
+					</section>
+
+					<section data-auto-animate>
+						<h1>Exercise time!</h1>
+						<p>Attempt questions 5-7.</p>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p class="fragment" data-fragment-index="1">Sometimes we don't want to do the same thing to every record, we might want to do different calculations based on some conditions.</p>
+						<p class="fragment" data-fragment-index="2">We do this by something called a <em>case</em> statement.</p>
+					</section>
+
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>Case statements take this form:</p>
+						<pre data-id="select-code4"><code class = "language-sql" data-trim data-line-numbers>
+							CASE 
+								WHEN condition THEN value_1
+								WHEN condition THEN value_2
+								...
+								WHEN condition THEN value_n
+								ELSE value_default
+							END
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>Case statements take this form:</p>
+						<li><em><font style = "color: white;">condition</font></em> is some boolean statement (TRUE or FALSE test)</li>
+						<pre data-id="select-code4"><code class = "language-sql" data-trim data-line-numbers="2-5">
+							CASE 
+								WHEN condition THEN value_1
+								WHEN condition THEN value_2
+								...
+								WHEN condition THEN value_n
+								ELSE value_default
+							END
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>Case statements take this form:</p>
+						<li><em><font style = "color: white;">condition</font></em> is some boolean statement (TRUE or FALSE test)</li>
+						<li><em><font style = "color: white;">value</font></em> is the output for record if the test is TRUE</li>
+						<pre data-id="select-code4"><code class = "language-sql" data-trim data-line-numbers="205">
+							CASE 
+								WHEN condition THEN value_1
+								WHEN condition THEN value_2
+								...
+								WHEN condition THEN value_n
+								ELSE value_default
+							END
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>Case statements take this form:</p>
+						<li><em><font style = "color: white;">condition</font></em> is some boolean statement (TRUE or FALSE test)</li>
+						<li><em><font style = "color: white;">value</font></em> is the output for record if the test is TRUE</li>
+						<li>Test are evaluated in order, if the first test is true it won't check the rest.</li>
+						<pre data-id="select-code4"><code class = "language-sql" data-trim data-line-numbers="2-5">
+							CASE 
+								WHEN condition THEN value_1
+								WHEN condition THEN value_2
+								...
+								WHEN condition THEN value_n
+								ELSE value_default
+							END
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>Case statements take this form:</p>
+						<li><em><font style = "color: white;">condition</font></em> is some boolean statement (TRUE or FALSE test)</li>
+						<li><em><font style = "color: white;">value</font></em> is the output for record if the test is TRUE</li>
+						<li>Test are evaluated in order, if the first test is true it won't check the rest.</li>
+						<li>If none are true, the <em><font style = "color: white;">ELSE</font></em>  condition triggers (id you don't provide one, it defaults to <em><font style = "color: white;">NULL</font></em>.</li>
+						<pre data-id="select-code4"><code class = "language-sql" data-trim data-line-numbers="6">
+							CASE 
+								WHEN condition THEN value_1
+								WHEN condition THEN value_2
+								...
+								WHEN condition THEN value_n
+								ELSE value_default
+							END
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p><b>REMEMBER:</b> every <em><font style = "color: white;">CASE</font></em> must have an <em><font style = "color: white;">END</font></em> and every <em><font style = "color: white;">WHEN</font></em> must have a <em><font style = "color: white;">THEN</font></em>.</p>
+						<pre data-id="select-code4"><code class = "language-sql" data-trim data-line-numbers="9">
+							CASE 
+								WHEN condition THEN value_1
+								WHEN condition THEN value_2
+								...
+								WHEN condition THEN value_n
+								ELSE value_default
+							END
+						</code></pre>
+					</section>
+					
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>To write these boolean/logical tests we use comparison operators like the following:</p>
+						<span style = "font-size: 50%;">
+						<table  class="fragment" data-fragment-index="1">
+							<thead>
+								<tr>
+								<th>Symbol</th>
+								<th>Comparison</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="fragment" data-fragment-index="2">
+								<td>=</td>
+								<td>Equal</td>
+								</tr>
+								<tr class="fragment" data-fragment-index="3">
+								<td>!=, &lt;&gt;, ^=</td>
+								<td>Unequal (not equal)</td>
+								</tr>
+								<tr class="fragment" data-fragment-index="4">
+								<td>&lt;, &lt;=</td>
+								<td>Less than, Less than or equal to</td>
+								</tr>
+								<tr class="fragment" data-fragment-index="5">
+								<td rowspan="4">&gt;, &gt;=</td>
+								<td rowspan="4">Greater than, Greater than or equal to</td>
+								</tr>
+								<tr>
+								</tr>
+								<tr>
+								</tr>
+								<tr>
+								</tr>
+								<tr  class="fragment" data-fragment-index="6">
+								<td rowspan="3">[NOT] IN</td>
+								<td rowspan="3">Set membership (is the element in the set/list provided). Set provided in ('Elem1', 'Elem2', ..., 'ElemN') format</td>
+								</tr>
+								<tr>
+								</tr>
+								<tr>
+								</tr>
+								<tr  class="fragment" data-fragment-index="7">
+								<td rowspan="3">[NOT] LIKE</td>
+								<td rowspan="3">Pattern match (is the element like the provided pattern). Uses % as 0-Inf character wildcard, _ for single character wildcard</td>
+								</tr>
+								<tr>
+								</tr>
+								<tr>
+								</tr>
+								<tr class="fragment" data-fragment-index="8">
+								<td rowspan="3">[NOT] BETWEEN</td>
+								<td rowspan="3">Shorthand for x &lt;= y and y &lt;= z becomes y between x and z</td>
+								</tr>
+								<tr>
+								</tr>
+								<tr>
+								</tr>
+							</tbody>
+							</table>
+						</span>
+						<small class="fragment" data-fragment-index="6"><em>The [NOT] is optional</em></small>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>And we can combine them using the logical operators:</p>
+						<span style = "font-size: 50%;">
+						<table class="fragment" data-fragment-index="1">
+							<thead>
+								<tr>
+								<th>Operation</th>
+								<th>Meaning</th>
+								</tr>
+							</thead>
+							<tbody>
+							<tr class="fragment" data-fragment-index="2">
+								<td>AND</td>
+								<td></td>
+							</tr>
+							<tr class="fragment" data-fragment-index="3">
+								<td>OR</td>
+								<td></td>
+							</tr>
+							<tr class="fragment" data-fragment-index="4">
+								<td>NOT</td>
+								<td></td>
+							</tr>
+							<tr class="fragment" data-fragment-index="5">
+								<td rowspan="4">()</td>
+								<td rowspan="4"></td>
+							</tr>
+							</tbody>
+							</table>
+						</span>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Truth Table Quiz!</h2>
+						<span style = "font-size: 50%;">
+							<table  class="fragment" data-fragment-index="1">
+								<thead>
+									<tr>
+										<th>A</th>
+										<th>B</th>
+										<th><em>A AND B</em></th>
+										<th><em>A OR B</em></th>
+										<th><em>NOT A</em></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>TRUE</td>
+										<td>TRUE</td>
+										<td  class="fragment" data-fragment-index="2">TRUE</td>
+										<td class="fragment" data-fragment-index="6">TRUE</td>
+										<td class="fragment" data-fragment-index="10">FALSE</td>
+									</tr>
+									<tr>
+										<td>TRUE</td>
+										<td>FALSE</td>
+										<td  class="fragment" data-fragment-index="3">FALSE</td>
+										<td class="fragment" data-fragment-index="7">TRUE</td>
+										<td>-</td>
+									</tr>
+									<tr>
+										<td>FALSE</td>
+										<td>TRUE</td>
+										<td class="fragment" data-fragment-index="4">FALSE</td>
+										<td class="fragment" data-fragment-index="8">TRUE</td>
+										<td class="fragment" data-fragment-index="11">TRUE</td>
+									</tr>
+									<tr>
+										<td>FALSE</td>
+										<td>FALSE</td>
+										<td class="fragment" data-fragment-index="5">FALSE</td>
+										<td class="fragment" data-fragment-index="9">FALSE</td>
+										<td>-</td>
+									</tr>
+								</tbody>
+								</table>
+						</span>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>And we can combine them using the logical operators:</p>
+						<span style = "font-size: 50%;">
+						<table>
+							<thead>
+								<tr>
+								<th>Operation</th>
+								<th>Meaning</th>
+								</tr>
+							</thead>
+							<tbody>
+							<tr">
+								<td>AND</td>
+								<td class="fragment" data-fragment-index="1">Logical AND, both statements must be TRUE</td>
+							</tr>
+							<tr>
+								<td>OR</td>
+								<td class="fragment" data-fragment-index="2">Logical OR, at least one statement must be TRUE</td>
+							</tr>
+							<tr>
+								<td>NOT</td>
+								<td class="fragment" data-fragment-index="3">Logical negation, converts TRUE to FALSE and vice versa</td>
+							</tr>
+							<tr>
+								<td rowspan="4">()</td>
+								<td  class="fragment" data-fragment-index="4" rowspan="4">Brackets, force the evaluation of the logical statement inside before any outside, i.e. (2+7)*5 != 2+7*5</td>
+							</tr>
+							</tbody>
+							</table>
+						</span>
+					</section>
+
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>Let's look at some examples</p>
+						<pre data-id="select-code5"><code class = "language-sql" data-trim data-line-numbers="1-4|6-12|14-19">
+							CASE 
+								WHEN sched_dep_time < 1200 THEN 'AM'
+								ELSE 'PM'
+							END AS DEP_AM_PM,
+
+							CASE 
+								WHEN sched_dep_time BETWEEN 0 AND 0800 THEN 'Early Morning'
+								WHEN sched_dep_time BETWEEN 0801 AND 1159 THEN 'Morning'
+								WHEN sched_dep_time BETWEEN 1200 AND 1800 THEN 'Afternoon'
+								WHEN sched_dep_time BETWEEN 1801 AND 2100 THEN 'Evening'
+								WHEN sched_dep_time BETWEEN 2100 AND 2359 THEN 'Night'
+							END AS DEP_TIME_DETAIL, -- Notice no ELSE
+
+							CASE 
+								WHEN length(sched_arr_time) != 4 THEN 'AM'
+								WHEN substr(sched_arr_time, 1, 2) < 12 THEN 'AM'
+								WHEN substr(sched_arr_time, 1, 2) > 12 THEN 'PM'
+								ELSE 'Midday'
+							END AS ARR_AM_PM,
+							...
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>Now examples using in</p>
+						<pre data-id="select-code6"><code class = "language-sql" data-trim data-line-numbers="1-4|6-10">
+							CASE
+								WHEN dest in ('JFK', 'LGA', 'EWR') THEN 'NYC'
+								ELSE 'Other'
+							END AS dest_nyc_check_in,
+
+							-- see how much easier it is than writing ors
+							CASE
+								WHEN dest = 'JFK' or dest = 'LGA' or dest = 'EWR' THEN 'NYC'
+								ELSE 'Other'
+							END AS dest_nyc_check_ors
+							...
+						</code></pre>
+						<small class="fragment" data-fragment-index="5"><em>Notice that comparisons always have to have a left and a right hand side, even when it's the same LHS</em></small>
+					</section>
+					
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>String values are case <b>sensitive</b></p>
+						<pre data-id="select-code7"><code class = "language-sql" data-trim data-line-numbers="1-4|6-9|11-14">
+							CASE
+								WHEN origin in ('JFK', 'LGA', 'EWR') THEN 'NYC'
+								ELSE 'Other'
+							END AS origin_nyc_check1,
+
+							CASE
+								WHEN lower(origin) in ('JFK', 'LGA', 'EWR') THEN 'NYC'
+								ELSE 'Other'
+							END AS origin_nyc_check2,
+
+							CASE
+								WHEN origin in ('JFK', 'lga', 'ewr') THEN 'NYC'
+								ELSE 'Other'
+							END AS origin_nyc_check3
+							...
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Case Statements</h2>
+						<p>And finally the <em><font style = "color: white;">like</font></em> matches.</p>
+						<pre data-id="select-code8"><code class = "language-sql" data-trim data-line-numbers="1-5|7-11|13-17|19-23">
+							-- Any number of character (including 0) before, and after a 7
+							CASE
+								WHEN tailnum LIKE '%7%' THEN 1
+								ELSE 0
+							END AS contains_7,
+
+							-- Any number of characters before a capital Q
+							CASE 
+								WHEN tailnum LIKE '%Q'	THEN 1 
+								ELSE 0
+							END AS ends_in_q,
+
+							-- A NOT acting on the output of a logical statement
+							CASE 
+								WHEN NOT (tailnum LIKE '%Q') THEN 1 
+								ELSE 0
+							END AS ends_in_not_q,
+
+							-- A NOT LIKE, specifically any record that doesn't match the pattern, 
+							-- slightly different to above
+							CASE WHEN tailnum NOT LIKE 'N5_5%' THEN 1 
+								ELSE 0
+							END AS weird_test
+							...
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h1>Live View</h1>
+						<p>Run some of these queries so far and see the results.</p>
+					</section>
+
+					<section data-auto-animate>
+						<h1>Exercise time!</h1>
+						<p>Attempt questions 8-11.</p>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Dates</h2>
+						<p class="fragment" data-fragment-index="1"> Finally let's look at dates in Oracle SQL.</p>
+						<p class="fragment" data-fragment-index="2">Date data types include both a date and a time, there is no time only value in Oracle.</p>
+						<p class="fragment" data-fragment-index="3">There is another type called a timestamp that contains milliseconds and timezones, most functions that work on dates also work on timestamps.</p>
+					</section>
+					
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Dates</h2>
+						<p> Just like in Excel, dates in Oracle are just numbers - meaning a difference of 24 hours is 1, 12 hours is 0.5 etc.</p>
+						<p class="fragment" data-fragment-index="1">However unlike excel because they are a specific datatype there's some specific functions to work with them.</p>
+					</section>
+					
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Dates</h2>
+						<span style = "font-size: 50%;">
+						<table>
+							<thead>
+								<tr>
+									<th>Function</th>
+									<th>Description</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="fragment" data-fragment-index="1">
+									<td>TO_DATE(variable,&nbsp;&nbsp;&nbsp;fmt)</td>
+									<td>Converts the variable (or string) into a date&nbsp;&nbsp;&nbsp;by giving it the format the variable is in</td>
+								</tr>
+								<tr class="fragment" data-fragment-index="2">
+									<td>TRUNC(date [, fmt])</td>
+									<td>Sets the time component of the date to 00:00:00 by default, or will round&nbsp;&nbsp;&nbsp;down to the format if provided</td>
+								</tr>
+								<tr class="fragment" data-fragment-index="3">
+									<td>sysdate</td>
+									<td>A system variable that is the current (local) date and time</td>
+								</tr>
+								<tr class="fragment" data-fragment-index="4">
+									<td>NEXT_DAY(date, day)</td>
+									<td>Returns the next date of the given day, after the date provided e.g.&nbsp;&nbsp;&nbsp;takes a Saturday at 00:00:01 to the NEXT Saturday</td>
+								</tr>
+								<tr class="fragment" data-fragment-index="5">
+									<td>TO_CHAR(variable, fmt)</td>
+									<td>Converts the variable (usually a date or a number) into the given format.&nbsp;&nbsp;&nbsp;This is the method to format a date in a given way NOT substr</td>
+								</tr>
+								<tr class="fragment" data-fragment-index="6">
+									<td>EXTRACT(value FROM date)</td>
+									<td>Returns the given value e.g. year from the date and returns it as a&nbsp;&nbsp;&nbsp;number. To extract units less than a day you must use a timestamp</td>
+								</tr>
+								<tr class="fragment" data-fragment-index="7">
+									<td>TO_TIMESTAMP(variable, fmt)</td>
+									<td>Converts the variable (or string) into a timestamp by giving it the&nbsp;&nbsp;&nbsp;format the variable is in</td>
+								</tr>
+							</tbody>
+							</table>
+						</span>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Dates</h2>
+						<small> I'm going to use <em><font style = "color: white;">||</font></em> in the code which concatenates (pastes) 2 strings together.</small> 
+						<pre><code class = "language-sql" data-trim data-line-numbers = "3-4|5|6|6|7|8-9|10-11">
+						SELECT 
+							time_hour,
+							time_hour + 1, -- add 1 day
+							time_hour + 5/24/60, -- add 5 minutes
+							TRUNC(time_hour), -- set time component to 0
+							TRUNC(time_hour, 'MM'), -- set to first of month
+							NEXT_DAY(time_hour, 'Saturday') - 1, -- Set to Friday inclusive for a week
+							TO_CHAR(time_hour, 'HH24:MI DAY DD MONTH YYYY'), -- format date in a specific format
+							TO_CHAR(time_hour, 'HH24:MI Day dd month yyyy'), -- notice how case changes the output
+							-- convert our columns into a date
+							TO_DATE(year||'-'||month||'-'||day||' '||hour||':'||minute, 'YYYY-MM-DD HH24:MI') -- convert our columns into a date
+						FROM
+							schema_name.flights;
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<h2 class = 'r-big'>Variables - Dates</h2>
+						<p> Using <em><font style = "color: white;">TO_DATE</font></em> every time can be annoying, so we can specify a date in another way. This is easier to read and more efficient for the database as well.</p> 
+						<pre><code class = "language-sql" data-trim data-line-numbers="2" >
+						SELECT 
+							DATE '2019-01-20' AS fixed_date
+						FROM
+							schema_name.flights;
+						</code></pre>
+					<small>The format is ALWAYS YYYY-MM-DD and is a string.</small>
+				</section>
+
+				<section data-auto-animate>
+					<h2 class = 'r-big'>Variables - Dates</h2>
+					<p> You should <b>NEVER</b> use <em><font style = "color: white;">substr</font></em> on a date because the result you gets depend on how the user has their system set up. </p> 
+					<pre><code class = "language-sql" data-trim data-line-numbers="1-8|10-17" >
+						-- Set a specific date format for your local session and sub-string our dates
+						ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MM-YYYY HH24:MI:SS';
+						SELECT 
+							time_hour,
+							substr(time_hour, 9, 2)
+						FROM
+							schema_name.flights;
+						-- returns 2 digit year
+						
+						-- Change the format and check the results
+						ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-DD-MM HH24:MI:SS';
+						SELECT 
+							time_hour,
+							substr(time_hour, 9, 2)
+						FROM
+							schema_name.flights;
+						-- returns 2 digit month
+					</code></pre>
+				<small>Always use <em><font style = "color: white;">to_char</font></em> instead.</small>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Live View</h1>
+					<p>Run some of these queries so far and see the results.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Exercise time!</h1>
+					<p>Attempt questions 12-15.</p>
+				</section>
+
+				<section data-auto-animate >
+					<h1 class="r-big" style = "color: teal;">Part 1:</h1>
+					<h3>In this section you learned to:</h3>
+					<li class="fragment" data-fragment-index="1">Return all or some columns from a table</li>
+					<li class="fragment" data-fragment-index="2">Create and return your own columns based on functions</li>
+					<li class="fragment" data-fragment-index="3">Create columns with conditional values</li>
+					<li class="fragment" data-fragment-index="4">Alias columns and tables</li>
+					<li class="fragment" data-fragment-index="5">Use common string functions</li>
+				<small class="fragment" data-fragment-index="6" >Don't forget to run the error message examples to see common examples of variable based errors!</small>
+				</section>
+
+			</section>
+				<!-- Part 1 End -->
+
+				<!-- Part 2 Start -->
+			<section>
+				<section data-auto-animate >
+					<h1 class="r-big" style = "color: teal;">Part 2:</h1>
+					<h2>Records</h2>
+					<h4>Filtering and ordering them</h4>
+				</section>
+
+				<section data-auto-animate >
+					<h1 class="r-big" style = "color: teal;">Part 2:</h1>
+					<h3>By the end of this section you will be able to:</h3>
+					<li class="fragment" data-fragment-index="1">Filter records based on conditions</li>
+					<li class="fragment" data-fragment-index="2">Order and only return a fixed number of records</li>
+					<li class="fragment" data-fragment-index="3">Combine record sets into a single output</li>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Filtering</h2>
+					<p class="fragment" data-fragment-index="1">We will start by learning how to filter records, we do this using a <em><font style = "color: white;">WHERE</font></em> clause, which goes after the <em><font style = "color: white;">FROM</font></em> clause.</p>
+					<pre data-id="wherecode" class="fragment" data-fragment-index="2" ><code class = "language-sql" data-trim data-line-numbers="|5-6">
+					SELECT
+						columns
+					FROM
+						tables
+					WHERE
+						condition
+					;
+					</code></pre>
+					<small class="fragment" data-fragment-index="3">The condition in this clause is the same type as those we saw in the <em><font style = "color: white;">CASE</font></em> statements.</small>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Filtering</h2>
+					<p >Let's take a look at some examples:</p>
+					<pre data-id="wherecode"><code class = "language-sql" data-trim data-line-numbers="6-7">
+					SELECT 
+						*
+					FROM
+						schema_name.flights
+					WHERE
+						arr_delay = 0
+						AND dep_delay = 0
+					;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Filtering</h2>
+					<p >Let's take a look at some examples:</p>
+					<p>Bonus tip: You can use an always true condition to make it easier to comment out individual checks when you're still developing your code</p>
+					<pre data-id="wherecode"><code class = "language-sql" data-trim data-line-numbers="6-8">
+					SELECT 
+						*
+					FROM
+						schema_name.flights
+					WHERE
+						1 = 1
+						--AND arr_delay = 0
+						AND dep_delay = 0;
+					;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Filtering</h2>
+					<p >Let's take a look at some examples:</p>
+					<p>and of course we can use our favourite boolean logic!</p>
+					<pre data-id="wherecode"><code class = "language-sql" data-trim data-line-numbers="6-9">
+						SELECT
+						*
+					FROM
+						schema_name.flights
+					WHERE
+						1 = 1
+						-- flights scheduled to depart in the first 10 or last 5 hours of a day
+						AND (hour < 10 OR hour > 19)
+						AND dep_delay = 0 -- left on time
+					;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Filtering</h2>
+					<p >Let's take a look at some examples:</p>
+					<p>A reminder that we can use <em><font style = "color: white;">IS [NOT] NULL</font></em> as a comparison. Useful when we want to check how many records have missing (or not) data</p>
+					<pre data-id="wherecode"><code class = "language-sql" data-trim data-line-numbers="6-9">
+					SELECT
+						*
+					FROM
+						schema_name.flights
+					WHERE
+						dep_delay IS NULL
+					;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Filtering</h2>
+					<p >Just like before, we can't use a renamed column in a <em><font style = "color: white;">WHERE</font></em> clause.</p>
+					<pre data-id="wherecode2" class="fragment" data-fragment-index="1"><code class = "language-sql" data-trim data-line-numbers="1-7|9-14">
+					-- Both of these will error
+					SELECT 
+						TRUNC(time_hour) AS flight_day
+					FROM
+						schema_name.flights
+					WHERE
+						flight_day > DATE '2013-06-01';
+					
+					SELECT 
+						tailnum AS tailnumber
+					FROM
+						schema_name.flights
+					WHERE
+						tailnumber LIKE 'N%';
+					</code></pre>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Filtering</h2>
+					<p>Just like before, we can't use a renamed column in a <em><font style = "color: white;">WHERE</font></em> clause.</p>
+					<p>The reason for this is because the <em><font style = "color: white;">WHERE</font></em> clause runs <b>before</b> the <em><font style = "color: white;">SELECT</font></em> does (even though it's written after).</p>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Filtering</h2>
+					<p>An upside of this is that you can filter on a column that you don't actually output.</p>
+					<pre data-id="wherecode3" class="fragment" data-fragment-index="1"><code class = "language-sql" data-trim data-line-numbers>
+					SELECT 
+						tailnum 
+					FROM
+						schema_name.flights
+					WHERE
+						origin = 'JFK'; -- only flights out of JFK airport
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Live View</h1>
+					<p>Run some of these queries so far and see the results.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Exercise time!</h1>
+					<p>Attempt questions 16-19.</p>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Ordering</h2>
+					<p class="fragment" data-fragment-index="1">Next let's look at how we can order our data</p>
+					<small class="fragment" data-fragment-index="2">Ordering data is one of the most inefficient things a computer can do and databases are not designed to be fast at it, try to avoid ordering unless you have to, only do it once, or consider doing it in some other tool after exporting the data</small>
+					<pre data-id="ordercode1" class="fragment" data-fragment-index="3"><code class = "language-sql" data-trim data-line-numbers= '|7-8'>
+					SELECT
+						columns
+					FROM
+						tables
+					WHERE
+						condition
+					ORDER BY 
+						columns;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Ordering</h2>
+					<p>We can order by a single column</p>
+					<pre data-id="ordercode1"><code class = "language-sql" data-trim data-line-numbers>
+					SELECT 
+						*
+					FROM
+						schema_name.flights
+					WHERE 
+						dep_delay > 0
+					ORDER BY 
+						dep_delay;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Ordering</h2>
+					<p>Or multiple columns for when there is a tie</p>
+					<pre data-id="ordercode1"><code class = "language-sql" data-trim data-line-numbers=|7-10>
+					SELECT 
+						*
+					FROM
+						schema_name.flights
+					WHERE 
+						dep_delay > 0
+					ORDER BY 
+					-- sort by departure delay THEN arrival delay if there is a tie.
+						dep_delay, 
+						arr_delay; 
+					</code></pre>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Ordering</h2>
+					<p>By default records are ordered in <b>ascending</b> order</p>
+					<pre data-id="ordercode1"><code class = "language-sql" data-trim data-line-numbers=|7-10>
+					SELECT 
+						*
+					FROM
+						schema_name.flights
+					WHERE 
+						dep_delay > 0
+					ORDER BY 
+					-- Least delayed departing, ties are sorted by least delayed when arriving.
+						dep_delay, 
+						arr_delay; 
+					</code></pre>
+				</section>
+				<section data-auto-animate >
+					<h2>Records - Ordering</h2>
+					<p>By default records are ordered in <b>ascending</b> order</p>
+					<p>but we can change that</p>
+					<pre data-id="ordercode1"><code class = "language-sql" data-trim data-line-numbers=8-9>
+					SELECT 
+						*
+					FROM
+						schema_name.flights
+					WHERE 
+						dep_delay > 0
+					ORDER BY 
+					-- MOST delayed departing, ties are sorted by least delayed when arriving.
+						dep_delay DESC, 
+						arr_delay; 
+					</code></pre>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Ordering</h2>
+					<p>By default records are ordered in <b>ascending</b> order</p>
+					<p>but we can change that</p>
+					<p>and we have to specify it for each column.</p>
+					<pre data-id="ordercode1"><code class = "language-sql" data-trim data-line-numbers=8,10>
+					SELECT 
+						*
+					FROM
+						schema_name.flights
+					WHERE 
+						dep_delay > 0
+					ORDER BY 
+					-- MOST delayed departing, ties are sorted by MOST delayed when arriving.
+						dep_delay DESC, 
+						arr_delay DESC; 
+					</code></pre>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Ordering</h2>
+					<p>Finally, we can be a bit lazy and because the <em><font style = "color: white;">ORDER BY</font></em> runs after the <em><font style = "color: white;">SELECT</font></em> we can actually just use numbers instead of column names.</p>
+					<p>This is also why we can use column aliases in the <em><font style = "color: white;">ORDER BY</font></em> and can't use columns we didn't <em><font style = "color: white;">SELECT</font></em></p>
+					<pre data-id="ordercode1"><code class = "language-sql" data-trim data-line-numbers=10-11>
+					SELECT 
+						flight,
+						dep_delay,
+						arr_delay
+					FROM
+						schema_name.flights
+					WHERE 
+						dep_delay > 0
+					ORDER BY 
+						2 desc, 
+						3; 
+					</code></pre>
+					<small>Generally this is a bad idea, it's hard to read and if you change the order in your <em><font style = "color: white;">SELECT</font></em> it will break.</small>
+				</section>
+
+				<section data-auto-animate >
+					<h2>Records - Distinct</h2>
+					<p>It's rare that you want duplicates in your data. Usually it means you've done a join (next section) wrong, or your source data has an issue, or you removed too many variables.</p>
+					<p class="fragment" data-fragment-index="1">If you are comfortable as to why you have duplicates but want to remove them you can use a <em><font style = "color: white;">SELECT DISTINCT</font></em> to just get unique records.</p>
+					<pre data-id="distinctcode1" class="fragment" data-fragment-index="2"><code class = "language-sql" data-trim data-line-numbers>
+					SELECT DISTINCT 
+						origin,
+						dest
+					FROM
+						schema_name.flights;
+					</code></pre>
+					<small class="fragment" data-fragment-index="3"><em><font style = "color: white;">DISTINCT</font></em> acts on all selected columns, not just the first one.</small>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Live View</h1>
+					<p>Run some of these queries so far and see the results.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Exercise time!</h1>
+					<p>Attempt questions 20-21.</p>
+				</section>
+				
+				<section data-auto-animate>
+					<h2>Records - Combining</h2>
+					<p class="fragment" data-fragment-index="1">Sometimes we want to combine our records in one way or another, if they are from the same table there is often a clever way to do this using <em><font style = "color: white;">OR</font></em>s and <em><font style = "color: white;">CASE</font></em> statements, but not always. Other times we might want to:</p>
+					<li class="fragment" data-fragment-index="2">Combine records (with or without checking for duplicates) and return them all (<em><font style = "color: white;">UNION [ALL]</font></em>)</li>
+					<li class="fragment" data-fragment-index="3">Find records that exist in both record sets and just return those (<em><font style = "color: white;">INTERSECT</font></em>)</li>
+					<li class="fragment" data-fragment-index="4">Find records that exist in one set, but not in another and return those from the first (<em><font style = "color: white;">MINUS</font></em>)</li>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Records - Combining</h2>
+					<img class="r-frame" style="background: rgba(255,255,255,0.1)"; data-src="./assets/unions.jpg" alt="Union types in SQL">
+				</section>
+
+				<section data-auto-animate>
+					<h2>Records - Combining</h2>
+					<small>We'll use the airlines table with some specific filters to illustrate these concepts</small>
+					<pre data-id="combinecode"><code class = "language-sql" data-trim data-line-numbers="1-14|17-30|33-46|49-62">
+						/* UNION records without duplicates */
+						SELECT 
+							*
+						FROM 
+							schema_name.airlines
+						WHERE
+							carrier in ('9E', 'AA', 'AS')
+						UNION
+						SELECT 
+							*
+						FROM 
+							schema_name.airlines
+						WHERE
+							carrier in ('AS', 'B6', 'DL');
+						
+						
+						/* UNION ALL records with duplicates */
+						SELECT 
+							*
+						FROM 
+							schema_name.airlines
+						WHERE
+							carrier in ('9E', 'AA', 'AS')
+						UNION ALL
+						SELECT 
+							*
+						FROM 
+							schema_name.airlines
+						WHERE
+							carrier in ('AS', 'B6', 'DL');
+						
+						
+						/* Find INTERESECTion of records */
+						SELECT 
+							*
+						FROM 
+							schema_name.airlines
+						WHERE
+							carrier in ('9E', 'AA', 'AS')
+						INTERSECT
+						SELECT 
+							*
+						FROM 
+							schema_name.airlines
+						WHERE
+							carrier in ('AS', 'B6', 'DL');
+						
+						
+						/* MINUS any matching records from the second table from the first */
+						SELECT 
+							*
+						FROM 
+							schema_name.airlines
+						WHERE
+							carrier in ('9E', 'AA', 'AS')
+						MINUS
+						SELECT 
+							*
+						FROM 
+							schema_name.airlines
+						WHERE
+							carrier in ('AS', 'B6', 'DL');
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Records - Fetch</h2>
+					<p class="fragment" data-fragment-index="1">Though it is very rare, sometimes you might only want to return a specific number of rows.</p>
+					<p class="fragment" data-fragment-index="2">For this we use the keyword <em><font style = "color: white;">FETCH</font></em> and it's associated terms.</p>
+					<small class="fragment" data-fragment-index="3"><em><font style = "color: white;">FETCH</font></em> is the very last thing a database will run as it has to complete ordering first, so it would be any quicker to just return 5 rows instead of 500</small>
+					<pre class="fragment" data-fragment-index="4" data-id="fetchcode"><code class = "language-sql" data-trim data-line-numbers="9-10">
+						SELECT
+							columns
+						FROM
+							tables
+						WHERE
+							condition
+						ORDER BY 
+							columns
+						[OFFSET number ROWS]
+						FETCH NEXT number [PERCENT] ROWS ONLY/WITH TIES;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Records - Fetch</h2>
+					<p>Though it is very rare, sometimes you might only want to return a specific number of rows.</p>
+					<p>For this we use the keyword <em><font style = "color: white;">FETCH</font></em> and it's associated terms.</p>
+					<pre data-id="fetchcode"><code class = "language-sql" data-trim data-line-numbers="9-10">
+						SELECT 
+							*
+						FROM
+							schema_name.flights
+						ORDER BY 
+							distance desc
+						OFFSET 5 ROWS
+						FETCH NEXT 5 ROWS WITH TIES;
+					</code></pre>
+					<small>This will return more than 5 records because of the option with ties.</small>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Records - Fetch</h2>
+					<p>Though it is very rare, sometimes you might only want to return a specific number of rows.</p>
+					<p>For this we use the keyword <em><font style = "color: white;">FETCH</font></em> and it's associated terms.</p>
+					<pre data-id="fetchcode"><code class = "language-sql" data-trim data-line-numbers="9-10">
+						SELECT 
+							*
+						FROM
+							schema_name.flights
+						ORDER BY 
+							distance desc
+						OFFSET 5 ROWS
+						FETCH NEXT 5 ROWS ONLY;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Live View</h1>
+					<p>Run some of these queries so far and see the results.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Exercise time!</h1>
+					<p>Attempt questions 22-24</p>
+				</section>
+
+				<section data-auto-animate >
+					<h1 class="r-big" style = "color: teal;">Part 2:</h1>
+					<h3>In this section you learned to:</h3>
+					<li class="fragment" data-fragment-index="1">Filter records based on conditions</li>
+					<li class="fragment" data-fragment-index="2">Order and only return a fixed number of records</li>
+					<li class="fragment" data-fragment-index="3">Combine record sets into a single output</li>
+				<small class="fragment" data-fragment-index="6" >Don't forget to run the error message examples to see common examples of variable based errors!</small>
+				</section>
+			</section>
+			<!-- Part 2 End -->
+
+
+			<!-- Part 3 Start -->
+			<section>
+				<section data-auto-animate >
+					<h1 class="r-big" style = "color: teal;">Part 3:</h1>
+					<h2>Tables</h2>
+					<h4>Reusing and joinging them</h4>
+				</section>
+
+				<section data-auto-animate >
+					<h1 class="r-big" style = "color: teal;">Part 3:</h1>
+					<h3>By the end of this section you will be able to:</h3>
+					<li class="fragment" data-fragment-index="1">Use the dummy table for testing queries</li>
+					<li class="fragment" data-fragment-index="2">Use the table output by one query in another</li>
+					<li class="fragment" data-fragment-index="3">Join tables together</li>
+				</section>
+				
+
+				<section data-auto-animate>
+					<h2>Tables - Dual</h2>
+					<p class="fragment" data-fragment-index="1">Sometimes we want to test our query or a function and don't want to query a whole table to do it.</p>
+					<p class="fragment" data-fragment-index="2">To do this we can use a special table called <em><font style = "color: white;">dual</font></em> which has a single row and a single column, with a value of <em>'X'</em>.</p>
+					<pre class="fragment" data-fragment-index="3" data-id="dualcode"><code class = "language-sql" data-trim data-line-numbers>
+						SELECT
+							* 
+						FROM
+							dual;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Dual</h2>
+					<p>One good use for this is often to test out some date or string functions on dummy data to make sure you get it right</p>
+					<pre data-id="dualcode"><code class = "language-sql" data-trim data-line-numbers>
+					SELECT
+						--Some random date manipulation as a test
+						TRUNC(SYSDATE) - 5 + 1/24 + 14/24/60, 
+						-- should return Friday
+						NEXT_DAY(TRUNC(SYSDATE), 'SAT') - 1 AS week_end_date 
+					FROM
+						dual;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Reusing</h2>
+					<p class="fragment" data-fragment-index="1">We've seen multiple times that we can't use a column we create/alias in a query within the same query (except in ordering). This was because of the order the query actualy runs in vs how we see it written.</p>
+					<p class="fragment" data-fragment-index="2">But we know that a query returns a table, so we could use <em>that</em> table as the input to another query!</p>
+					<pre class="fragment" data-fragment-index="3" data-id="nestcode"><code class = "language-sql" data-trim data-line-numbers = '|4'>
+					SELECT
+						columns
+					FROM
+						table
+					WHERE
+						condition;
+					</code></pre>
+				</section>
+
+			
+				<section data-auto-animate>
+					<h2>Tables - Reusing</h2>
+					<p>We've seen multiple times that we can't use a column we create/alias in a query within the same query (except in ordering). This was because of the order the query actualy runs in vs how we see it written.</p>
+					<p>But we know that a query returns a table, so we could use <em>that</em> table as the input to another query!</p>
+					<pre data-id="nestcode"><code class = "language-sql" data-trim data-line-numbers= '4-10'>
+					SELECT
+						columns
+					FROM
+						(SELECT
+							columns
+						FROM
+							tables
+						WHERE
+							condition
+						)
+					WHERE
+						condition;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Reusing</h2>
+					<p>This is known as a <em><font style = "color: white;">nested query</font></em> because the inner query is nested entirely within the outer one.</p>
+					<p class="fragment" data-fragment-index="1">We can do this as many times as we like, but the database does have to complete an inner query before it can run the outer one, so filter as early (more nested) as possible, and order as late as possible.</p>
+					<pre data-id="nestcode"><code class = "language-sql" data-trim data-line-numbers= '4-10'>
+					SELECT
+						columns
+					FROM
+						(SELECT
+							columns
+						FROM
+							tables
+						WHERE
+							condition
+						)
+					WHERE
+						condition;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Reusing</h2>
+					<p>We need a way to refer to the attributes in the output of this inner query, we do that by aliasing the inner query - just like we would a table.</p>
+					<pre data-id="nestcode"><code class = "language-sql" data-trim data-line-numbers= '9-10'>
+					SELECT
+						b.*
+					FROM
+						(
+						SELECT
+							a.*,
+							distance * 1.60934 AS distance_km
+						FROM
+							schema_name.flights a
+						) b
+					WHERE
+						distance_km > 1000;
+					</code></pre>
+					<small class="fragment" data-fragment-index="1">People often use a/b/c etc. for aliases - for short code this is fine but for longer code try to use a short but descriptive alias for each table instead.</small>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Reusing</h2>
+					<p>Nested queries are great when the inner query is short and you only need to use it once. But what about if you want to use that inner query in multiple places, or the nesting gets very deep and complex?</p>
+					<p class="fragment" data-fragment-index="1">The solution is <em><font style = "color: white;">Common Table Expressions (CTEs)</font></em> which allow you to alias a whole query and refer to it at any later point in your code <em>without</em> having to write it out in full every time. These use the <em><font style = "color: white;">WITH</font></em> keyboard</p>
+					<pre class="fragment" data-fragment-index="2" data-id="withcode"><code class = "language-sql" data-trim data-line-numbers= '|1|3|5|7-10'>
+						WITH alias AS (QUERY),
+
+						alias2 AS (QUERY),
+
+						alias3 AS (QUERY)
+						
+						SELECT
+							columns
+						FROM
+							tables;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Reusing</h2>
+					<small>The database will optimise if it needs to reuse a table and will temporarily store it vs just running it once when needed - CTEs can be more efficient than nested queries, not just easier to read!</small>
+					<pre data-id="withcode"><code class = "language-sql" data-trim data-line-numbers= '1-8|10-22|13,20'>
+						WITH km_table as 
+						(
+							SELECT
+								a.*,
+								distance * 1.60934 AS distance_km
+							FROM
+								schema_name.flights a
+						)
+
+						SELECT
+							*
+						FROM
+							km_table
+						WHERE
+							distance_km > 1000
+						UNION
+						SELECT
+							*
+						FROM
+							km_table
+						WHERE
+							distance_km < 1000;
+					</code></pre>
+				</section>
+				
+
+				<section data-auto-animate>
+					<h1>Live View</h1>
+					<p>Run some of these queries so far and see the results.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Exercise time!</h1>
+					<p>Attempt questions 25-28</p>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Reusing</h2>
+					<p class="fragment" data-fragment-index="1"> Finally we can keep a table for a longer period by storing it permanently in the database. To do this we use the <em><font style = "color: white;">CREATE TABLE</font></em> statement.</p>
+					<small class="fragment" data-fragment-index="2">Remember that a statement is different to a a query - a query reads the database and returns a table, a statement can interact with the database in other ways.</small>
+					<pre class="fragment" data-fragment-index="3" data-id="createcode"><code class = "language-sql" data-trim data-line-numbers>
+						-- Nologging optionally turns off logs for the table creation
+						CREATE TABLE your_table_name [NOLOGGING] AS
+							query;
+					</code></pre>
+					<small class="fragment" data-fragment-index="4">It is possible to use <em><font style = "color: white;">CREATE TABLE</font></em> to create tables without a query by just specifying column names and types, but that is beyond the scope of this training.</small>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Reusing</h2>
+					<p> Once created you can query the table like any other. Because you created it in your schema, you don't have to specify the schema name. </p>
+					<small class="fragment" data-fragment-index="1">Remember only you can see this table, to share it with others you have to grant them access.</small>
+					<pre data-id="createcode"><code class = "language-sql" data-trim data-line-numbers = '1-6|8-11'>
+						CREATE TABLE flights_km NOLOGGING AS
+						SELECT
+							a.*,
+							distance * 1.60934 AS distance_km
+						FROM
+							schema_name.flights a;
+
+						SELECT
+							*
+						FROM 
+							flights_km;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Reusing</h2>
+					<p> Once we're done we want to <em><font style = "color: white;">DROP</font></em> the table to delete it from the database. </p>
+					<pre data-id="dropcode"><code class = "language-sql" data-trim data-line-numbers>
+						DROP TABLE your_table_name [PURGE];
+					</code></pre>
+					<small><em><font style = "color: white;">PURGE</font></em> removes it from your recycling bin, you can leave it out but make sure to empty the bin in the case!</small>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Reusing</h2>
+					<pre data-id="dropcode"><code class = "language-sql" data-trim data-line-numbers>
+						DROP TABLE flights_km PURGE;
+
+						SELECT
+							*
+						FROM 
+							flights_km; -- the table no longer exist.
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Reusing</h2>
+					<p>There are plenty of other statements in SQL that interact with tables, you can use <em><font style = "color: white;">TRUNCATE</font></em> to empty a table, <em><font style = "color: white;">INSERT</font></em> to add new records, <em><font style = "color: white;">DELETE</font></em> to remove specific records, and <em><font style = "color: white;">UPDATE</font></em> to alter existing records.</p>
+					<p>However, these are beyond the scope of this training.</p>
+				</section>
+
+
+				<section data-auto-animate>
+					<h1>Live View</h1>
+					<p>Run some of these queries so far and see the results.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Exercise time!</h1>
+					<p>Attempt questions 29</p>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Joining</h2>
+					<p class="fragment" data-fragment-index="1">We now come to one of the most powerful parts of using a relational databases, <em>joining</em> tables.</p>
+					<p class="fragment" data-fragment-index="2">Joins take place in the <em><font style = "color: white;">FROM</font></em> part of the query and have the following form:</p>
+					<pre class="fragment" data-fragment-index="3" data-id="joincode"><code class = "language-sql" data-trim data-line-numbers= '|4-6'>
+						SELECT
+							columns
+						FROM
+							table1
+							join_type JOIN table2
+							ON condition;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Joining</h2>
+					<p>There are 4 types of joins you can do:</p>
+					<span style="font-size: 50%;">
+					<table>
+						<thead>
+							<tr>
+								<th>Join type</th>
+								<th>Description</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr class="fragment" data-fragment-index="1">
+								<td>INNER JOIN</td>
+								<td>Only return records where they exist in both tables</td>
+							</tr>
+							<tr class="fragment" data-fragment-index="2">
+								<td>LEFT/RIGHT JOIN</td>
+								<td>Return all records in the left/right table and any match in the right/left one if it exists</td>
+							</tr>
+							<tr class="fragment" data-fragment-index="3">
+								<td>FULL OUTER JOIN </td>
+								<td>Return all records in both tables and any match if it exists</td>
+							</tr>
+							<tr class="fragment" data-fragment-index="4">
+								<td>CROSS JOIN</td>
+								<td>Return all combinations of rows across both tables (the Cartesian product of the rows). Not often useful.</td>
+							</tr>
+						</tbody>
+						</table>
+					</span>
+					<small class="fragment" data-fragment-index="5">Note that <em><font style = "color: white;">CROSS JOIN</font></em> does not have an ON condition.</small>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Joining</h2>
+					<p>There are 4 types of joins you can do:</p>
+					<img class="r-frame" style="background: rgba(255,255,255,0.1); max-height: 400px;" data-src="./assets/joins.jpg" alt="Join types in SQL">
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Joining</h2>
+					<h3>WARNING:</h3>
+					<p class="fragment" data-fragment-index="1">When you specify a condition in your join that defines where a match is returned to the record or not, when you specify it in the <em><font style = "color: white;">WHERE</font></em> this specifies whether the <em>whole</em> record is returned or not.</p>
+					<p class="fragment" data-fragment-index="2">In the case of an inner join these are the same thing, but for other joins they are not.</p>
+					<p class="fragment" data-fragment-index="3">First define your join logic, then define your filter criteria <b>separately</b>.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Joining</h2>
+					<p>For the join examples we're going to use a slim version of the planes table so we can see how each join behaves; let's create that first.</p>
+					<pre data-id="joincreatecode"><code class = "language-sql" data-trim data-line-numbers>
+						CREATE TABLE planes_short NOLOGGING AS
+						SELECT
+							* 
+						FROM 
+							schema_name.planes
+						WHERE
+							tailnum = 'N108UW';
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Joining</h2>
+					<p>First let's look at an inner join, where only records that find a match are returned</p>
+					<pre data-id="joincode2"><code class = "language-sql" data-trim data-line-numbers= '|5,6,9|2-3'>
+						SELECT 
+							a.*,
+							b.*
+						FROM 
+							schema_name.flights a
+							INNER JOIN planes_short b
+							/* In this case the columns had the same names, 
+							but that won't always (in fact will rarely) be the case */
+							ON a.tailnum = b.tailnum; 
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Joining</h2>
+					<p>Next the left join, where all records from the first table are returned, plus any matching data from the second</p>
+					<pre data-id="joincode2"><code class = "language-sql" data-trim data-line-numbers= '6'>
+						SELECT 
+							a.*,
+							b.*
+						FROM 
+							schema_name.flights a
+							LEFT JOIN planes_short b
+							ON a.tailnum = b.tailnum; 
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Joining</h2>
+					<p>And a right join, just the other way round to the left.</p>
+					<pre data-id="joincode2"><code class = "language-sql" data-trim data-line-numbers= '6'>
+						SELECT 
+							a.*,
+							b.*
+						FROM 
+							schema_name.flights a
+							RIGHT JOIN planes_short b
+							ON a.tailnum = b.tailnum; 
+					</code></pre>
+					<small class="fragment" data-fragment-index="1"> Despire the planes_short table having 1 row per plane, because of the join we now have multiple - we'll talk about this in a bit!</small>
+				</section>
+				
+
+				<section data-auto-animate>
+					<h2>Tables - Joining</h2>
+					<p>And a full outer join - we'll use a dummy table to create a fake plane to show that it returns all records from both tables regardless of if they match.</p>
+					<pre data-id="joincode2"><code class = "language-sql" data-trim data-line-numbers= '6'>
+						SELECT 
+							a.*,
+							b.*
+						FROM 
+							schema_name.flights a
+							FULL OUTER JOIN (SELECT 'FAKETAIL' AS tailnum_2 FROM dual) b
+						ON a.tailnum = b.tailnum_2
+						-- Defaults to nulls first for descending.
+						ORDER BY a.flight DESC; 
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Joining</h2>
+					<p>Lastly the cross join - the least used of them all. We'll use 2 tables with 3 rows each to show we get all matches back in 9 rows (3x3).</p>
+					<pre data-id="joincode2"><code class = "language-sql" data-trim data-line-numbers>
+						SELECT
+							*
+						FROM 
+							(SELECT '1' AS num FROM DUAL
+								UNION
+							SELECT '2' AS num FROM DUAL
+								UNION
+							SELECT '3' AS num FROM DUAL) A
+						CROSS JOIN
+							(SELECT 'A' AS let FROM DUAL
+								UNION
+							SELECT 'B' AS let FROM DUAL
+								UNION
+							SELECT 'C' AS let FROM DUAL) B;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Tables - Joining</h2>
+					<h3>A note about join conditions</h3>
+					<p class="fragment" data-fragment-index="1">Joins are the place you are most likely to make a mistake that leads to duplicates in your data and going from millions of records to billions.</p>
+					<p class="fragment" data-fragment-index="2">The reason is if your join is not unique on at least one of the tables (i.e. the condition you give can be used to define each record and distinguish it from others) then each record in <b>both</b> tables will join to multiple in the other, getting out of hand very fast.</p>
+					<p class="fragment" data-fragment-index="3">Always ask yourself; does my join link 1 row to 1/many rows in my other table? If the answer is no, you need to rethink your logic.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Live View</h1>
+					<p>Run some of these queries so far and see the results.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Exercise time!</h1>
+					<p>Attempt questions 30-32</p>
+				</section>
+
+				<section data-auto-animate >
+					<h1 class="r-big" style = "color: teal;">Part 3:</h1>
+					<h3>In this section you learned to:</h3>
+					<li class="fragment" data-fragment-index="1">Use the dummy table for testing queries</li>
+					<li class="fragment" data-fragment-index="2">Use the table output by one query in another</li>
+					<li class="fragment" data-fragment-index="3">Join tables together</li>
+				<small class="fragment" data-fragment-index="6" >Don't forget to run the error message examples to see common examples of variable based errors!</small>
+				</section>
+
+			</section>
+			<!-- Part 3 End -->
+
+
+			<!-- Part 4 Start -->
+			<section>
+				<section data-auto-animate >
+					<h1 class="r-big" style = "color: teal;">Part 4:</h1>
+					<h2>Aggregation</h2>
+					<h4>Grouping and window functions</h4>
+				</section>
+
+				<section data-auto-animate >
+					<h1 class="r-big" style = "color: teal;">Part 4:</h1>
+					<h3>By the end of this section you will be able to:</h3>
+					<li class="fragment" data-fragment-index="1">Summarise data in defined groups</li>
+					<li class="fragment" data-fragment-index="2">Add aggregated information to existing tables</li>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Aggregation - Grouping</h2>
+					<p class="fragment" data-fragment-index="1">Often we want to get aggregate information of our data and group it by values in another column - this is similar to what we do in PivotTables in Excel.</p>
+					<p class="fragment" data-fragment-index="2">To do this we use the <em><font style = "color: white;">GROUP BY</font></em> clause and summary functions. This goes after <em><font style = "color: white;">WHERE</font></em> but before <em><font style = "color: white;">ORDER BY</font></em>.</p>
+					<pre class="fragment" data-fragment-index="3" data-id="groupcode"><code class = "language-sql" data-trim data-line-numbers='|8-9|2-3'>
+						SELECT
+							group_columns,
+							summary_columns
+						FROM
+							tables
+						WHERE
+							condition
+						GROUP BY 
+							group_columns
+						ORDER BY 
+							columns;
+					</code></pre>
+				<small class="fragment" data-fragment-index="4">Any non-summarised variable <b>must</b> be listed in your <em><font style = "color: white;">GROUP BY</font></em> otherwise it will error. You can group by something you don't select but it's a bad idea.</small>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Aggregation - Grouping</h2>
+					<p >There are plenty of aggergation functions and the most common are listed below:</p>
+					<span style="font-size: 50%;">
+					<table>
+						<thead>
+							<tr>
+								<th>Agg type</th>
+								<th>Description</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr class="fragment" data-fragment-index="1">
+								<td>COUNT(*)</td>
+								<td>The total number of records per group</td>
+							</tr>
+							<tr class="fragment" data-fragment-index="2">
+								<td>COUNT(column)</td>
+								<td>The total number of records that are non-null in that variable</td>
+							</tr>
+							<tr class="fragment" data-fragment-index="3">
+								<td>SUM(column)</td>
+								<td>The sum of that variable, must be numeric</td>
+							</tr>
+							<tr class="fragment" data-fragment-index="4">
+								<td>AVG(column)</td>
+								<td>The mean of that variable, must be numeric</td>
+							</tr>
+							<tr class="fragment" data-fragment-index="5">
+								<td>MAX(column)</td>
+								<td>The maximum of that variable</td>
+							</tr>
+							<tr class="fragment" data-fragment-index="6">
+								<td>MIN(column)</td>
+								<td>The minimum of that variable</td>
+							</tr>
+						</tbody>
+						</table>
+					</span>
+						<small class="fragment" data-fragment-index="7">For a full list visit <a href='https://docs.oracle.com/database/121/SQLRF/functions003.htmc#SQLRF20035'>the Oracle site.</a></small>
+				</section>
+
+
+				<section data-auto-animate>
+					<h2>Aggregation - Grouping</h2>
+					<p>Let's look at information about flights out of each airport</p>
+					<pre class="fragment" data-fragment-index="1" data-id="groupcode2"><code class = "language-sql" data-trim data-line-numbers='|11-12|2,12|3-8'>
+						SELECT
+							origin,
+							COUNT(*) AS num_flights,
+							COUNT(dep_time) as num_departed_flights, -- doesn't count records with a null departure time
+							SUM(air_time) AS total_airtime,
+							AVG(air_time) AS mean_airtime,
+							MAX(dep_delay) AS latest_dep,
+							MIN(dep_delay) AS earliest_dep
+						FROM 
+							schema_name.flights
+						GROUP BY 
+							origin;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Aggregation - Grouping</h2>
+					<p>Let's look at information about flights out of each airport</p>
+					<p>AND by each destination airport.</p>
+					<pre data-id="groupcode2"><code class = "language-sql" data-trim data-line-numbers='3,14'>
+						SELECT
+							origin,
+							dest,
+							COUNT(*) AS num_flights,
+							COUNT(dep_time) as num_departed_flights,
+							SUM(air_time) AS total_airtime,
+							AVG(air_time) AS mean_airtime,
+							MAX(dep_delay) AS latest_dep,
+							MIN(dep_delay) AS earliest_dep
+						FROM 
+							schema_name.flights
+						GROUP BY 
+							origin,
+							dest;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Aggregation - Grouping</h2>
+					<p>We don't have to group by everything if we want details about the whole dataset.</p>
+					<pre data-id="groupcode2"><code class = "language-sql" data-trim data-line-numbers>
+						SELECT 
+							COUNT(*) AS num_flights,
+							MAX(dep_delay) AS latest_dep,
+							MIN(dep_delay) AS earliest_dep
+						FROM
+							schema_name.flights;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Aggregation - Grouping</h2>
+					<p>These aggergations becomes even more powerful when combined with a <em><font style = "color: white;">CASE</font></em> statement.</p>
+					<pre class="fragment" data-fragment-index="1" data-id="groupcode3"><code class = "language-sql" data-trim data-line-numbers='3-9|10-16'>
+						SELECT 
+							origin,
+							SUM( -- SUM uses 1 and 0 as the values
+								CASE 
+									WHEN dep_delay = 0 AND arr_delay = 0 
+										THEN 1 
+									ELSE 0 
+								END 
+								) AS perfect_flights,
+							COUNT( -- COUNT uses anything and null as the values
+								CASE 
+									WHEN dep_delay = 0 AND arr_delay = 0 
+										THEN 1 
+									ELSE null 
+								END 
+								) AS perfect_flights2 
+						FROM
+							schema_name.flights
+						GROUP BY
+							origin;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Aggregation - Grouping</h2>
+					<p>You can filter on the results on an aggretation by using the <em><font style = "color: white;">HAVING</font></em> keyword (as a <em><font style = "color: white;">WHERE</font></em> filters records <em>before</em> they are aggregated).</p>
+					<pre data-id="groupcode4"><code class = "language-sql" data-trim data-line-numbers='8-10'>
+						SELECT
+							tailnum,
+							COUNT(*)
+						FROM
+							schema_name.flights
+						GROUP BY
+							tailnum
+						HAVING
+						-- only planes that had at least 50 flights in 2013
+							COUNT(*) > 50; 
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Live View</h1>
+					<p>Run some of these queries so far and see the results.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Exercise time!</h1>
+					<p>Attempt questions 33-34</p>
+				</section>
+
+
+				<section data-auto-animate>
+					<h2>Aggregation - Windowing</h2>
+					<p class="fragment" data-fragment-index="1">There are times we want to add aggregate information to our data but keep it at the record level. We could group and then join back on, but this is inefficient.</p>
+					<p class="fragment" data-fragment-index="2">Instead we can use something called <em><font style = "color: white;">WINDOW FUNCTIONS</font></em> (also known as <em><font style = "color: white;">ANALYTICAL FUNCTIONS</font></em>).</p>
+					<p class="fragment" data-fragment-index="3">Pretty much all of them have the same format:</p> 
+					<pre class="fragment" data-fragment-index="4" data-id="groupcode"><code class = "language-sql" data-trim data-line-numbers>
+						WINDOW_FUNCTION(column) OVER (PARTITION BY columns ORDER BY columns)
+					</code></pre>
+				<small class="fragment" data-fragment-index="5">Not all of the functions have an argument to the main function, or an <em><font style = "color: white;">ORDER BY</font></em> clause, but most do.</small>
+				<p class="fragment" data-fragment-index="6">The <em><font style = "color: white;">PARTITION BY</font></em> defines your group for that record, and the <em><font style = "color: white;">ORDER BY</font></em> defines the order within that group.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Aggregation - Windowing</h2>
+					<p>Most <em><font style = "color: white;">GROUP BY</font></em> functions have an equivalent window function, but there are a few extras as well:</p>
+					<span style = 'font-size: 50%;'>
+					<table>
+						<thead>
+						  <tr>
+							<th>Window Function</th>
+							<th>Description</th>
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr class="fragment" data-fragment-index="1">
+							<td>ROW_NUMBER()</td>
+							<td>Numbers records in group from 1 to N (number in group) based on order by</td>
+						  </tr>
+						  <tr class="fragment" data-fragment-index="2">
+							<td>RANK(column)</td>
+							<td>Rank value within that group, same value for ties (with gaps)</td>
+						  </tr>
+						  <tr class="fragment" data-fragment-index="3">
+							<td>DENSE_RANK(column)</td>
+							<td>Rank value within that group, same value for ties (with no gaps)</td>
+						  </tr>
+						  <tr class="fragment" data-fragment-index="4">
+							<td>FIRST/LAST_VALUE(column)</td>
+							<td>The first/last value within that group.</td>
+						  </tr>
+						  <tr class="fragment" data-fragment-index="5">
+							<td>LEAD/LAG(column)</td>
+							<td>The next/previous value within that group.</td>
+						  </tr>
+						</tbody>
+						</table>
+					</span>
+					<small class="fragment" data-fragment-index="6">For a full list visit <a href='https://docs.oracle.com/cd/E11882_01/server.112/e41084/functions004.htm#SQLRF06174'>the Oracle site.</a></small>
+					<small class="fragment" data-fragment-index="7">Not covered here is a few extra (optional) arguments to these functions that let you do the calculation to only some range of the rows (e.g. only previous rows for cumulative values, or the previous and next X records for rolling values etc.) For more info see the documentation.</small>
+				</section>
+
+
+				<section data-auto-animate>
+					<h2>Aggregation - Windowing</h2>
+					<p>Let's look at an example.</p>
+					<pre data-id="windowcode"><code class = "language-sql" data-trim data-line-numbers='3-6|7-9|10-12'>
+						SELECT
+							a.*,
+							ROW_NUMBER() OVER (
+								PARTITION BY year, month, day, carrier 
+								ORDER BY sched_dep_time
+								) AS day_carrier_flight,
+							COUNT(*) OVER (
+								PARTITION BY year, month, day, carrier
+								) AS day_carrier_flight_total,
+							AVG(dep_delay) OVER (
+								PARTITION BY year, month, day, carrier
+								) AS day_carrier_avg_dep_delay
+						FROM
+							schema_name.flights a;
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Live View</h1>
+					<p>Run some of these queries so far and see the results.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h1>Exercise time!</h1>
+					<p>Attempt questions 35-36</p>
+				</section>
+
+
+				<section data-auto-animate >
+					<h1 class="r-big" style = "color: teal;">Part 4:</h1>
+					<h3>In this section you learned to:</h3>
+					<li class="fragment" data-fragment-index="1">Summarise data in defined groups</li>
+						<li class="fragment" data-fragment-index="2">Add aggregated information to existing tables</li>
+				<small class="fragment" data-fragment-index="6" >Don't forget to run the error message examples to see common examples of variable based errors!</small>
+					</section>
+					
+
+		</section>
+		
+
+		<!-- Part 4 End -->
+
+		<!-- Exec Order start -->
+		<section>
+			<section >
+				<h1 class="r-big" style = "color: teal;">Order of writing vs execution.</h1>
+			</section>
+
+			<section>
+				
+				<p>We have seen that often the order we write our code in is not the same order that the database runs it in. Let's quickly review the order of writing a full query, then compare it with how the database will (usually) execute it.</p>
+				
+			</section>
+
+			<section data-background-image = './assets/written_order.jpg' data-background-size = 'contain'>
+			</section>
+
+			<section data-background-image = './assets/logical_order.jpg' data-background-size = 'contain'>
+			</section>
+		
+	
+
+		</section>
+		<!-- Exec Order end -->		
+
+		<!-- Murder mystery start -->
+		<section>
+			<section data-background-image = './assets/detective.png'>
+				<h1 class="r-big" style = "color: teal;">A murder mystery!?</h1>
+			</section>
+
+			<section>
+				
+				<p>A crime has taken place and the detective needs your help. The detective gave you the crime scene report, but you somehow lost it. You vaguely remember that the crime was a <em><font style = "color: white;"><b>murder</b>​</font></em>​ that occurred sometime on ​<em><font style = "color: white;"><b>Jan.15, 2018​</b>​</font></em> and that it took place in <em><font style = "color: white;"><b>SQL City</b>​</font></em>​. Start by retrieving the corresponding crime scene report from the police department’s database.
+				</p>
+				<p>
+				All the clues to this mystery are buried in a huge database, and you need to use SQL to navigate through this vast network of information. Your first step to solving the mystery is to retrieve the corresponding crime scene report from the police department’s database.
+				</p>
+				
+			</section>
+
+			<section data-background-image = './assets/mystery_erd.jpg' data-background-size = 'contain'>
+			</section>
+		
+	
+
+		</section>
+		<!-- Murder mystery end -->
+
+		<section>
+			<h1 class="r-big" style = "color: teal;">Thank you, and I hope you found this useful!</h1>
+		</section>
+
+			</div>
+		</div>
+
+
+		<style type="text/css">
+			/* 1. Style header/footer <div> so they are positioned as desired. */
+			#header-left {
+				position: absolute;
+				top: 0%;
+				left: 0%;
+			}
+			#header-right {
+				position: absolute;
+				top: 0%;
+				right: 0%;
+			}
+			#footer-left {
+				position: absolute;
+				bottom: 1%;
+				left: 0%;
+				font-size: small;
+				color: grey;
+			}
+		</style>
+
+		<div id="hidden" style="display:none;">
+			<div id="header">
+				<!-- <div id="header-left">HEADER-LEFT</div> -->
+				<!-- <div id="header-right">HEADER-RIGHT</div> -->
+				<div id="footer-left">Credit: @rlh1994 on github<div>
+			</div>
+		</div>
+		<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+		<script type="text/javascript">
+		    // 3. On Reveal.js ready event, copy header/footer <div> into each `.slide-background` <div>
+						var header = $('#header').html();
+			if ( window.location.search.match( /print-pdf/gi ) ) {
+				Reveal.addEventListener( 'ready', function( event ) {
+					$('.slide-background').append(header);
+				});
+			}
+			else {
+				$('div.reveal').append(header);
+		}
+		</script>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+			// Remap to allow my clicker to work!
+			Reveal.configure({
+				keyboard: {
+					37: 'prev',
+					38: 'prev',
+					39: 'next',
+					40: 'next'
+				}
+			});
+		</script>
+	</body>
+</html>

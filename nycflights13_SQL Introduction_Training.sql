@@ -314,11 +314,11 @@ In SQL, the format of this is known as a CASE statement. This is a statement, no
 function returns a new variable/column, with one record per record in the rest of the SELECT statement. The format is:
 
 CASE 
-	WHEN <CONDITION> THEN <VALUE>
-	WHEN <CONDITION> THEN <VALUE>
+	WHEN <CONDITION> THEN <VALUE_1>
+	WHEN <CONDITION> THEN <VALUE_2>
 	...
-	WHEN <CONDITION> THEN <VALUE>
-	ELSE <VALUE>
+	WHEN <CONDITION> THEN <VALUE_N>
+	ELSE <VALUE_DEFAULT>
 END
 
 Where:
@@ -496,7 +496,7 @@ SELECT
 	time_hour + 1, -- add 1 day
 	time_hour + 5/24/60, -- add 5 minutes
 	TRUNC(time_hour), -- set time component to 0
-	TRUNC(time_hour, 'MM'), -- set to first of month TODO: check if strips time as well
+	TRUNC(time_hour, 'MM'), -- set to first of month 
 	NEXT_DAY(time_hour, 'Saturday') - 1, -- Set to Friday inclusive for a week
 	TO_CHAR(time_hour, 'HH24:MI DAY DD MONTH YYYY'), -- format date in a specific format
 	TO_CHAR(time_hour, 'HH24:MI Day dd month yyyy'), -- notice how case changes the output
@@ -620,7 +620,7 @@ FROM
 SELECT 
 	TRUNK(sysdate) AS today
 FROM
-	schema_name.flight;
+	schema_name.flights;
 
 ---------------------------------------------------------------------------------------------------
 /* 
@@ -675,7 +675,7 @@ FROM
 	schema_name.flights
 WHERE
 	1 = 1
-	AND (hour < 10 or hour > 19) -- flights scheduled to depart in the first 10 or last 5 hours of a day
+	AND (hour < 10 OR hour > 19) -- flights scheduled to depart in the first 10 or last 5 hours of a day
 	AND dep_delay = 0; -- left on time
 
 
@@ -1062,7 +1062,7 @@ FROM
 	dual;
 
 
-/* You can now attempt question 23 */
+/* You can now attempt question 25 */
 
 
 /*
@@ -1114,14 +1114,15 @@ in a query. We can alias as many query output tables as we want this way, and ca
 
 WITH alias AS (<QUERY>),
 
-alias2 AS (<QUERY>)
+alias2 AS (<QUERY>),
+
+alias3 AS (<QUERY>)
 
 SELECT
 	<COLUMNS>
 FROM
 	<TABLES>
-WHERE
-	<CONDITION>;
+;
 
 From a database point of view, sometimes it will store the result of a WITH statement as a temporary table, and sometimes it will just run the query when it 
 is used within another query. 
@@ -1159,7 +1160,7 @@ The final way we can use the output of our queries is to store the resulting tab
 we use a CREATE TABLE statement. Whilst it is possible to create an empty table by specifying the variables and their type we will not cover 
 that in this course. Instead, we will just cover how to create a table from a SELECT statement.
 
-CREATE TABLE <TABLE> NOLOGGING AS
+CREATE TABLE <TABLE> [NOLOGGING] AS
 <QUERY>;
 
 The NOLOGGING keyword just removed logs of this creation from the database to slightly improve speed.
@@ -1183,7 +1184,7 @@ FROM
 Once we are done with the table we want to remove it so we could reuse the name and free up space in the database. We do this using a 
 DROP TABLE statement.
 
-DROP TABLE <TABLE> PURGE;
+DROP TABLE <TABLE> [PURGE];
 
 Where PURGE is a keyword to remove it from the recycling bin immediately.
 */
@@ -1222,8 +1223,7 @@ LEFT/RIGHT JOIN - Return all records in the left/right table and any match in th
 FULL OUTER JOIN - Return all records in both tables and any match if it exists
 CROSS JOIN - Return all combinations of rows across both tables (the Cartesian product of the rows). Not often useful.
 
-Note that the CROSS JOIN does not have an ON condition. Sometimes it is possible to choose to have a condition in either
-the join statement or the where statement. Both are equally fine and the database will optimise for what is best. 
+Note that the CROSS JOIN does not have an ON condition.
 
 Let's look at a few examples, but first let's create a smaller version of the PLANES table to help illustrate the different types
 */
@@ -1255,7 +1255,8 @@ SELECT
 FROM 
 	schema_name.flights a
 	LEFT JOIN planes_short b
-	ON a.tailnum = b.tailnum;
+	ON a.tailnum = b.tailnum
+;
 
 
 /*- Return all rows in the right table, matching where exists in right table
@@ -1302,6 +1303,7 @@ CROSS JOIN
 -- Remove our table as we no longer need it.
 DROP TABLE planes_short PURGE;
 
+/* An important thing about joins is making sure you avoid generating duplicates of your data. Every join (except the cross join) should (usually) have at least one of the tables be uniquely defined by your join logic i.e. one row per record when using just those columns used in your join. If both tables aren't unique on the join, you're going to get huge duplication and massive amounts of rows.*/
 
 /* You can now attempt questions 30-32 */
 
@@ -1547,7 +1549,7 @@ SELECT
 	a.*,
 	ROW_NUMBER() OVER (PARTITION BY year) AS tailnum_by_year
 FROM
-	schema_name.planes a; --TODO make sure this is broken?
+	schema_name.planes a;
 
 ---------------------------------------------------------------------------------------------------
 /* 
@@ -1829,7 +1831,7 @@ ORDER BY
 
 /* 
 Now we have this table we can answer the question ... sort of. Because of the choices we made with regards to deciles over all airports
-we actually in many cases on have one airport per decile! Overall there seems to be a spike of delays in the 10th decile, and a small but not
+we actually in many cases only have one airport per decile! Overall there seems to be a spike of delays in the 10th decile, and a small but not
 smooth trend upwards in the lower deciles, which suggest there isn't much of a correlation except for extreme amounts of rain. La Guardia seems 
 to cope best with high volumes of rain, potentially because they most often see more rain than the other airports, but using just this data in the 
 way we created it I wouldn't be super confident in my findings as there is such a high standard deviation for each decile.

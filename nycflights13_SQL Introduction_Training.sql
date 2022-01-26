@@ -615,7 +615,7 @@ FROM
 SELECT 
 	TRUNK(sysdate) AS today
 FROM
-	schema_name.flight;
+	schema_name.flights;
 
 ---------------------------------------------------------------------------------------------------
 /* 
@@ -1250,7 +1250,8 @@ SELECT
 FROM 
 	schema_name.flights a
 	LEFT JOIN planes_short b
-	ON a.tailnum = b.tailnum;
+	ON a.tailnum = b.tailnum
+;
 
 
 /*- Return all rows in the right table, matching where exists in right table
@@ -1543,7 +1544,7 @@ SELECT
 	a.*,
 	ROW_NUMBER() OVER (PARTITION BY year) AS tailnum_by_year
 FROM
-	schema_name.planes a; --TODO make sure this is broken?
+	schema_name.planes a;
 
 ---------------------------------------------------------------------------------------------------
 /* 
